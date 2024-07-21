@@ -16,24 +16,32 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '14'
+        node-version: '20'
 
-    - name: Install sshpass if not already installed
+    - name: Install sshpass and PM2 if not already installed
       run: |
         if ! command -v sshpass &> /dev/null; then
-          echo "${{ secrets.KEVIN_PASSWORD }}" | sudo -S apt-get update -y
-          echo "${{ secrets.KEVIN_PASSWORD }}" | sudo -S apt-get install -y sshpass
+          echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S apt-get update -y
+          echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S apt-get install -y sshpass
+        fi
+        if ! command -v pm2 &> /dev/null; then
+          sudo npm install -g pm2
         fi
 
     - name: Deploy to Server
       env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         KEVIN_PASSWORD: ${{ secrets.KEVIN_PASSWORD }}
       run: |
+        mkdir -p ~/.ssh
+        echo "${SSH_PRIVATE_KEY}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan 132.145.196.46 >> ~/.ssh/known_hosts
         sshpass -p "${KEVIN_PASSWORD}" ssh -o "StrictHostKeyChecking=no" -i ~/.ssh/id_rsa kevin_trejo@132.145.196.46 << 'EOF'
           cd /var/www/course_tools
           git pull origin main
           npm install
           npm run build
-          pm2 restart nextjs || pm2 start npm --name "nextjs" --start
+          pm2 restart nextjs || pm2 start npm --name "nextjs" -- start
           pm2 save
         EOF
