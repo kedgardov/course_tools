@@ -1,0 +1,38 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install sshpass if not already installed
+      run: |
+        if ! command -v sshpass &> /dev/null; then
+          echo "${{ secrets.KEVIN_PASSWORD }}" | sudo -S apt-get update -y
+          echo "${{ secrets.KEVIN_PASSWORD }}" | sudo -S apt-get install -y sshpass
+        fi
+
+    - name: Deploy to Server
+      env:
+        KEVIN_PASSWORD: ${{ secrets.KEVIN_PASSWORD }}
+      run: |
+        sshpass -p "${KEVIN_PASSWORD}" ssh -o "StrictHostKeyChecking=no" -i ~/.ssh/id_rsa kevin_trejo@132.145.196.46 << 'EOF'
+          cd /var/www/course_tools
+          git pull origin main
+          npm install
+          npm run build
+          pm2 restart nextjs
+        EOF
