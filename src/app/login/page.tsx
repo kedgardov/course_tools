@@ -17,17 +17,16 @@ const Login: React.FC = () => {
     };
 
     return (
-        <form
+        <div
             className='flex flex-col items-center flex-grow bg-gradient-radial from-primary to-blue-500 justify-center'
             onSubmit={handleSubmit(onSubmit)}
         >
-            <div className='flex flex-col h-[25rem] p-4 rounded-md bg-gradient-radial from-light to-light_highlight shadow-xl'>
+            <form aria-label = 'login-form' className='flex flex-col h-[25rem] p-4 rounded-md bg-gradient-radial from-light to-light_highlight shadow-xl'>
             <div className='flex flex-col items-center text-dark'>
                 <AcademicCapIcon className='size-24'/>
-                <p className='uppercase text-2xl font-bold'>Course Tools</p>
+                <h1 className='uppercase text-2xl font-bold'>Course Tools</h1>
             </div>
             <div className={`m-2 flex items-center bg-light border rounded-2xl shadow p-2 ${errors.username? 'border-secondary border-2' : 'border-gray-300'}`}>
-                <label htmlFor='usuario'></label>
             <UserIcon className={`size-5 ${errors.username? 'text-secondary' : 'text-dark' }`}/>
                 <input
                     className='px-2 text-dark bg-light focus:outline-none'
@@ -37,7 +36,6 @@ const Login: React.FC = () => {
                     placeholder='Usuario'
                     aria-label='Usuario'
                     aria-invalid={errors.username ? "true" : "false"}
-                    aria-describedby={errors.username ? "username-input-error" : 'username-input'}
                     { ...register('username') }
                 >
                 </input>
@@ -48,7 +46,6 @@ const Login: React.FC = () => {
                     <p className='mx-1 italic'>{errors.username.message}</p>
                 </div>}
             <div className={`m-2 flex items-center bg-light border rounded-2xl shadow p-2 ${errors.password? 'border-secondary border-2' : 'border-gray-300'}`}>
-                <label htmlFor='password'></label>
             <LockClosedIcon className={`size-5 ${errors.username? 'text-secondary' : 'text-dark' }`}/>
                 <input
                     className='px-2 text-dark bg-light focus:outline-none'
@@ -58,7 +55,6 @@ const Login: React.FC = () => {
                     placeholder='Contraseña'
                     aria-label='Contraseña'
                     aria-invalid={errors.password ? "true" : "false"}
-                    aria-describedby={errors.password ? "password-input-error" : 'password-input'}
                     { ...register('password') }
                 >
                 </input>
@@ -74,8 +70,8 @@ const Login: React.FC = () => {
             >
             Iniciar Sesion
             </button>
-        </div>
         </form>
+        </div>
     );
 
 }
