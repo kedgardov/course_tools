@@ -1,8 +1,8 @@
 
-const ListadoCursos = ({ className }:{ className: string }) => {
+const ListadoCursos = () => {
 
     return (
-        <div className = {`${className}`}>
+        <div className=''>
             <p>Mis Cursos</p>
         </div>
     );
