@@ -77,7 +77,7 @@ const Sidebar = async ( { className }:{ className: string } ) => {
             />
             <Facultades
                 title='Facultades'
-                id='faultades'
+                id='facultades'
                 name='facultades'
             />
         </aside>
