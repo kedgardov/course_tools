@@ -1,87 +1,77 @@
-import MisCursos from './misCursos';
-import PanelAdmin from './panelAdmin';
-import RepositoriosTesis from './repositoriosTesis';
-import Facultades from './facultades';
-import { Curso } from '../../models/curso';
+'use client'
+import Link from 'next/link';
+import SidebarSection from './sidebarSection';
+import { AcademicCapIcon, Bars3Icon } from '@heroicons/react/24/outline';
+import { CursoMiniType } from '@/models/curso';
+import { useState } from 'react';
 
-const Sidebar = async ( { className }:{ className: string } ) => {
+const SidebarClient = ({
+    className,
+    cursosMini,
+}:{
+    className: string,
+    cursosMini: CursoMiniType[],
+}) => {
+    const [showSidebar, setShowSidebar] = useState<boolean>(true);
 
-    const getCursos = async(): Promise<Curso[]> => {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                 const dummyCursos: Curso[] = [
-        {
-          id_curso: 1,
-          clave: 'CS101',
-          nombre: 'Computer Science',
-          nombre_ingles: 'Computer Science',
-          horas_teoricas: 3,
-          horas_practicas: 2,
-          horas_independientes: 1,
-          horas_semana: 6,
-          horas_semestre: 90,
-        },
-        {
-          id_curso: 2,
-          clave: 'MATH101',
-          nombre: 'Mathematics',
-          nombre_ingles: 'Mathematics',
-          horas_teoricas: 3,
-          horas_practicas: 2,
-          horas_independientes: 1,
-          horas_semana: 6,
-          horas_semestre: 90,
-        },
-        {
-          id_curso: 3,
-          clave: 'PHY101',
-          nombre: 'Physics',
-          nombre_ingles: 'Physics',
-          horas_teoricas: 3,
-          horas_practicas: 2,
-          horas_independientes: 1,
-          horas_semana: 6,
-          horas_semestre: 90,
-        },
-      ];
-                //const dummyCursos = [
-                    // new Curso(1, 'CS101', 'Computer Science', 'Computer Science', 3, 2, 1, 6, 90),
-                    // new Curso(2, 'MATH101', 'Mathematics', 'Mathematics', 3, 2, 1, 6, 90),
-                    // new Curso(3, 'PHY101', 'Physics', 'Physics', 3, 2, 1, 6, 90),
-                //];
-                resolve(dummyCursos);
-            }, 3000);
-        });
-    }
+    const cursos = cursosMini.map((curso) => ({id:curso.id, title: curso.nombre, link:`/cursos/${curso.id}/general`}));
+    const facultades = [
+        {id:1, title:'Ver Facultades', link:'/'},
+        {id:2, title:'Agregar Facultad', link:'/'},
+        {id:3, title:'Editar Facultad', link:'/'},
+    ];
 
-    const cursos: Curso[] = await getCursos();
+    const repositorios = [
+        {id:1, title:'Ver Tesis', link:'/'},
+        {id:2, title:'Agregar Tesis', link:'/'},
+        {id:3, title:'Reportes de Tesis', link:'/'},
+    ];
+
+    const opcionesPanel = [
+        {id:1, title:'Crear Curso', link:'/'},
+        {id:2, title:'Editar Curso', link:'/'},
+        {id:3, title:'Habilitar Actualizacion', link:'/'},
+    ];
 
     return (
-        <aside className={`${className} bg-primary divide-y`}>
-            <header className='p-2 m-2 text-light flex justify-center text-4xl font-bold'>Course Tools</header>
-            <MisCursos
-                title='Mis Cursos'
-                id='mis-cursos'
-                name='mis-cursos'
-                cursos={cursos}
-            />
-            <PanelAdmin
-                title='Panel Admin'
-                id='panel-administrador'
-                name='panel-administrador'
-            />
-            <RepositoriosTesis
-                title='Repositorios de Tesis'
-                id='repositorios-tesis'
-                name='repositorios-tesis'
-            />
-            <Facultades
-                title='Facultades'
-                id='facultades'
-                name='facultades'
-            />
-        </aside>
+        <>
+        {showSidebar ? (
+            <aside className={`sidebar ${className}`}>
+                <header className='p-2 m-2 flex flex-col items-center'>
+                    <AcademicCapIcon className='size-24'/>
+                    <Link href='/cursos' className='text-4xl uppercase'>Course Tools</Link>
+                </header>
+                <SidebarSection
+                    label='Mis Cursos'
+                    name='mis-cursos'
+                    entries={cursos}
+                />
+                <SidebarSection
+                    label='Panel Admin'
+                    name='panel-administrador'
+                    entries={opcionesPanel}
+                />
+                <SidebarSection
+                    label='Repositorios de Tesis'
+                    name='repositorios-tesis'
+                    entries={repositorios}
+                />
+                <SidebarSection
+                    label='Facultades'
+                    name='facultades'
+                    entries={facultades}
+                />
+                <button onClick={() => setShowSidebar(false)}>
+                    Hide
+                </button>
+            </aside>
+        ) : (
+            <button className='fixed left-4 top-4 z-50' onClick={() => setShowSidebar(true)} >
+                <Bars3Icon className='size-6' />
+            </button>
+        )}
+        </>
     );
 };
 
-export default Sidebar;
+export default SidebarClient;

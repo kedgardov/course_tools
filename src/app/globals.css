@@ -30,14 +30,190 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+  .loading {
+    @apply animate-pulse bg-less-light border rounded-lg;
+  }
 
+  .sidebar {
+    @apply w-80 max-w-80 min-w-80 bg-gradient-radial from-primary to-primary-light text-more-light;
+  }
   .sidebar-section {
-    @apply p-2 mx-2 text-light text-xl flex flex-col;
+    @apply p-2 mx-2 text-xl flex flex-col border-t border-light/50;
   }
   .sidebar-entry {
-    @apply p-2 text-base text-dark border border-light rounded-lg hover:bg-light_highlight truncate;
+    @apply p-2 text-base text-dark border border-more-light rounded-lg transition duration-300 ease-in-out hover:bg-light truncate;
   }
   .sidebar-accordion-section {
-    @apply bg-light border border-primary rounded-lg transition-all duration-500 ease-in-out overflow-hidden;
+    @apply bg-more-light rounded-lg transition-all duration-500 ease-in-out overflow-hidden;
   }
+
+  .curso-general-input-horas {
+    @apply border rounded p-2 w-1/5 flex flex-col;
+  }
+
+  .title-1-dark {
+    @apply text-2xl capitalize font-bold text-more-dark ;
+  }
+
+  .title-3-u {
+    @apply text-xl uppercase text-dark;
+  }
+  .title-2 {
+    @apply text-2xl capitalize;
+  }
+
+  .title-2-container {
+    @apply flex h-8;
+  }
+
+  .title-2-loading {
+    @apply flex h-6 m-1 loading;
+  }
+
+  .title-1 {
+    @apply text-3xl capitalize font-bold;
+  }
+
+  .title-1-container {
+    @apply flex h-12
+  }
+
+  .error-text {
+    @apply text-red-500 italic text-sm ml-auto mr-2;
+  }
+
+  .list-title {
+    @apply uppercase text-sm text-dark tracking-wider text-left p-1 px-3;
+  }
+
+  .button-1-primary {
+    @apply px-2 py-1 capitalize border rounded shadow-sm text-more-light h-8
+    transition-all duration-500 ease-in-out
+    bg-gradient-to-tl to-primary-light via-primary from-primary-dark bg-size-200 bg-pos-0
+    hover:bg-pos-100
+    disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .button-1-secondary {
+    @apply px-2 py-1 capitalize border rounded shadow-sm text-more-light h-8
+    transition-all duration-500 ease-in-out
+    bg-gradient-to-tl to-secondary-light via-secondary from-secondary-dark bg-size-200 bg-pos-0
+    hover:bg-pos-100
+    disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .button-1-tertiary {
+    @apply px-2 py-1 capitalize border border-tertiary-dark rounded shadow-sm text-more-light h-8
+    transition-all duration-500 ease-in-out
+    bg-gradient-to-tl to-tertiary-light via-tertiary from-tertiary-dark bg-size-200 bg-pos-0
+    hover:bg-pos-100
+    disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .button-1-gray {
+    @apply px-2 py-1 capitalize border border-gray-400 rounded shadow-sm text-more-dark h-8
+    transition-all duration-500 ease-in-out
+    bg-gradient-to-tl to-light from-less-light bg-size-200 bg-pos-0
+    hover:bg-pos-100
+    disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+
+  .button-3 {
+    @apply px-2 py-1 capitalize border rounded border-less-dark border-opacity-0 h-8
+    transition ease-in-out duration-500
+    hover:border-opacity-100;
+  }
+
+  .divider-dark {
+    @apply border-t border-less-dark/25;
+  }
+
+  .input {
+    @apply bg-more-light h-8 p-1 border rounded transition ease-in-out duration-500;
+  }
+
+  .input-loading {
+    @apply h-6 m-1 loading;
+  }
+
+  .input-centered {
+    @apply input text-center w-full;
+  }
+
+  .input-text-area-old {
+    @apply bg-more-light h-16 p-1 border rounded transition ease-in-out duration-500;
+  }
+
+  .input-text-area {
+    @apply bg-more-light h-full p-1 border rounded transition ease-in-out duration-500;
+  }
+
+
+
+
+  .input-label {
+    @apply px-1;
+  }
+
+  .input-label-container {
+    @apply flex px-2 h-6;
+  }
+
+  .input-label-loading {
+    @apply h-6 loading;
+  }
+
+  .help-icon {
+    @apply w-4 h-4 stroke-2;
+  }
+
+  .edit-mode {
+    @apply border-dark;
+  }
+
+  .disabled-mode-no-border {
+    @apply border-more-light/0 bg-more-light/0;
+  }
+
+  .disabled-mode-border {
+    @apply border-light/75 bg-more-light/0;
+  }
+
+  .input-error {
+    @apply outline-tertiary-light border-tertiary-light;
+  }
+
+ .update-icon {
+   @apply rotate-12 stroke-secondary-light size-6 stroke-2
+   transition duration-300 ease-in-out
+   hover:scale-110 hover:stroke-secondary hover:rotate-45;
+ }
+ .delete-icon {
+   @apply stroke-tertiary-light size-6 stroke-2
+   transition duration-300 ease-in-out
+   hover:scale-110 hover:rotate-6;
+ }
+ .edit-icon {
+   @apply stroke-dark size-6 stroke-2
+   transition duration-300 ease-in-out
+   hover:scale-110 hover:rotate-6;
+ }
+
+ .tab {
+   @apply p-2 border border-light rounded-t-md;
+ }
+
+ .selected-tab {
+   @apply scale-110 bg-gradient-radial from-gray-300 to-gray-200;
+ }
+
+ .curso-number-input {
+   @apply w-1/5 text-center mx-1;
+ }
+
+ .field-text {
+   @apply elipsis;
+ }
+
 }

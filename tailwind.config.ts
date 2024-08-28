@@ -7,7 +7,15 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {
+    extend: {     
+      backgroundSize: {
+        'size-200': '200% 200%',
+        'size-300': '300% 300%'
+      },
+      backgroundPosition: {
+        'pos-0': '0% 0%',
+        'pos-100': '100% 100%',
+      },
       fontFamily: {
         sans: ['Arial', 'Helvetica', 'ui-sans-serif', 'system-ui'],
         serif: ['Georgia', 'Times New Roman', 'ui-serif', 'serif'],
@@ -15,17 +23,36 @@ const config: Config = {
         cursive: ['Comic Sans MS', 'Brush Script MT', 'cursive'],
         fantasy: ['Impact', 'Charcoal', 'fantasy'],
       },
-      colors : {
-        primary: '#2B42F3', //blue
-        secondary: '#BB2532', //red
-        tertiary: '#067A1F', //green
-        dark: '#2E2E3A', //dark gray
-        light: '#F0F0F0', //light gray
-        light_highlight: '#E7E7E7', //light gray but darker
+      colors: {
+        // Primary colors
+        'primary-light': '#3A5CF7', // light version of primary color
+        'primary': '#2B42F3',       // main primary color
+        'primary-dark': '#2438D3',  // dark version of primary color
+
+        // Secondary colors
+        'secondary-light': '#33813F', // light version of secondary color
+        'secondary': '#107329',       // main secondary color
+        'secondary-dark': '#0C6322',  // dark version of secondary color
+
+        // Tertiary colors
+        'tertiary-light': '#BE4042', // light version of tertiary color
+        'tertiary': '#B1222E',       // main tertiary color
+        'tertiary-dark': '#991C27',  // dark version of tertiary color
+
+        // Light and dark shades
+        'less-light': '#A9A3A7',           // light shade
+        'light': '#D4D0D2',      // slightly less light shade
+        'more-light': '#FFFFFF',      // even lighter shade
+
+        'more-dark': '#2D2D39',            // dark shade
+        'dark': '#44414B',       // slightly less dark shade
+        'less-dark': '#7E7880', // even darker shade
+
+        'line-gray':'#CCCCCC',
       },
-      width : {
-        '1/8' : '12.5%',
-        '1/10' : '10%',
+      width: {
+        '1/8': '12.5%',
+        '1/10': '10%',
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -36,4 +63,5 @@ const config: Config = {
   },
   plugins: [],
 };
+
 export default config;

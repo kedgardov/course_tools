@@ -8,12 +8,13 @@ export const metadata: Metadata = {
 };
 
 
+      //<body className='flex flex-col min-h-screen max-h-screen border border-green-400 min-w-screen max-w-screen'>
 
 const RootLayout = ({ children } : { children: React.ReactNode }) => {
 
   return (
     <html lang="es-MX">
-      <body className='flex min-h-screen'>
+      <body className='flex flex-col min-h-screen text-dark'>
         {children}
       </body>
     </html>
