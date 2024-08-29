@@ -50,6 +50,7 @@ const NewFuente = ({
                     register={register('titulo')}
                     placeholder='Ingrese el titulo de la fuente'
                     error={errors.titulo}
+                    showBorder={false}
                 />
             </div>
             <div className={widthList[1]}>
@@ -64,6 +65,7 @@ const NewFuente = ({
                     placeholder='Seleccione el Tipo de Fuente'
                     idKey='id'
                     valueKey='tipo_fuente'
+                    showBorder={false}
                 />
             </div>
             <div className={`flex ${widthList[2]}`}>

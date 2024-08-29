@@ -54,6 +54,7 @@ const NewEncargado = ({
                     placeholder='Seleccione un Docente'
                     idKey='id'
                     valueKey='label'
+                    showBorder={false}
                 />
             </div>
             <div className={widthList[1]}>
@@ -68,6 +69,7 @@ const NewEncargado = ({
                     placeholder='Seleccione un Rol'
                     idKey='id'
                     valueKey='rol'
+                    showBorder={false}
                 />
             </div>
             <div className={`${widthList[2]} flex`}>

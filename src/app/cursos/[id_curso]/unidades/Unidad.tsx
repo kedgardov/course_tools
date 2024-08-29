@@ -60,6 +60,7 @@ const Unidad = ({
                     register={register('titulo')}
                     placeholder='Ingrese el Titulo de la Unidad'
                     error={errors.titulo}
+                    showBorder={false}
                 />
                 </div>
                 <div className={`${widthList[2]} flex`}>

@@ -50,6 +50,7 @@ const NewObjetivo = ({
                     register={register('objetivo')}
                     placeholder='Ingrese la Descripcion del Objetivo'
                     error={errors.objetivo}
+                    showBorder={false}
                 />
             </div>
             <div className={`${widthList[2]} flex items-center`}>

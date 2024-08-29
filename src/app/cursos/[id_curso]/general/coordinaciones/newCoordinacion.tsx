@@ -53,6 +53,7 @@ const NewCoordinacion = ({
                     placeholder='Selecciona una Coordinacion'
                     idKey='id'
                     valueKey='coordinacion'
+                    showBorder={false}
                 />
             </div>
             <div className={`${widthList[1]} flex`}>

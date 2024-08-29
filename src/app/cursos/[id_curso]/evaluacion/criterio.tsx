@@ -52,6 +52,7 @@ const Criterio = ({
                         register={register('criterio')}
                         placeholder='Ingrese el Criterio'
                         error={errors.criterio}
+                        showBorder={false}
                     />
                 </div>
                 <div className={widthList[1]}>
@@ -63,6 +64,7 @@ const Criterio = ({
                         register={register('valor', { valueAsNumber:true })}
                         placeholder='Ingrese el Valor del Criterio'
                         error={errors.valor}
+                        showBorder={false}
                     />
                 </div>
             <div className={`flex ${widthList[2]}`}>
