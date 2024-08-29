@@ -14,6 +14,8 @@ import TertiaryButton from "@/components/tertiaryButton";
 import EditButton from "@/components/editButton";
 import TextAreaLabel from "@/components/textAreaLabel";
 import SelectInputLabel from "@/components/selectInputLabel";
+import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
 const DetallesTesisComponent = ({
     className,
@@ -61,6 +63,10 @@ const DetallesTesisComponent = ({
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={className}>
+            <div className='flex justify-center'>
+                <Link href={`/tesis/detalles/${idTesis-1}`} ><ArrowLeftIcon className='size-8' /></Link>
+                <Link href={`/tesis/detalles/${idTesis+1}`} ><ArrowRightIcon className='size-8'/></Link>
+            </div>
             {loading && (
                 <p>Cargando....</p>
             )}
@@ -182,7 +188,11 @@ const DetallesTesisComponent = ({
                 error={errors.palabras_clave}
                 showBorder={true}
             />
-           
+
+            <div className='flex justify-center'>
+                <Link href={`/tesis/detalles/${idTesis-1}`} ><ArrowLeftIcon className='size-8' /></Link>
+                <Link href={`/tesis/detalles/${idTesis+1}`} ><ArrowRightIcon className='size-8'/></Link>
+            </div>
            <Alert error={error} setError={() => setError(null)}/>
         </form>
     );
