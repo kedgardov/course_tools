@@ -6,9 +6,9 @@ import ListHeaders from "@/components/listHeaders";
 import { useState, useEffect } from 'react';
 
 import { Bar } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, BarController } from 'chart.js';
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, BarController, ChartOptions } from 'chart.js';
 
-// Register all necessary components with ChartJS
+// Register required components for Chart.js
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, BarController);
 
 // Hardcoded PRONACE list based on your database table
@@ -77,8 +77,9 @@ const ListaTesis = ({
     ],
   };
 
-  const options = {
-    indexAxis: 'y', // Set this to 'y' to make bars horizontal
+  // Define the options type explicitly
+  const options: ChartOptions<'bar'> = {
+    indexAxis: 'y', // Explicitly set as 'y' to indicate horizontal bars
     responsive: true,
     plugins: {
       legend: {
@@ -87,14 +88,14 @@ const ListaTesis = ({
       title: {
         display: true,
         text: `Frecuencia de PRONACEs [${tesisMini.length}]`,
-        font:{
-          size:20,
+        font: {
+          size: 20,
         },
       },
       tooltip: {
         enabled: true,
         callbacks: {
-          label: function (context: any) {
+          label: function (context) {
             // Customize tooltip label
             return `${context.label}: ${context.raw} Tesis`;
           },
@@ -106,9 +107,9 @@ const ListaTesis = ({
         beginAtZero: true,
         title: {
           display: true,
-          text: 'Frequencia',
-          font:{
-            size:14,
+          text: 'Frecuencia',
+          font: {
+            size: 14,
           },
         },
       },
@@ -116,8 +117,8 @@ const ListaTesis = ({
         title: {
           display: true,
           text: 'Categorias PRONACE',
-          font:{
-            size:14,
+          font: {
+            size: 14,
           },
         },
         ticks: {
@@ -135,7 +136,7 @@ const ListaTesis = ({
         borderWidth: 2,
       },
     },
-    onClick: (event: any, elements: any) => {
+    onClick: (event, elements) => {
       if (elements.length > 0) {
         const index = elements[0].index;
         const pronaceId = pronaceList[index].id;

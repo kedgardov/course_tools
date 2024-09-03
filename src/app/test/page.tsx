@@ -6,8 +6,7 @@ import TestChild1Suspense from './testChild1/loading';
 import TestChild2Suspense from './testChild2/loading';
 import TestChild3Suspense from './testChild3/loading';
 import Transformer from './transformer';
-import { Example } from './Example';
-//import "./styles.css";
+
 
 const TestParent = () => {
 
