@@ -15,7 +15,7 @@ const TesisMini = ({
             <div className={widthList[0]}>
                 {tesisMini.checked? 'Hecho':'Pendiente'}
             </div>
-            <div className={widthList[1]}>
+            <div className={`${widthList[1]} uppercase`}>
                 {tesisMini.titulo}
             </div>
             <div className={widthList[2]}>

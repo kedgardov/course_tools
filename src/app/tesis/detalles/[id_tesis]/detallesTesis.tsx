@@ -22,6 +22,7 @@ const DetallesTesisComponent = ({
     token,
     idTesis,
     tesis,
+    prediccionPronace,
     catalogoAutores,
     catalogoPronaces,
     catalogoCoordinaciones,
@@ -31,6 +32,7 @@ const DetallesTesisComponent = ({
     token: string,
     idTesis: number,
     tesis: TesisType,
+    prediccionPronace: PronaceType | null,
     catalogoAutores: AutorType[],
     catalogoPronaces: PronaceType[],
     catalogoCoordinaciones: CoordinacionType[],
@@ -90,6 +92,14 @@ const DetallesTesisComponent = ({
                 error={errors.titulo}
                 showBorder={true}
             />
+
+            {tesis.checked?  (
+                <p>Checked</p>
+            ):(
+                <p>Not Checked</p>
+            )}
+                {prediccionPronace && (<p>{`prediccion:${prediccionPronace.pronace}`}</p>)}
+
             <div className='flex'>
                 <SelectInputLabel
                     className='w-1/3 p-1'
@@ -106,7 +116,6 @@ const DetallesTesisComponent = ({
                     valueKey='pronace'
                     showBorder={true}
                 />
-           
                 <div className=' flex flex-col w-fit p-1'>
                     <label htmlFor='fecha'>Fecha Publicacion</label>
                     <input id='fecha' className='input border' type='date' {...register('fecha')} disabled={!editMode} />

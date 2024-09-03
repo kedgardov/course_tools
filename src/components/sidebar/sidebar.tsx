@@ -22,7 +22,7 @@ const SidebarClient = ({
     ];
 
     const repositorios = [
-        {id:1, title:'Ver Tesis', link:'/'},
+        {id:1, title:'Ver Tesis', link:'/tesis'},
         {id:2, title:'Agregar Tesis', link:'/'},
         {id:3, title:'Reportes de Tesis', link:'/'},
     ];

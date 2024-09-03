@@ -7,6 +7,7 @@ import { getCatalogoCoordinaciones, GetCatalogoCoordinacionesType } from "@/util
 import { getAutores, GetAutoresResponseType } from "@/utils/repo_tesis/autores/getCatalogoAutores";
 import { getCatalogoGrados, GetCatalogoGradosType } from "@/utils/repo_tesis/grados/getCatalogoGrados";
 import { getCatalogoPronaces, GetCatalogoPronacesType } from "@/utils/repo_tesis/pronaces/getCatalogoPronaces";
+import { getPrediccion, GetPrediccionPronaceType } from "@/utils/repo_tesis/pronaces/getPrediccion";
 
 const DetallesTesis = async ({
     params,
@@ -27,25 +28,28 @@ const DetallesTesis = async ({
         responseGetCatalogoAutores,
         responseGetCatalogoGrados,
         responseGetCatalogoPronaces,
+        responseGetPrediccionPronace,
     ]:[
         GetTesisResponseType,
         GetCatalogoCoordinacionesType,
         GetAutoresResponseType,
         GetCatalogoGradosType,
         GetCatalogoPronacesType,
+        GetPrediccionPronaceType,
     ] = await Promise.all([
         getTesis(idTesis, token),
         getCatalogoCoordinaciones(token),
         getAutores(token),
         getCatalogoGrados(token),
         getCatalogoPronaces(token),
+        getPrediccion(idTesis,token),
     ]);
 
     if( !responseGetTesis.tesis ){
         notFound();
     }
 
-
+    console.log('prediccion',responseGetPrediccionPronace);
     return (
         <section>
             <DetallesTesisComponent
@@ -57,6 +61,7 @@ const DetallesTesis = async ({
                 catalogoPronaces={responseGetCatalogoPronaces.catalogo_pronaces}
                 catalogoCoordinaciones={responseGetCatalogoCoordinaciones.catalogo_coordinaciones}
                 catalogoGrados={responseGetCatalogoGrados.catalogo_grados}
+                prediccionPronace={responseGetPrediccionPronace.prediccion}
             />
         </section>
     );

@@ -31,7 +31,7 @@ const Tesis = async () => {
     ]);
     return (
         <ListaTesis
-            className=''
+            className='p-4'
             token={token}
             tesisMini={responseGetTesisMini.tesis_mini}
         />

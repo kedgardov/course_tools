@@ -5,18 +5,15 @@ import TestChild3 from './testChild3';
 import TestChild1Suspense from './testChild1/loading';
 import TestChild2Suspense from './testChild2/loading';
 import TestChild3Suspense from './testChild3/loading';
+import Transformer from './transformer';
+import { Example } from './Example';
+//import "./styles.css";
 
 const TestParent = () => {
 
   return (
     <>
-        <TestChild1/>
-      <Suspense fallback={<TestChild2Suspense/>}>
-        <TestChild2/>
-      </Suspense>
-     <Suspense  fallback={<TestChild3Suspense/>}>
-        <TestChild3/>
-      </Suspense>
+      <Transformer/>
     </>
   );
 };
