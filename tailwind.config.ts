@@ -53,6 +53,11 @@ const config: Config = {
       width: {
         '1/8': '12.5%',
         '1/10': '10%',
+        '18':'4.5rem',
+        '76':'19rem',
+        '100': '25rem',
+        '58': '14.5rem',
+        '54': '13.5rem',
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

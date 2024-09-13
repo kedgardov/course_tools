@@ -3,7 +3,7 @@ import "./globals.css";
 
 
 export const metadata: Metadata = {
-  title: "Course Tools Ciad",
+  title: "Courses Tool",
   description: "Plataforma para gestion de cursos del centro de investigacion en alimentacion y desarrollo",
 };
 

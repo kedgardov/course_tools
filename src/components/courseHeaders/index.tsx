@@ -1,13 +1,13 @@
 import { cookies } from 'next/headers';
-import { getCurso, GetCursoType } from "@/utils/cursos/getCurso";
+import { getCursoMini, GetCursoMiniType } from '@/utils/cursos/getCursoMini';
 
 
 const CourseHeader = async ({ id_curso, className='' }:{ id_curso: number, className: string  }) => {
 
     const cookieStore = cookies();
     const token = cookieStore.get('authToken')?.value || '';
-    const response: GetCursoType = await getCurso(id_curso, token);
-    const curso = response.curso;
+    const response: GetCursoMiniType = await getCursoMini(id_curso, token);
+    const curso = response.curso_mini;
 
     return (
         <h1 className={`${className} title-1 title-1-container`}>

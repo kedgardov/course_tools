@@ -1,57 +1,39 @@
-import fakeApiCall from "@/utils/fakeApi";
 import { notFound } from "next/navigation";
 import CoordinacionesList from "./coordinacionesList";
-import { GetCoordinacionesType } from "@/utils/coordinaciones/getCoordinaciones";
+import { getCoordinaciones, GetCoordinacionesType } from "@/utils/coordinaciones/getCoordinaciones";
 import { getCatalogoCoordinaciones, GetCatalogoCoordinacionesType } from "@/utils/coordinaciones/getCatalogoCoordinaciones";
-import { cookies } from "next/headers";
 
 const CoordinacionesComponent = async ({
     className,
     idCurso,
+    token,
 }:{
     className: string,
     idCurso: number,
+    token: string,
 }) => {
-
-    const cookieStorage = cookies();
-    const token = cookieStorage.get('authToken')?.value || '';
-
 
     const [
         responseGetCatalogoCoordinaciones,
+        responseGetCoordinaciones,
     ]:[
         GetCatalogoCoordinacionesType,
+        GetCoordinacionesType,
     ] = await Promise.all([
-        getCatalogoCoordinaciones(token)
+        getCatalogoCoordinaciones(token),
+        getCoordinaciones(idCurso, token),
     ]);
 
-
-    if( !responseGetCatalogoCoordinaciones.success ){
+    if(!responseGetCatalogoCoordinaciones.success || !responseGetCoordinaciones.success){
+        console.log(responseGetCoordinaciones);
         notFound();
     }
 
-
-    const responseGetCoordinaciones: GetCoordinacionesType = {
-        success:true,
-        message:'all good',
-        coordinaciones:[
-            {id: 1, id_curso:idCurso, id_coordinacion:1},
-            {id: 2, id_curso:idCurso, id_coordinacion:2},
-            {id: 3, id_curso:idCurso, id_coordinacion:3},
-            {id: 4, id_curso:idCurso, id_coordinacion:4},
-        ],
-    };
-
-
-    const catalogoCoordinaciones = responseGetCatalogoCoordinaciones.catalogo_coordinaciones;
-    const coordinaciones = responseGetCoordinaciones.coordinaciones;
-
-
     return (
         <CoordinacionesList
-            coordinaciones={coordinaciones}
+            coordinaciones={responseGetCoordinaciones.coordinaciones}
             idCurso={idCurso}
-            catalogo_coordinaciones={catalogoCoordinaciones}
+            catalogo_coordinaciones={responseGetCatalogoCoordinaciones.catalogo_coordinaciones}
             className={className}
             token={token}
         />

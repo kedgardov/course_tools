@@ -5,20 +5,25 @@ import WidthType from '@/models/width';
 import ListHeaders from '@/components/listHeaders';
 import { notFound } from 'next/navigation';
 import Curso from './curso';
-import { RolType } from '@/models/rol';
+import { getCatalogoRoles, GetCatalogoRolesType } from '@/utils/cursos/getCatalogoRoles';
+
 
 const Cursos = async () => {
     const cookieStore = cookies();
     const token = cookieStore.get('authToken')?.value || '';
-    const response: GetCursosMiniType = await getCursosMini(token);
 
-    const catalogoRoles: RolType[] = [
-        {id:1, rol:'Titular'},
-        {id:2, rol:'Docente'},
-        {id:3, rol:'Admin'},
-        {id:4, rol:'Colaborador'},
-    ];
-    if(!response.success){
+    const [
+        responseGetCatalogoRoles,
+        responseGetCursosMini,
+    ]:[
+        GetCatalogoRolesType,
+        GetCursosMiniType,
+    ] = await Promise.all([
+        getCatalogoRoles(token),
+        getCursosMini(token),
+    ]);
+
+    if(!responseGetCatalogoRoles.success || !responseGetCursosMini.success){
         return notFound();
     }
 
@@ -34,13 +39,13 @@ const Cursos = async () => {
                     headersList={['Clave', 'Nombre del Curso', 'Rol', 'Acciones']}
                     widthList={widths}
                 />
-                {response.cursos_mini.map((curso) => (
+                {responseGetCursosMini.cursos_mini.map((curso) => (
                     <li key={curso.id}>
                         <Curso
                             className='divider-dark p-1'
                             curso={curso}
                             widthList={widths}
-                            catalogoRoles={catalogoRoles}
+                            catalogoRoles={responseGetCatalogoRoles.catalogo_roles}
                         />
                     </li>
                 ))}

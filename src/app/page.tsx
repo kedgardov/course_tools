@@ -1,7 +1,7 @@
 const LandingPage = () => {
   return (
     <div className='flex-grow'>
-      Landing Page
+      Landing Page En Progreso
     </div>
   );
 };

@@ -9,29 +9,31 @@ import { LGACType } from '@/models/lgac';
 import ListHeaders from '@components/listHeaders';
 import WidthType from '@models/width';
 import PrimaryButton from '@/components/primaryButton';
-import { NivelAcademicoType } from '@/models/nivelAcademico';
 import fakeApiCall from '@/utils/fakeApi';
 import LoadingComponent from '@/components/loading';
+import { NivelCurricularType } from '@/models/nivelCurricular';
+import Alert from '@/components/alert';
 
 
 const ListaLGACs = ({
     className,
     idCurso,
-    catalogoNivelesAcademicos,
+    token,
+    catalogoNivelesCurriculares,
     catalogoLGACs,
     catalogoProgramas,
     lgacs
 }:{
     className: string,
     idCurso: number,
-    catalogoNivelesAcademicos: NivelAcademicoType[],
+    token: string,
+    catalogoNivelesCurriculares: NivelCurricularType[],
     catalogoLGACs: LGACType[],
     catalogoProgramas: ProgramaType[],
     lgacs: LGACCursoType[],
 }) => {
-
-    const widthList: [WidthType, WidthType, WidthType, WidthType] = ['w-[30%]', 'w-[25%]', 'w-[25%]', 'w-[20%]'];
-
+    const widthList: [WidthType, WidthType, WidthType, WidthType] = ['w-[35%]', 'w-[25%]', 'w-[20%]', 'w-[20%]'];
+    const [error, setError] = useState<string | null>(null);
     const [currentLGACs, setCurrentLGACs] = useState<LGACCursoType[]>(lgacs);
     const [addingMode, setAddingMode] = useState(false);
     const [loadingMode, setLoadingMode] = useState(false);
@@ -46,7 +48,7 @@ const ListaLGACs = ({
             id: 0,
             id_curso: idCurso,
             id_lgac: data.id_lgac,
-            id_nivel_academico: data.id_nivel_academico,
+            id_nivel_curricular: data.id_nivel_curricular,
             id_programa: data.id_programa,
         };
         const response = await fakeApiCall();
@@ -73,7 +75,7 @@ const ListaLGACs = ({
             <ul>
                 <ListHeaders
                     className=''
-                    headersList={['LGAC', 'Programa', 'Nivel Academico', 'Acciones']}
+                    headersList={['LGAC', 'Programa', 'Nivel Curricular', 'Acciones']}
                     widthList={widthList}
                 />
                 {currentLGACs.map((lgac) => (
@@ -81,13 +83,15 @@ const ListaLGACs = ({
                         <LGAC
                             className="flex"
                             lgac={lgac}
+                            token={token}
                             handleDelete={handleDelete}
                             catalogoLGACs={catalogoLGACs}
-                            catalogoNivelesAcademicos={catalogoNivelesAcademicos}
+                            catalogoNivelesCurriculares={catalogoNivelesCurriculares}
                             catalogoProgramas={catalogoProgramas}
                             widthList={widthList}
                             startLoadingMode={startLoadingMode}
                             stopLoadingMode={stopLoadingMode}
+                            setError={setError}
                         />
                     </li>
                 ))}
@@ -98,7 +102,7 @@ const ListaLGACs = ({
                             selfDestruct={stopAddingMode}
                             handleAddLGAC={handleAddLGAC}
                             catalogoLGACs={catalogoLGACs}
-                            catalogoNivelesAcademicos={catalogoNivelesAcademicos}
+                            catalogoNivelesCurriculares={catalogoNivelesCurriculares}
                             catalogoProgramas={catalogoProgramas}
                             widthList={widthList}
                         />
@@ -111,6 +115,7 @@ const ListaLGACs = ({
                     />
                 )}
             </ul>
+            <Alert error={error} setError={setError}/>
         </div>
     );
 };

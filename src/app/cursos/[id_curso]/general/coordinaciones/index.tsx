@@ -5,9 +5,11 @@ import LoadingCoordinaciones from "./loading";
 const Coordinaciones = ({
     className,
     idCurso,
+    token,
 }:{
     className: string,
     idCurso: number,
+    token: string,
 }) => {
 
     return (
@@ -16,6 +18,7 @@ const Coordinaciones = ({
                 <CoordinacionesComponent
                     className={className}
                     idCurso={idCurso}
+                    token={token}
                 />
             </Suspense>
         </section>

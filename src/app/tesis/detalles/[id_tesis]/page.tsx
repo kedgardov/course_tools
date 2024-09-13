@@ -8,14 +8,18 @@ import { getAutores, GetAutoresResponseType } from "@/utils/repo_tesis/autores/g
 import { getCatalogoGrados, GetCatalogoGradosType } from "@/utils/repo_tesis/grados/getCatalogoGrados";
 import { getCatalogoPronaces, GetCatalogoPronacesType } from "@/utils/repo_tesis/pronaces/getCatalogoPronaces";
 import { getPrediccion, GetPrediccionPronaceType } from "@/utils/repo_tesis/pronaces/getPrediccion";
+import { getCatalogoMaestros, GetCatalogoMaestrosType } from "@/utils/maestros/getCatalogoMaestros";
+import { getCatalogoRolesTesis, GetCatalogoRolesTesisType } from "@/utils/maestros/getCatalogoRolesTesis";
+import { getComiteDirectivoTesis, GetComiteDirectivoTesisType } from "@/utils/repo_tesis/tesis/getComiteDirectivoTesis";
+
 
 const DetallesTesis = async ({
     params,
-}:{
-    params: { id_tesis: string, },
+}: {
+    params: { id_tesis: string },
 }) => {
     const idTesis = parseId(params.id_tesis);
-    if( !idTesis ){
+    if (!idTesis) {
         notFound();
     }
 
@@ -29,31 +33,40 @@ const DetallesTesis = async ({
         responseGetCatalogoGrados,
         responseGetCatalogoPronaces,
         responseGetPrediccionPronace,
-    ]:[
+        responseGetCatalogoMaestros,
+        responseGetCatalogoRolesTesis,
+        responseGetComiteDirectivo,
+    ]: [
         GetTesisResponseType,
         GetCatalogoCoordinacionesType,
         GetAutoresResponseType,
         GetCatalogoGradosType,
         GetCatalogoPronacesType,
         GetPrediccionPronaceType,
+        GetCatalogoMaestrosType,
+        GetCatalogoRolesTesisType,
+        GetComiteDirectivoTesisType
     ] = await Promise.all([
         getTesis(idTesis, token),
         getCatalogoCoordinaciones(token),
         getAutores(token),
         getCatalogoGrados(token),
         getCatalogoPronaces(token),
-        getPrediccion(idTesis,token),
+        getPrediccion(idTesis, token),
+        getCatalogoMaestros(token),
+        getCatalogoRolesTesis(token),
+        getComiteDirectivoTesis(idTesis, token),
     ]);
 
-    if( !responseGetTesis.tesis ){
+
+    if (!responseGetTesis.tesis) {
         notFound();
     }
 
-    console.log('prediccion',responseGetPrediccionPronace);
     return (
         <section>
             <DetallesTesisComponent
-                className=' flex flex-col p-2'
+                className='flex flex-col p-2'
                 token={token}
                 idTesis={idTesis}
                 tesis={responseGetTesis.tesis}
@@ -62,7 +75,11 @@ const DetallesTesis = async ({
                 catalogoCoordinaciones={responseGetCatalogoCoordinaciones.catalogo_coordinaciones}
                 catalogoGrados={responseGetCatalogoGrados.catalogo_grados}
                 prediccionPronace={responseGetPrediccionPronace.prediccion}
+                comiteDirectivo={responseGetComiteDirectivo.comite_directivo}
+                catalogoMaestros={responseGetCatalogoMaestros.catalogo_maestros}
+                catalogoRolesTesis={responseGetCatalogoRolesTesis.catalogo_roles_tesis}
             />
+           
         </section>
     );
 };

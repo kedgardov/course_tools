@@ -1,0 +1,58 @@
+import { cookies } from "next/headers";
+
+// Corrected function for handling GET requests in Next.js API route
+export async function GET(req: Request) {
+  // Extract the 'id_tesis' from the query parameters
+  const { searchParams } = new URL(req.url);
+  const id_tesis = searchParams.get('id');
+
+  // Check if 'id_tesis' is present
+  if (!id_tesis) {
+    return new Response('ID is required', { status: 400 });
+  }
+
+  const cookieStore = cookies();
+  const token = cookieStore.get('authToken')?.value || '';
+
+  try {
+    // Fetch the PDF file from the external API
+    const response = await fetch(`http://localhost/api/repositorio_tesis/tesis/download_pdf.php?id=${id_tesis}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+      credentials: 'include',
+    });
+
+    // Check if the response status is OK (200-299)
+    if (!response.ok) {
+      // Read the error message from the response
+      const errorMessage = await response.text();
+      console.error('Error from API:', errorMessage);
+      return new Response('Error fetching PDF: ' + errorMessage, { status: response.status });
+    }
+
+    // Check if the response is actually a PDF by inspecting the Content-Type header
+    const contentType = response.headers.get('Content-Type');
+    if (!contentType || !contentType.includes('application/pdf')) {
+      const errorText = await response.text();
+      console.error('Unexpected content type:', contentType, errorText);
+      return new Response('Unexpected content type: ' + contentType, { status: 400 });
+    }
+
+    // Convert the response to a blob for the file download
+    const fileBlob = await response.blob();
+
+    // Set headers to tell the browser to download the file with a dynamic filename
+    const headers = new Headers();
+    headers.append("Content-Disposition", `attachment; filename="tesis_${id_tesis}.pdf"`);
+    headers.append("Content-Type", "application/pdf");
+
+    // Return the response with the file blob and headers
+    return new Response(fileBlob, {
+      headers,
+    });
+  } catch (error) {
+    console.error('Error downloading PDF:', error);
+    return new Response('Error fetching PDF', { status: 500 });
+  }
+}
