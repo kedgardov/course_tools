@@ -19,6 +19,7 @@ export const CursoScheme = z.object({
     vinculo_objetivos_posgrado: z.string().max(1200, {message: 'Maximo 1200 caracteres'}).nullable(),
     id_rol: z.number().int().nonnegative(),
 });
+
 export type CursoType = z.infer<typeof CursoScheme>;
 
 export const CursoBasicDataScheme = CursoScheme.pick({
@@ -42,9 +43,9 @@ export const CursoNombreScheme = CursoScheme.pick({
 });
 export type CursoNombreType = z.infer<typeof CursoNombreScheme>;
 
-export const CursoFacultadScheme = OpcionTerminalCursoScheme.merge(
+export const CursoOpcionTerminalScheme = OpcionTerminalCursoScheme.merge(
     z.object({
         nombre: CursoScheme.shape.nombre,
     })
 );
-export type CursoFacultadType = z.infer<typeof CursoFacultadScheme>;
+export type CursoOpcionTerminalType = z.infer<typeof CursoOpcionTerminalScheme>;

@@ -6,30 +6,30 @@ import NewOpcionTerminal from './newOpcionTerminal';
 import ListHeaders from '@components/listHeaders';
 import WidthType from '@models/width';
 import PrimaryButton from '@/components/primaryButton';
-import { NivelAcademicoType } from '@/models/nivelAcademico';
 import fakeApiCall from '@/utils/fakeApi';
 import LoadingComponent from '@/components/loading';
 import { OpcionTerminalType } from '@/models/opcionTerminal';
 import { OpcionTerminalCursoDataType, OpcionTerminalCursoType } from '@/models/opcionTerminalCurso';
+import { NivelCurricularType } from '@/models/nivelCurricular';
 
 
 const ListaOpcionesTerminales = ({
     className,
     idCurso,
-    catalogoNivelesAcademicos,
+    catalogoNivelesCurriculares,
     catalogoOpcionesTerminales,
     catalogoProgramas,
     opcionesTerminales
 }:{
     className: string,
     idCurso: number,
-    catalogoNivelesAcademicos: NivelAcademicoType[],
+    catalogoNivelesCurriculares: NivelCurricularType[],
     catalogoOpcionesTerminales: OpcionTerminalType[],
     catalogoProgramas: ProgramaType[],
     opcionesTerminales: OpcionTerminalCursoType[],
 }) => {
 
-    const widthList: [WidthType, WidthType, WidthType, WidthType] = ['w-[30%]', 'w-[25%]', 'w-[25%]', 'w-[20%]'];
+    const widthList: [WidthType, WidthType, WidthType, WidthType] = ['w-[35%]', 'w-[25%]', 'w-[20%]', 'w-[20%]'];
 
     const [currentOpcionesTerminales, setCurrentOpcionesTerminales] = useState<OpcionTerminalCursoType[]>(opcionesTerminales);
     const [addingMode, setAddingMode] = useState(false);
@@ -45,7 +45,7 @@ const ListaOpcionesTerminales = ({
             id: 0,
             id_curso: idCurso,
             id_opcion_terminal: data.id_opcion_terminal,
-            id_nivel_academico: data.id_nivel_academico,
+            id_nivel_curricular: data.id_nivel_curricular,
             id_programa: data.id_programa,
         };
         const response = await fakeApiCall();
@@ -75,20 +75,25 @@ const ListaOpcionesTerminales = ({
                     headersList={['Opcion Terminal', 'Programa', 'Nivel Academico', 'Acciones']}
                     widthList={widthList}
                 />
-                {currentOpcionesTerminales.map((opcionTerminal) => (
+                {opcionesTerminales.length === 0? (
+                    <li className='flex p-4'>
+                        <p className='text-center flex-grow italic text-less-dark'>No Aplica o No se Encontraron Opciones Terminales</p>
+                    </li>
+                ):(
+                    currentOpcionesTerminales.map((opcionTerminal) => (
                     <li key={opcionTerminal.id} className="divider-dark p-1">
                         <OpcionTerminal
                             className="flex"
                             opcionTerminal={opcionTerminal}
                             handleDelete={handleDelete}
                             catalogoOpcionesTerminales={catalogoOpcionesTerminales}
-                            catalogoNivelesAcademicos={catalogoNivelesAcademicos}
+                            catalogoNivelesCurriculares={catalogoNivelesCurriculares}
                             catalogoProgramas={catalogoProgramas}
                             widthList={widthList}
                             startLoadingMode={startLoadingMode}
                             stopLoadingMode={stopLoadingMode}
                         />
-                    </li>
+                    </li>)
                 ))}
                 {addingMode ? (
                     <li className="divider-dark p-1">
@@ -97,7 +102,7 @@ const ListaOpcionesTerminales = ({
                             selfDestruct={stopAddingMode}
                             handleAddOpcionTerminal={handleAddOpcionTerminal}
                             catalogoOpcionesTerminales={catalogoOpcionesTerminales}
-                            catalogoNivelesAcademicos={catalogoNivelesAcademicos}
+                            catalogoNivelesCurriculares={catalogoNivelesCurriculares}
                             catalogoProgramas={catalogoProgramas}
                             widthList={widthList}
                         />

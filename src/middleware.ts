@@ -10,7 +10,7 @@ export function middleware(request: NextRequest) {
 
   if (pathname === '/login') {
     if (token) {
-      return NextResponse.redirect(new URL('/cursos', request.url));
+      return NextResponse.redirect(new URL('/herramientas', request.url));
     }
     return response; // Continue to login if no token
   }
@@ -20,10 +20,10 @@ export function middleware(request: NextRequest) {
   }
 
   // Handle course-specific redirection
-  const match = pathname.match(/^\/cursos\/(\d+)\/?$/);
+  const match = pathname.match(/^\/herramientas\/cursos\/(\d+)\/?$/);
   if (match) {
     const id = match[1];
-    return NextResponse.redirect(new URL(`/cursos/${id}/general`, request.url));
+    return NextResponse.redirect(new URL(`/herramientas/cursos/${id}/general`, request.url));
   }
 
   // Correctly set the Authorization header for downstream requests
@@ -35,5 +35,5 @@ export function middleware(request: NextRequest) {
 
 // Configuring paths for middleware application
 export const config = {
-  matcher: ['/cursos/:path*', '/login'],
+  matcher: ['/herramientas/cursos/:path*', '/login'],
 };

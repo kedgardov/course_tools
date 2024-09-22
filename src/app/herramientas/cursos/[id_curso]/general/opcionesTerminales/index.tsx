@@ -5,9 +5,11 @@ import OpcionesTerminalesComponent from './opcionesTerminales';
 const OpcionesTerminales = ({
     className,
     idCurso,
+    token,
 }:{
     className: string,
     idCurso: number,
+    token: string,
 }) => {
 
     return (
@@ -16,6 +18,7 @@ const OpcionesTerminales = ({
                 <OpcionesTerminalesComponent
                     className={className}
                     idCurso={idCurso}
+                    token={token}
                 />
             </Suspense>
         </section>

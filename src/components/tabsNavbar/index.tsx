@@ -18,7 +18,6 @@ const TabsNavbar = ({
             'objetivos',
             'unidades',
             'evaluacion',
-            'facultades',
             'colaboradores',
             'fuentes'
          ];
@@ -36,7 +35,6 @@ const TabsNavbar = ({
             <Link className={`tab ${currentTab === 'objetivos' ? 'selected-tab' : ''}`} href={`/cursos/${idCurso}/objetivos`}>Objetivos</Link>
             <Link className={`tab ${currentTab === 'unidades' ? 'selected-tab' : ''}`} href={`/cursos/${idCurso}/unidades`}>Contenido</Link>
             <Link className={`tab ${currentTab === 'evaluacion' ? 'selected-tab' : ''}`} href={`/cursos/${idCurso}/evaluacion`}>Evaluación</Link>
-            <Link className={`tab ${currentTab === 'facultades' ? 'selected-tab' : ''}`} href={`/cursos/${idCurso}/facultades`}>Facultades</Link>
             <Link className={`tab ${currentTab === 'fuentes' ? 'selected-tab' : ''}`} href={`/cursos/${idCurso}/fuentes`}>Fuentes</Link>
         </nav>
     );

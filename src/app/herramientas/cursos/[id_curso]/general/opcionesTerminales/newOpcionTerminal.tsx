@@ -6,9 +6,9 @@ import WidthType from '@/models/width';
 import SelectInput from '@/components/selectInput';
 import SecondarySubmit from '@/components/secondarySubmit';
 import TertiaryButton from '@/components/tertiaryButton';
-import { NivelAcademicoType } from '@/models/nivelAcademico';
 import { OpcionTerminalCursoDataScheme, OpcionTerminalCursoDataType } from '@/models/opcionTerminalCurso';
 import { OpcionTerminalType } from '@/models/opcionTerminal';
+import { NivelCurricularType } from '@/models/nivelCurricular';
 
 
 const NewOpcionTerminal= ({
@@ -17,7 +17,7 @@ const NewOpcionTerminal= ({
     handleAddOpcionTerminal,
     catalogoOpcionesTerminales,
     catalogoProgramas,
-    catalogoNivelesAcademicos,
+    catalogoNivelesCurriculares,
     widthList,
 }:{
     className: string,
@@ -25,7 +25,7 @@ const NewOpcionTerminal= ({
     handleAddOpcionTerminal: (data: OpcionTerminalCursoDataType) => void,
     catalogoOpcionesTerminales: OpcionTerminalType[],
     catalogoProgramas: ProgramaType[],
-    catalogoNivelesAcademicos: NivelAcademicoType[],
+    catalogoNivelesCurriculares: NivelCurricularType[],
     widthList: [WidthType, WidthType, WidthType, WidthType]
 }) => {
 
@@ -78,17 +78,17 @@ const NewOpcionTerminal= ({
                 />
             </div>
             <div className={widthList[2]}>
-                <SelectInput<NivelAcademicoType>
+                <SelectInput<NivelCurricularType>
                     className='w-full'
                     idPrefix='id-modalidad-curso-en-opcion-terminal'
                     idRaw='0'
-                    register={register('id_nivel_academico', { valueAsNumber:true })}
+                    register={register('id_nivel_curricular', { valueAsNumber:true })}
                     editMode={true}
-                    options={catalogoNivelesAcademicos}
-                    error={errors.id_nivel_academico}
+                    options={catalogoNivelesCurriculares}
+                    error={errors.id_nivel_curricular}
                     placeholder='Selecciona un Nivel'
                     idKey='id'
-                    valueKey='nivel_academico'
+                    valueKey='nivel_curricular'
                     showBorder={false}
                 />
             </div>

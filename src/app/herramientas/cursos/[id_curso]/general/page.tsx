@@ -5,6 +5,7 @@ import LGACs from "./lgacs";
 import OpcionesTerminales from './opcionesTerminales';
 import Coordinaciones from "./coordinaciones";
 import { cookies } from "next/headers";
+import Encargados from "./encargados";
 
 const General = ({
     params,
@@ -37,6 +38,11 @@ const General = ({
                 token={token}
             />
             <Coordinaciones
+                className='border p-2'
+                idCurso={idCurso}
+                token={token}
+            />
+            <Encargados
                 className='border p-2'
                 idCurso={idCurso}
                 token={token}

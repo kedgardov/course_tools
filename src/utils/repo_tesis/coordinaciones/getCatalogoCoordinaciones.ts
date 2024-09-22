@@ -22,7 +22,6 @@ export async function getCatalogoCoordinaciones(token: string): Promise<GetCatal
                'Authorization': `Bearer ${token}`,
            }
         });
-        console.log(response.data);
         const validatesResponse = GetCatalogoCoordinacionesScheme.parse(response.data);
         return validatesResponse;
     } catch ( error ) {

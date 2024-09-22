@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react';
-import { AcademicCapIcon, BookOpenIcon, BuildingLibraryIcon, ChevronLeftIcon, Cog6ToothIcon, HomeIcon, SquaresPlusIcon } from '@heroicons/react/24/outline';
+import { AcademicCapIcon, BookOpenIcon, ChartPieIcon, ChevronLeftIcon, Cog6ToothIcon, HomeIcon, SquaresPlusIcon, StarIcon, UsersIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import CourseToolsIcon from '@/components/CourseToolsIcons';
 
@@ -28,17 +28,13 @@ const SidebarClient = () => {
                 <aside className='sidebar-layout'>
                     <div className='h-20 flex items-center'>
                         <SidebarTitle
-                            className={`sidebar-link ${isExpanded ? 'sidebar-link-expanded' : 'sidebar-link-contracted'}`}
-                            icon={
-                                <SquaresPlusIcon
-                                    className={`p-2 border border-0 transition-all ease-in-out duration-500 rounded-3xl ${isExpanded ? 'sidebar-icon-expanded h-14 w-14' : 'sidebar-icon-contracted h-12 w-12'}`}
-                                />
-                            }
-                            label='Courses Tool'
-                            link='/'
-                            showText={showText}
-                            isTransparent={isTransparent}
-                        />
+                        className={`sidebar-link ${isExpanded ? 'sidebar-link-expanded' : 'sidebar-link-contracted'}`}
+                        icon={<SquaresPlusIcon className={`sidebar-icon ${isExpanded ? 'sidebar-icon-expanded' : 'sidebar-icon-contracted'}`} />}
+                        label='Courses Tools'
+                        link='/'
+                        showText={showText}
+                        isTransparent={isTransparent}
+                    />
                     </div>
 
                     <SidebarDivider isExpanded={isExpanded} />
@@ -53,27 +49,45 @@ const SidebarClient = () => {
 
                     <SidebarEntry
                         className={`${isExpanded ? 'sidebar-link-expanded' : 'sidebar-link-contracted'}`}
-                        icon={<AcademicCapIcon className={`sidebar-icon ${isExpanded ? 'sidebar-icon-expanded' : 'sidebar-icon-contracted'}`} />}
+                        icon={<StarIcon className={`sidebar-icon ${isExpanded ? 'sidebar-icon-expanded' : 'sidebar-icon-contracted'}`} />}
                         label='Mis Cursos'
-                        link='/cursos'
+                        link='/herramientas/mis-cursos'
                         showText={showText}
                         isTransparent={isTransparent}
                     />
 
                     <SidebarEntry
+                        className={`${isExpanded ? 'sidebar-link-expanded' : 'sidebar-link-contracted'}`}
+                        icon={<UsersIcon className={`sidebar-icon ${isExpanded ? 'sidebar-icon-expanded' : 'sidebar-icon-contracted'}`} />}
+                        label='Docentes'
+                        link='/herramientas/docentes'
+                        showText={showText}
+                        isTransparent={isTransparent}
+                    />
+
+                     <SidebarEntry
                         className={`${isExpanded ? 'sidebar-link-expanded' : 'sidebar-link-contracted'}`}
                         icon={<BookOpenIcon className={`sidebar-icon ${isExpanded ? 'sidebar-icon-expanded' : 'sidebar-icon-contracted'}`} />}
-                        label='Repositorio de Tesis'
-                        link='/tesis'
+                        label='Tesis'
+                        link='/herramientas/tesis'
                         showText={showText}
                         isTransparent={isTransparent}
                     />
 
                     <SidebarEntry
                         className={`${isExpanded ? 'sidebar-link-expanded' : 'sidebar-link-contracted'}`}
-                        icon={<BuildingLibraryIcon className={`sidebar-icon ${isExpanded ? 'sidebar-icon-expanded' : 'sidebar-icon-contracted'}`} />}
-                        label='Facultades'
-                        link='/facultades'
+                        icon={<AcademicCapIcon className={`sidebar-icon ${isExpanded ? 'sidebar-icon-expanded' : 'sidebar-icon-contracted'}`} />}
+                        label='Cursos'
+                        link='/herramientas/cursos'
+                        showText={showText}
+                        isTransparent={isTransparent}
+                    />
+
+                    <SidebarEntry
+                        className={`${isExpanded ? 'sidebar-link-expanded' : 'sidebar-link-contracted'}`}
+                        icon={<ChartPieIcon className={`sidebar-icon ${isExpanded ? 'sidebar-icon-expanded' : 'sidebar-icon-contracted'}`} />}
+                        label='Reportes'
+                        link='/herramientas/reportes/cursos'
                         showText={showText}
                         isTransparent={isTransparent}
                     />
@@ -122,7 +136,7 @@ const SidebarTitle = ({
     return (
         <Link href={link} className={`${className} sidebar-link group`}>
             {icon}
-            <div className={`sidebar-text-container-lg ${isTransparent ? 'text-more-light/0' : 'text-more-light'} ${showText ? 'w-54' : 'w-0'}`}>
+            <div className={`sidebar-text-container-lg ${isTransparent ? 'text-more-light/0' : 'text-more-light'} ${showText ? 'w-58' : 'w-0'}`}>
                 {showText && <h2>{label}</h2>}
             </div>
             {!showText && <div className='sidebar-tooltip'>{label}</div>}

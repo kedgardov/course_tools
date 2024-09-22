@@ -32,8 +32,7 @@ const ListaLGACs = ({
     catalogoProgramas: ProgramaType[],
     lgacs: LGACCursoType[],
 }) => {
-
-    const widthList: [WidthType, WidthType, WidthType, WidthType] = ['w-[30%]', 'w-[25%]', 'w-[25%]', 'w-[20%]'];
+    const widthList: [WidthType, WidthType, WidthType, WidthType] = ['w-[35%]', 'w-[25%]', 'w-[20%]', 'w-[20%]'];
     const [error, setError] = useState<string | null>(null);
     const [currentLGACs, setCurrentLGACs] = useState<LGACCursoType[]>(lgacs);
     const [addingMode, setAddingMode] = useState(false);

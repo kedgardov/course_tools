@@ -11,6 +11,7 @@ import TertiaryButton from '@/components/tertiaryButton';
 import { NivelCurricularType } from '@/models/nivelCurricular';
 
 
+
 const NewLGAC= ({
     className,
     selfDestruct,

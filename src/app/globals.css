@@ -107,7 +107,7 @@ body {
   }
 
   .sidebar-text-container-lg {
-    @apply ml-auto text-4xl text-left transition ease-in-out duration-500;
+    @apply ml-auto text-3xl text-left transition ease-in-out duration-500;
   }
 
 
@@ -281,5 +281,34 @@ body {
  .field-text {
    @apply elipsis;
  }
+
+ .filter-button-on{
+   @apply m-2 px-2 py-1 capitalize border rounded shadow-sm text-more-light h-8
+    transition-all duration-500 ease-in-out
+    bg-gradient-to-tl to-primary-light via-primary from-primary-dark bg-size-200 bg-pos-0
+    hover:bg-pos-100;
+ }
+
+.filter-button-off{
+   @apply m-2 px-2 py-1 capitalize border rounded shadow-sm text-more-dark h-8
+    transition-all duration-500 ease-in-out
+    bg-gradient-to-tl to-more-light via-light from-less-light bg-size-200 bg-pos-0
+    hover:bg-pos-100;
+ }
+
+.filter-button-todos{
+  @apply m-2 px-2 py-1 capitalize border rounded shadow-sm text-more-light h-8
+    transition-all duration-500 ease-in-out
+    bg-gradient-to-tl to-secondary-light via-secondary from-secondary-dark bg-size-200 bg-pos-0
+    hover:bg-pos-100;
+}
+.filter-button-ninguno{
+  @apply m-2 px-2 py-1 capitalize border rounded shadow-sm text-more-light h-8
+    transition-all duration-500 ease-in-out
+    bg-gradient-to-tl to-tertiary-light via-tertiary from-tertiary-dark bg-size-200 bg-pos-0
+    hover:bg-pos-100;
+
+}
+
 
 }

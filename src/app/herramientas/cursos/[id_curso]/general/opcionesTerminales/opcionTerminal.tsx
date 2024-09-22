@@ -4,7 +4,7 @@ import EditButton from '@/components/editButton';
 import SecondarySubmit from '@/components/secondarySubmit';
 import SelectInput from '@/components/selectInput';
 import TertiaryButton from '@/components/tertiaryButton';
-import { NivelAcademicoType } from '@/models/nivelAcademico';
+import { NivelCurricularType } from '@/models/nivelCurricular';
 import { OpcionTerminalType } from '@/models/opcionTerminal';
 import { OpcionTerminalCursoDataScheme, OpcionTerminalCursoDataType, OpcionTerminalCursoType } from '@/models/opcionTerminalCurso';
 import { ProgramaType } from '@/models/programa';
@@ -22,7 +22,7 @@ const OpcionTerminal = ({
     handleDelete,
     catalogoOpcionesTerminales,
     catalogoProgramas,
-    catalogoNivelesAcademicos,
+    catalogoNivelesCurriculares,
     widthList,
     startLoadingMode,
     stopLoadingMode,
@@ -32,7 +32,7 @@ const OpcionTerminal = ({
     handleDelete: (id: number) => void,
     catalogoOpcionesTerminales: OpcionTerminalType[],
     catalogoProgramas: ProgramaType[],
-    catalogoNivelesAcademicos: NivelAcademicoType[],
+    catalogoNivelesCurriculares: NivelCurricularType[],
     widthList:[WidthType, WidthType, WidthType, WidthType],
     startLoadingMode: () => void,
     stopLoadingMode: () => void,
@@ -97,17 +97,17 @@ const OpcionTerminal = ({
                 />
             </div>
             <div className={widthList[2]}>
-                <SelectInput<NivelAcademicoType>
+                <SelectInput<NivelCurricularType>
                     className='w-full'
                     idPrefix='id-modalidad-curso-en-opcion-terminal'
                     idRaw={`${opcionTerminal.id}`}
-                    register={register('id_nivel_academico', { valueAsNumber: true })}
+                    register={register('id_nivel_curricular', { valueAsNumber: true })}
                     editMode={editMode}
-                    options={catalogoNivelesAcademicos}
-                    error={errors.id_nivel_academico}
+                    options={catalogoNivelesCurriculares}
+                    error={errors.id_nivel_curricular}
                     placeholder='Selecciona una Modalidad'
                     idKey='id'
-                    valueKey='nivel_academico'
+                    valueKey='nivel_curricular'
                     showBorder={false}
                 />
             </div>

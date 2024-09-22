@@ -4,10 +4,9 @@ import Footer from '@components/footer';
 import Navbar from '@components/navbar';
 import { Suspense } from 'react';
 
-//<main className="flex-grow p-4 flex flex-col border border-purple-500 h-full overflow-auto">
-//<div className="border border-red-500 flex h-screen w-full overflow-hidden">
 
-const CursosLayout = ({ children }: { children: React.ReactNode }) => {
+
+const HerramientasLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex w-full min-h-screen">
       <Suspense fallback={<LoadingSidebar className="" />}>
@@ -24,4 +23,4 @@ const CursosLayout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default CursosLayout;
+export default HerramientasLayout;

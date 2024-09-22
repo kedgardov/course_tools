@@ -17,7 +17,6 @@ export async function getCatalogoGrados(token: string): Promise<GetCatalogoGrado
                'Authorization': `Bearer ${token}`,
            }
         });
-        console.log(response.data);
         const validatesResponse = GetCatalogoGradosScheme.parse(response.data);
         return validatesResponse;
     } catch ( error ) {

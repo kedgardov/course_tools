@@ -7,6 +7,7 @@ export const TesisScheme = z.object({
     id_pronace: z.number().int().nonnegative(),
     id_grado: z.number().int().nonnegative(),
     id_file: z.number().int().nonnegative().nullable(),
+    id_opcion_terminal: z.number().int().nonnegative(),
     titulo: z.string().min(1).max(290),
     fecha: z.string().date().min(1).max(20),
     palabras_clave: z.string().min(1).max(390),
@@ -20,6 +21,7 @@ export const TesisDataScheme = TesisScheme.pick({
     id_coordinacion:true,
     id_pronace: true,
     id_grado: true,
+    id_opcion_terminal:true,
     titulo: true,
     fecha: true,
     palabras_clave: true,
@@ -33,6 +35,7 @@ export const TesisMiniScheme = TesisScheme.pick({
     id_coordinacion: true,
     id_pronace: true,
     id_grado: true,
+    id_opcion_terminal: true,
     titulo: true,
     fecha: true,
     checked: true,
@@ -44,3 +47,10 @@ export const TesisMiniMaestroScheme = TesisMiniScheme.extend({
     id_directivo: z.number().int().nonnegative(),
 });
 export type TesisMiniMaestroType = z.infer<typeof TesisMiniMaestroScheme>;
+
+export const TesisFinderScheme = TesisScheme.pick({
+    id: true,
+    titulo: true,
+    resumen: true,
+});
+export type TesisFinderType = z.infer< typeof TesisFinderScheme>;

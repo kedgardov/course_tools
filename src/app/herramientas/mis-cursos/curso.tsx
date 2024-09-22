@@ -24,7 +24,7 @@ const Curso = ({
             <div className={widthList[0]}>{curso.clave}</div>
             <div className={widthList[1]}>{curso.nombre}</div>
             <div className={widthList[2]}>{rol}</div>
-            <div className={widthList[3]}><Link href={`/cursos/${curso.id}/general`} className='button-3'>Ver Mas</Link></div>
+            <div className={widthList[3]}><Link href={`/herramientas/cursos/${curso.id}/general`} className='button-3'>Ver Mas</Link></div>
         </div>
     );
 };
