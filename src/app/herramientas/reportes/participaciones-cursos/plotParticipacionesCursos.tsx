@@ -1,9 +1,9 @@
+import BarsPlot from "@/components/barsPlot";
 import { NivelCurricularType } from "@/models/nivelCurricular";
 import { OpcionTerminalType } from "@/models/opcionTerminal";
 import { ParticipacionCursoType } from "@/models/participacionCurso";
 import { ProgramaType } from "@/models/programa";
 import { RolType } from "@/models/rol";
-import BarsPlot from "./BarsPlot";
 import { useEffect, useState } from "react";
 
 
@@ -126,7 +126,7 @@ const PlotParticipacionesCursos = ({
             <button className='m-2 bg-blue-300 p-2' onClick={() => setSelectedCategory('nivel-curricular')}> Nivel Curricular </button>
             <button className='m-2 bg-blue-300 p-2' onClick={() => setSelectedCategory('rol')}> Rol </button>
 
-            <div className='w-2/3'>
+            <div className=''>
                 {currentPlotData && (
                     <BarsPlot
                         labels={currentPlotData.labels}

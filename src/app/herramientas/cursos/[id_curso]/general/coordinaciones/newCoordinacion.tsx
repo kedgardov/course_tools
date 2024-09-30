@@ -36,7 +36,6 @@ const NewCoordinacion = ({
 
     const onSubmit: SubmitHandler<CoordinacionCursoDataType> = (data) => {
         handleAdd(data);
-        selfDestruct();
     };
 
     return (

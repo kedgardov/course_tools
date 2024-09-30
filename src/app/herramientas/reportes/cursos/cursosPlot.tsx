@@ -1,10 +1,11 @@
 'use client'
+import BarsPlot from "@/components/barsPlot";
 import { NivelCurricularType } from "@/models/nivelCurricular";
 import { OpcionTerminalType } from "@/models/opcionTerminal";
 import { OpcionTerminalCursoType } from "@/models/opcionTerminalCurso";
 import { ProgramaType } from "@/models/programa";
 import { useEffect, useState } from "react";
-import BarsPlot from "./BarsPlot"; // Assuming you already have BarsPlot component
+
 
 // Count by Opcion Terminal
 const countByOpcionTerminal = (opcionesTerminales: OpcionTerminalCursoType[]) => {
@@ -84,14 +85,14 @@ const CursosPlot = ({
     }, [selectedCategory, currentOpcionesTerminales, catalogoOpcionesTerminales, catalogoProgramas, catalogoNivelesCurriculares]);
 
     return (
-        <div>
+        <div className={`${className}`}>
             {/* Category Selection Buttons */}
             <button className='m-2 bg-blue-300 p-2' onClick={() => setSelectedCategory('opcion-terminal')} > Opción Terminal </button>
             <button className='m-2 bg-blue-300 p-2' onClick={() => setSelectedCategory('programa')} > Programa </button>
             <button className='m-2 bg-blue-300 p-2' onClick={() => setSelectedCategory('nivel-curricular')} > Nivel Curricular </button>
 
             {/* Bar Plot Display */}
-            <div className={`${className} w-2/3`}>
+            <div>
                 <BarsPlot
                     labels={currentPlotData.labels}
                     data={currentPlotData.data}

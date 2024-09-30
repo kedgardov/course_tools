@@ -16,7 +16,7 @@ export async function updateCurso( curso: CursoType, token: string ): Promise<Ap
             withCredentials: true,
         });
         const validatedResponse: ApiResponseType = ApiResponseScheme.parse(response.data);
-        revalidatePath(`/cursos/${curso.id}/general`, 'page');
+        revalidatePath(`/herramientas/cursos/${curso.id}/general`, 'page');
         return validatedResponse;
     } catch ( error ) {
         const errorResponse: ApiResponseType = {

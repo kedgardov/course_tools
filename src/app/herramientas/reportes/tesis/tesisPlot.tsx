@@ -5,8 +5,8 @@ import { PronaceType } from "@/models/pronace";
 import { CoordinacionType } from "@/utils/repo_tesis/coordinaciones/getCatalogoCoordinaciones";
 import { GradoType } from "@/models/grado";
 import { useEffect, useState } from "react";
-import BarsPlot from "./BarsPlot";
 import { OpcionTerminalType } from "@/models/opcionTerminal";
+import BarsPlot from "@/components/barsPlot";
 
 const countByPronace = (tesis: TesisMiniType[]) => {
         return tesis.reduce((acc, { id_pronace }) => {
@@ -75,12 +75,11 @@ const TesisPlot = ({
     const [ currentPlotData, setCurrentPlotData ] = useState<any>({});
 
     useEffect(() => {
-        console.time('useEffectDuration');
         switch (selectedCategory){
             case 'pronace':
-                console.time('countByPronaceDuration');
+
                 const pronaceCounts = countByPronace(currentTesis);
-                console.timeEnd('countByPronaceDuration');
+
                 //setPronaceFrequency(pronaceCounts);
                 setCurrentPlotData({
                     labels: catalogoPronaces.map((p) => p.pronace),
@@ -142,17 +141,16 @@ const TesisPlot = ({
                 });
                 break;
         }
-        console.timeEnd('useEffectDuration');
     },[currentTesis, selectedCategory, catalogoAnos, catalogoProgramas, catalogoCoordinaciones, catalogoPronaces, catalogoOpcionesTerminales]);
 
     return (
-        <div>
+        <div className={`${className}`}>
             <button className='m-2 bg-blue-300 p-2' onClick={() => setSelectedCategory('pronace')} > Pronace </button>
             <button className='m-2 bg-blue-300 p-2' onClick={() => setSelectedCategory('coordinacion')} > Coordinacion </button>
             <button className='m-2 bg-blue-300 p-2' onClick={() => setSelectedCategory('programa')} > Programa </button>
             <button className='m-2 bg-blue-300 p-2' onClick={() => setSelectedCategory('fecha')} > Fecha </button>
             <button className='m-2 bg-blue-300 p-2' onClick={() => setSelectedCategory('opcion-terminal')} > Opcion Terminal </button>
-        <div className={`${className} w-2/3`}>
+        <div>
             <BarsPlot
                 labels={currentPlotData.labels}
                 data={currentPlotData.data}

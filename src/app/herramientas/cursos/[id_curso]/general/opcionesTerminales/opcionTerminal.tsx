@@ -1,4 +1,5 @@
 'use client'
+import Alert from '@/components/alert';
 import DeleteButton from '@/components/deleteButton';
 import EditButton from '@/components/editButton';
 import SecondarySubmit from '@/components/secondarySubmit';
@@ -9,7 +10,7 @@ import { OpcionTerminalType } from '@/models/opcionTerminal';
 import { OpcionTerminalCursoDataScheme, OpcionTerminalCursoDataType, OpcionTerminalCursoType } from '@/models/opcionTerminalCurso';
 import { ProgramaType } from '@/models/programa';
 import WidthType from '@/models/width';
-import fakeApiCall from '@/utils/fakeApi';
+import { updateOpcionTerminalCurso } from '@/utils/cursos/updateOpcionTerminalCurso';
 import { zodResolver } from '@hookform/resolvers/zod';
 import React, { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -18,6 +19,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 const OpcionTerminal = ({
     className,
+    token,
     opcionTerminal,
     handleDelete,
     catalogoOpcionesTerminales,
@@ -28,6 +30,7 @@ const OpcionTerminal = ({
     stopLoadingMode,
 }:{
     className: string,
+    token: string,
     opcionTerminal: OpcionTerminalCursoType,
     handleDelete: (id: number) => void,
     catalogoOpcionesTerminales: OpcionTerminalType[],
@@ -39,6 +42,7 @@ const OpcionTerminal = ({
 }) => {
 
     const [editMode, setEditMode] = useState<boolean>(false);
+    const [ error, setError ] = useState<string | null>(null);
 
     const { register, handleSubmit, reset, formState:{ errors, isDirty } } = useForm<OpcionTerminalCursoDataType>({
         resolver: zodResolver(OpcionTerminalCursoDataScheme),
@@ -46,13 +50,20 @@ const OpcionTerminal = ({
     });
 
     const onSubmit: SubmitHandler<OpcionTerminalCursoDataType> = async (data) => {
-        startLoadingMode()
-        const response = fakeApiCall();
-        if((await response).success){
+        startLoadingMode();
+        const updatedOpcionTerminal: OpcionTerminalCursoType = {
+            id: opcionTerminal.id,
+            id_curso: opcionTerminal.id_curso,
+            id_opcion_terminal: data.id_opcion_terminal,
+            id_programa: data.id_programa,
+            id_nivel_curricular: data.id_nivel_curricular,
+        };
+        const response = await updateOpcionTerminalCurso(updatedOpcionTerminal, token);
+        if(response.success){
             reset(data);
             setEditMode(false);
         }else{
-            console.log('Algo salio mal');
+            setError(response.message);
         }
         stopLoadingMode();
     }
@@ -124,6 +135,10 @@ const OpcionTerminal = ({
                 </>
             )}
             </div>
+            <Alert
+                error={error}
+                setError={setError}
+            />
         </form>
     );
 };

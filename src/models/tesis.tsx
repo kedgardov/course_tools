@@ -44,7 +44,6 @@ export type TesisMiniType = z.infer<typeof TesisMiniScheme>;
 
 export const TesisMiniMaestroScheme = TesisMiniScheme.extend({
     id_rol_tesis: z.number().int().nonnegative(),
-    id_directivo: z.number().int().nonnegative(),
 });
 export type TesisMiniMaestroType = z.infer<typeof TesisMiniMaestroScheme>;
 

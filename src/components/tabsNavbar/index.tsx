@@ -31,11 +31,11 @@ const TabsNavbar = ({
 
     return (
         <nav className='flex'>
-            <Link className={`tab ${currentTab === 'general' ? 'selected-tab' : ''}`} href={`/cursos/${idCurso}/general`}>General</Link>
-            <Link className={`tab ${currentTab === 'objetivos' ? 'selected-tab' : ''}`} href={`/cursos/${idCurso}/objetivos`}>Objetivos</Link>
-            <Link className={`tab ${currentTab === 'unidades' ? 'selected-tab' : ''}`} href={`/cursos/${idCurso}/unidades`}>Contenido</Link>
-            <Link className={`tab ${currentTab === 'evaluacion' ? 'selected-tab' : ''}`} href={`/cursos/${idCurso}/evaluacion`}>Evaluación</Link>
-            <Link className={`tab ${currentTab === 'fuentes' ? 'selected-tab' : ''}`} href={`/cursos/${idCurso}/fuentes`}>Fuentes</Link>
+            <Link className={`tab ${currentTab === 'general' ? 'selected-tab' : ''}`} href={`/herramientas/cursos/${idCurso}/general`}>General</Link>
+            <Link className={`tab ${currentTab === 'objetivos' ? 'selected-tab' : ''}`} href={`/herramientas/cursos/${idCurso}/objetivos`}>Objetivos</Link>
+            <Link className={`tab ${currentTab === 'unidades' ? 'selected-tab' : ''}`} href={`/herramientas/cursos/${idCurso}/unidades`}>Contenido</Link>
+            <Link className={`tab ${currentTab === 'evaluacion' ? 'selected-tab' : ''}`} href={`/herramientas/cursos/${idCurso}/evaluacion`}>Evaluación</Link>
+            <Link className={`tab ${currentTab === 'fuentes' ? 'selected-tab' : ''}`} href={`/herramientas/cursos/${idCurso}/fuentes`}>Fuentes</Link>
         </nav>
     );
 };

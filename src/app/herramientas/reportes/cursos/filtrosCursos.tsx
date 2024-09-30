@@ -71,80 +71,87 @@ const FiltrosCursos = ({
     };
 
     return (
-        <section className={`${className}`}>
-            {/*Opcion Terminal Filter*/}
-            <div>
+    <section className={`${className}`}>
+        {/* Opcion Terminal Filter */}
+        <h2 className='title-2 mx-2'>Filtrar por Opción Terminal</h2>
+        <div className='divider-dark mb-2'>
+            <button
+                onClick={() => setSelectedOpcionesTerminales(catalogoOpcionesTerminales)}
+                className='filter-button-todos'
+            >
+                Todas
+            </button>
+            {catalogoOpcionesTerminales.map((opcion) => (
                 <button
-                    onClick={() => setSelectedOpcionesTerminales(catalogoOpcionesTerminales)}
-                    className='filter-button-todos'
+                    onClick={() => toggleOpcionesTerminalesFilter(opcion.id)}
+                    key={opcion.id}
+                    className={`${selectedOpcionesTerminales.find((ot) => ot.id === opcion.id) ? 'filter-button-on' : 'filter-button-off'}`}
                 >
-                    Todas
+                    {opcion.opcion_terminal}
                 </button>
-                {catalogoOpcionesTerminales.map((opcion) => (
-                    <button
-                        onClick={() => toggleOpcionesTerminalesFilter(opcion.id)}
-                        key={opcion.id}
-                        className={`${selectedOpcionesTerminales.find((ot) => ot.id === opcion.id)? 'filter-button-on':'filter-button-off'}`}
-                    >
-                        {opcion.opcion_terminal}
-                    </button>
-                ))}
+            ))}
+            <button
+                className='filter-button-ninguno'
+                onClick={() => setSelectedOpcionesTerminales([])}
+            >
+                Ninguna
+            </button>
+        </div>
+
+        {/* Programa Filter */}
+        <h2 className='title-2 mx-2'>Filtrar por Programa</h2>
+        <div className='divider-dark mb-2'>
+            <button
+                onClick={() => setSelectedProgramas(catalogoProgramas)}
+                className='filter-button-todos'
+            >
+                Todos
+            </button>
+            {catalogoProgramas.map((programa) => (
                 <button
-                    className='filter-button-ninguno'
-                    onClick={() => setSelectedOpcionesTerminales([])}
+                    onClick={() => toggleProgramaFilter(programa.id)}
+                    key={programa.id}
+                    className={`${selectedProgramas.find((p) => p.id === programa.id) ? 'filter-button-on' : 'filter-button-off'}`}
                 >
-                    Ninguna
+                    {programa.programa}
                 </button>
-            </div>
-            {/*Programa Filter*/}
-            <div>
+            ))}
+            <button
+                className='filter-button-ninguno'
+                onClick={() => setSelectedProgramas([])}
+            >
+                Ninguno
+            </button>
+        </div>
+
+        {/* Nivel Curricular Filter */}
+        <h2 className='title-2 mx-2'>Filtrar por Nivel Curricular</h2>
+        <div className='divider-dark mb-2'>
+            <button
+                onClick={() => setSelectedNivelesCurriculares(catalogoNivelesCurriculares)}
+                className='filter-button-todos'
+            >
+                Todos
+            </button>
+            {catalogoNivelesCurriculares.map((nivelCurricular) => (
                 <button
-                    onClick={() => setSelectedProgramas(catalogoProgramas)}
-                    className='filter-button-todos'
+                    onClick={() => toggleNivelesCurricularesFilter(nivelCurricular.id)}
+                    key={nivelCurricular.id}
+                    className={`${selectedNivelesCurriculares.find((nc) => nc.id === nivelCurricular.id) ? 'filter-button-on' : 'filter-button-off'}`}
                 >
-                    Todos
+                    {nivelCurricular.nivel_curricular}
                 </button>
-                {catalogoProgramas.map((programa) => (
-                    <button
-                        onClick={() => toggleProgramaFilter(programa.id)}
-                        key={programa.id}
-                        className={`${selectedProgramas.find((p) => p.id === programa.id)? 'filter-button-on':'filter-button-off'}`}
-                    >
-                        {programa.programa}
-                    </button>
-                ))}
-                <button
-                    className='filter-button-ninguno'
-                    onClick={() => setSelectedProgramas([])}
-                >
-                    Ninguno
-                </button>
-            </div>
-            {/*Nivel Curricular Filter*/}
-            <div>
-                <button
-                    onClick={() => setSelectedNivelesCurriculares(catalogoNivelesCurriculares)}
-                    className='filter-button-todos'
-                >
-                    Todos
-                </button>
-                {catalogoNivelesCurriculares.map((nivelCurricular) => (
-                    <button
-                        onClick={() => toggleNivelesCurricularesFilter(nivelCurricular.id)}
-                        key={nivelCurricular.id}
-                        className={`${selectedNivelesCurriculares.find((nc) => nc.id === nivelCurricular.id)? 'filter-button-on':'filter-button-off'}`}
-                    >
-                        {nivelCurricular.nivel_curricular}
-                    </button>
-                ))}
-                <button
-                    className='filter-button-ninguno'
-                    onClick={() => setSelectedNivelesCurriculares([])}
-                >
-                    Ninguno
-                </button>
-            </div>
-        </section>
-    );
+            ))}
+            <button
+                className='filter-button-ninguno'
+                onClick={() => setSelectedNivelesCurriculares([])}
+            >
+                Ninguno
+            </button>
+        </div>
+    </section>
+);
+
+
 };
 export default FiltrosCursos;

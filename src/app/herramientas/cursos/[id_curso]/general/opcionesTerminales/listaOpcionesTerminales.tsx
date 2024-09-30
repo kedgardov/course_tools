@@ -6,16 +6,19 @@ import NewOpcionTerminal from './newOpcionTerminal';
 import ListHeaders from '@components/listHeaders';
 import WidthType from '@models/width';
 import PrimaryButton from '@/components/primaryButton';
-import fakeApiCall from '@/utils/fakeApi';
 import LoadingComponent from '@/components/loading';
 import { OpcionTerminalType } from '@/models/opcionTerminal';
 import { OpcionTerminalCursoDataType, OpcionTerminalCursoType } from '@/models/opcionTerminalCurso';
 import { NivelCurricularType } from '@/models/nivelCurricular';
+import { insertOpcionTerminalCurso } from '@/utils/cursos/insertOpcionTerminalCurso';
+import Alert from '@/components/alert';
+import { deleteOpcionTerminalCurso } from '@/utils/cursos/deleteOpcionTerminalCurso';
 
 
 const ListaOpcionesTerminales = ({
     className,
     idCurso,
+    token,
     catalogoNivelesCurriculares,
     catalogoOpcionesTerminales,
     catalogoProgramas,
@@ -23,6 +26,7 @@ const ListaOpcionesTerminales = ({
 }:{
     className: string,
     idCurso: number,
+    token: string,
     catalogoNivelesCurriculares: NivelCurricularType[],
     catalogoOpcionesTerminales: OpcionTerminalType[],
     catalogoProgramas: ProgramaType[],
@@ -35,8 +39,19 @@ const ListaOpcionesTerminales = ({
     const [addingMode, setAddingMode] = useState(false);
     const [loadingMode, setLoadingMode] = useState(false);
 
-    const handleDelete = (id: number) => {
-        setCurrentOpcionesTerminales(prev => prev.filter(ot => ot.id !== id));
+    const [ error, setError ] = useState<string | null>(null);
+
+    const handleDelete = async (id: number) => {
+        startLoadingMode();
+        const response = await deleteOpcionTerminalCurso(id, token);
+        if( response.success ){
+            const newOpcionesTerminales = currentOpcionesTerminales.filter((ot) => ot.id !== id);
+            setCurrentOpcionesTerminales(newOpcionesTerminales);
+            stopAddingMode();
+        } else {
+            setError(response.message);
+        }
+        stopLoadingMode()
     };
 
     const handleAddOpcionTerminal = async (data: OpcionTerminalCursoDataType) => {
@@ -48,12 +63,12 @@ const ListaOpcionesTerminales = ({
             id_nivel_curricular: data.id_nivel_curricular,
             id_programa: data.id_programa,
         };
-        const response = await fakeApiCall();
+        const response = await insertOpcionTerminalCurso(newOpcionTerminal, token);
         if (response.success){
-            setCurrentOpcionesTerminales(prev => [...prev, newOpcionTerminal]);
+            setCurrentOpcionesTerminales(prev => [...prev, {...newOpcionTerminal, id: response.id}]);
             setAddingMode(false);
         }else{
-            console.log('Algo salio mal');
+            setError(response.message);
         }
         stopLoadingMode();
     };
@@ -85,6 +100,7 @@ const ListaOpcionesTerminales = ({
                         <OpcionTerminal
                             className="flex"
                             opcionTerminal={opcionTerminal}
+                            token={token}
                             handleDelete={handleDelete}
                             catalogoOpcionesTerminales={catalogoOpcionesTerminales}
                             catalogoNivelesCurriculares={catalogoNivelesCurriculares}
@@ -115,6 +131,10 @@ const ListaOpcionesTerminales = ({
                     />
                 )}
             </ul>
+            <Alert
+                error={error}
+                setError={setError}
+            />
         </div>
     );
 };

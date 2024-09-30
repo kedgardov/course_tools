@@ -30,9 +30,8 @@ const DatosBasicosComponent = async ({
         getCatalogoModalidades(token),
     ]);
 
-    if( !getCursoResponse.curso ){
-        console.log(getCursoResponse);
-        notFound()
+    if( !getCursoResponse.curso || !getCatalogoTiposResponse.success || !getCatalogoModalidadesResponse.success || !getCursoResponse.success ){
+        notFound();
     }
 
     return (

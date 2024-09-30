@@ -2,6 +2,7 @@
 
 import SecondarySubmit from "@/components/secondarySubmit";
 import SelectInput from "@/components/selectInput";
+import SelectInputFilter from "@/components/selectInputFilter";
 import TertiaryButton from "@/components/tertiaryButton";
 import { EncargadoDataScheme, EncargadoType } from "@/models/encargado";
 import { MaestroType } from "@/models/maestro";
@@ -14,7 +15,6 @@ const NewEncargado = ({
     catalogoMaestros,
     catalogoRoles,
     className,
-    idCurso,
     widthList,
     handleAdd,
     selfDestruct,
@@ -22,13 +22,12 @@ const NewEncargado = ({
     catalogoMaestros: MaestroType[],
     catalogoRoles: RolType[],
     className: string,
-    idCurso: number,
     widthList: [WidthType, WidthType, WidthType, WidthType],
     handleAdd: (data: EncargadoType) => void,
     selfDestruct: () => void,
 }) => {
 
-    const { register, reset, handleSubmit, formState: { errors, isDirty } } = useForm<EncargadoType>({
+    const { register, reset, setValue, handleSubmit, formState: { errors, isDirty } } = useForm<EncargadoType>({
         resolver: zodResolver(EncargadoDataScheme),
     });
 
@@ -39,26 +38,27 @@ const NewEncargado = ({
 
     const onSubmit: SubmitHandler<EncargadoType> = (data) => {
         handleAdd(data);
-        selfDestruct();
     };
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={`${className} flex`}>
             <div className={widthList[0]}>
-                <SelectInput<MaestroType>
+                <SelectInputFilter<MaestroType>
                     className='w-full'
                     idPrefix='id-maestro'
                     idRaw='0'
                     register={register('id_maestro', { valueAsNumber: true })}
                     editMode={true}
                     options={catalogoMaestros}
+                    setValue={setValue}
                     error={errors.id_maestro}
                     placeholder='Selecciona un Maestro'
                     idKey='id'
-                    valueKey='nombre'
+                    valueKey='label'
                     showBorder={false}
-                />
+                    />
             </div>
+
             <div className={widthList[1]}>
                 <SelectInput<RolType>
                     className='w-full'

@@ -117,86 +117,90 @@ const FiltrosParticipantesCursos = ({
         }
     };
 
-
-    return (
-        <div className={`${className}`}>
-            {/* Opcion Terminal Filter */}
-            <div>
+return (
+    <div className={`${className}`}>
+        {/* Opcion Terminal Filter */}
+        <h2 className='title-2 mx-2'>Filtrar por Opción Terminal</h2>
+        <div className='divider-dark mb-2'>
             <button onClick={() => setSelectedOpcionesTerminales(catalogoOpcionesTerminales)} className='filter-button-todos'>
-            Todos
-        </button>
+                Todos
+            </button>
             {catalogoOpcionesTerminales.map((opcion) => (
                 <button
-                onClick={() => toggleOpcionTerminalFilter(opcion.id)}
-                className={`${selectedOpcionesTerminales.find((ot) => ot.id === opcion.id) ? 'filter-button-on' : 'filter-button-off'}`}
-                key={opcion.id}
-                    >
+                    onClick={() => toggleOpcionTerminalFilter(opcion.id)}
+                    className={`${selectedOpcionesTerminales.find((ot) => ot.id === opcion.id) ? 'filter-button-on' : 'filter-button-off'}`}
+                    key={opcion.id}
+                >
                     {opcion.opcion_terminal}
                 </button>
             ))}
             <button onClick={() => setSelectedOpcionesTerminales([])} className='filter-button-ninguno'>
-            Ninguna
-        </button>
-            </div>
+                Ninguna
+            </button>
+        </div>
 
-            {/* Programa Filter */}
-            <div>
+        {/* Programa Filter */}
+        <h2 className='title-2 mx-2'>Filtrar por Programa</h2>
+        <div className='divider-dark mb-2'>
             <button onClick={() => setSelectedProgramas(catalogoProgramas)} className='filter-button-todos'>
-            Todos
-        </button>
+                Todos
+            </button>
             {catalogoProgramas.map((programa) => (
                 <button
-                onClick={() => toggleProgramaFilter(programa.id)}
-                className={`${selectedProgramas.find((p) => p.id === programa.id) ? 'filter-button-on' : 'filter-button-off'}`}
-                key={programa.id}
-                    >
+                    onClick={() => toggleProgramaFilter(programa.id)}
+                    className={`${selectedProgramas.find((p) => p.id === programa.id) ? 'filter-button-on' : 'filter-button-off'}`}
+                    key={programa.id}
+                >
                     {programa.programa}
                 </button>
             ))}
             <button onClick={() => setSelectedProgramas([])} className='filter-button-ninguno'>
-            Ninguno
-        </button>
-            </div>
+                Ninguno
+            </button>
+        </div>
 
-            {/* Nivel Curricular Filter */}
-            <div>
+        {/* Nivel Curricular Filter */}
+        <h2 className='title-2 mx-2'>Filtrar por Nivel Curricular</h2>
+        <div className='divider-dark mb-2'>
             <button onClick={() => setSelectedNivelesCurriculares(catalogoNivelesCurriculares)} className='filter-button-todos'>
-            Todos
-        </button>
+                Todos
+            </button>
             {catalogoNivelesCurriculares.map((nivel) => (
                 <button
-                onClick={() => toggleNivelCurricularFilter(nivel.id)}
-                className={`${selectedNivelesCurriculares.find((nc) => nc.id === nivel.id) ? 'filter-button-on' : 'filter-button-off'}`}
-                key={nivel.id}
-                    >
+                    onClick={() => toggleNivelCurricularFilter(nivel.id)}
+                    className={`${selectedNivelesCurriculares.find((nc) => nc.id === nivel.id) ? 'filter-button-on' : 'filter-button-off'}`}
+                    key={nivel.id}
+                >
                     {nivel.nivel_curricular}
                 </button>
             ))}
             <button onClick={() => setSelectedNivelesCurriculares([])} className='filter-button-ninguno'>
-            Ninguno
-        </button>
-            </div>
+                Ninguno
+            </button>
+        </div>
 
-            {/* Rol Filter */}
-            <div>
+        {/* Rol Filter */}
+        <h2 className='title-2 mx-2'>Filtrar por Rol</h2>
+        <div className='divider-dark mb-2'>
             <button onClick={() => setSelectedRoles(catalogoRoles)} className='filter-button-todos'>
-            Todos
-        </button>
+                Todos
+            </button>
             {catalogoRoles.map((rol) => (
                 <button
-                onClick={() => toggleRolFilter(rol.id)}
-                className={`${selectedRoles.find((r) => r.id === rol.id) ? 'filter-button-on' : 'filter-button-off'}`}
-                key={rol.id}
-                    >
+                    onClick={() => toggleRolFilter(rol.id)}
+                    className={`${selectedRoles.find((r) => r.id === rol.id) ? 'filter-button-on' : 'filter-button-off'}`}
+                    key={rol.id}
+                >
                     {rol.rol}
                 </button>
             ))}
             <button onClick={() => setSelectedRoles([])} className='filter-button-ninguno'>
-            Ninguno
-        </button>
-            </div>
-            </div>
-    );
+                Ninguno
+            </button>
+        </div>
+    </div>
+);
 
-};
+
+  };
 export default FiltrosParticipantesCursos;

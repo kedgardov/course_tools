@@ -21,7 +21,7 @@ const Login = (): React.JSX.Element => {
         const response = await login(credentials);
         if (response.success) {
             sessionStorage.setItem('labelDocente',response.label);
-            router.push('/cursos');
+            router.push('/herramientas/cursos');
         } else {
             setServerError(response.message);
         }

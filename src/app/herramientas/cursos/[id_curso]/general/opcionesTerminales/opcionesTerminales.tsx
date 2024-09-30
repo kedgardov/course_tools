@@ -36,6 +36,7 @@ const OpcionesTerminalesComponent = async ({
             <ListaOpcionesTerminales
                 className={className}
                 idCurso={idCurso}
+                token={token}
                 catalogoOpcionesTerminales={responseGetCatalogoOpcionesTerminales.catalogo_opciones_terminales}
                 catalogoNivelesCurriculares={responseGetCalaogoNivelesCurriculares.catalogo_niveles_curriculares}
                 catalogoProgramas={responseGetCatalogoProgramas.catalogo_programas}

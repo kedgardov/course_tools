@@ -17,8 +17,6 @@ import GuardarButton from '@/components/guardarButton';
 import { updateCurso } from '@/utils/cursos/updateCurso';
 import Alert from '@/components/alert';
 
-
-
 const DatosBasicosForm = ({
     className,
     idCurso,

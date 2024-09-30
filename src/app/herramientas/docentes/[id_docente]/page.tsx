@@ -5,7 +5,10 @@ import { parseId } from "@/utils/parseId";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import DetallesDocenteForm from "./docenteForm";
-import ListaTesis from "./tesisList";
+import { getCatalogoPronaces, GetCatalogoPronacesType } from "@/utils/repo_tesis/pronaces/getCatalogoPronaces";
+import TesisDocente from "./tesisDocente";
+import { getCatalogoGrados, GetCatalogoGradosType } from "@/utils/repo_tesis/grados/getCatalogoGrados";
+import { getCatalogoOpcionesTerminales, GetCatalogoOpcionesTerminalesType } from "@/utils/repo_tesis/opcionesTerminales/getCatalogoOpcionesTerminales";
 
 const DetallesDocente = async ({
     params,
@@ -26,56 +29,48 @@ const DetallesDocente = async ({
     const [
         responseGetMaestro,
         responseGetCatalogoRolesTesis,
+        responseGetCatalogoPronaces,
         responseGetTesisMaestro,
+        responseGetCatalogoGrados,
+        responseGetCatalogoOpcionesTerminales,
+
     ]:[
         GetMaestroType,
         GetCatalogoRolesTesisType,
+        GetCatalogoPronacesType,
         GetTesisMaestroType,
+        GetCatalogoGradosType,
+        GetCatalogoOpcionesTerminalesType,
     ] = await Promise.all([
         getMaestro(idDocente, token),
         getCatalogoRolesTesis(token),
+        getCatalogoPronaces(token),
         getTesisMaestro(idDocente, token),
+        getCatalogoGrados(token),
+        getCatalogoOpcionesTerminales(token),
     ]);
 
-    //console.log(responseGetTesisMaestro);
-
-    if( !responseGetMaestro.success || !responseGetCatalogoRolesTesis.success || !responseGetTesisMaestro.success || !responseGetMaestro.maestro ){
-        console.log(`getMaestro: ${responseGetMaestro.success}`);
-        console.log(`getCatalogoRolesTesis: ${responseGetCatalogoRolesTesis.success}`);
-        console.log(`getTesisMaestro: ${responseGetTesisMaestro.success}`);
+    if( !responseGetMaestro.success || !responseGetCatalogoRolesTesis.success || !responseGetTesisMaestro.success ||
+        !responseGetCatalogoPronaces.success || !responseGetCatalogoGrados.success || !responseGetCatalogoOpcionesTerminales.success ||
+        !responseGetMaestro.maestro ){
         return notFound();
     }
 
-
-    const pronaceList = [
-  { id: 1, pronace: 'Agentes Tóxicos y Procesos Contaminantes' },
-  { id: 2, pronace: 'Agua' },
-  { id: 3, pronace: 'Cultura' },
-  { id: 4, pronace: 'Educación' },
-  { id: 5, pronace: 'Energía y Cambio Climático' },
-  { id: 6, pronace: 'Salud' },
-  { id: 7, pronace: 'Seguridad Humana' },
-  { id: 8, pronace: 'Sistemas Socio-Ecológicos' },
-  { id: 9, pronace: 'Soberanía Alimentaria' },
-  { id: 10, pronace: 'Vivienda' },
-  { id: 11, pronace: 'Otro' },
-  { id: 12, pronace: 'Economía' },
-  { id: 13, pronace: 'Materiales' },
-];
-
-
+    const catalogoAnos = ['2018','2019','2020','2021','2022','2023','2024'];
 
     return (
         <div className='p-4'>
             <DetallesDocenteForm
                 maestro={responseGetMaestro.maestro}
             />
-            <ListaTesis
-                className='m-2'
-                token={token}
+            <TesisDocente
+                className=''
                 tesisMini={responseGetTesisMaestro.tesis_maestro}
-                pronaceList={pronaceList}
                 catalogoRolesTesis={responseGetCatalogoRolesTesis.catalogo_roles_tesis}
+                catalogoPronaces={responseGetCatalogoPronaces.catalogo_pronaces}
+                catalogoAnos={catalogoAnos}
+                catalogoGrados={responseGetCatalogoGrados.catalogo_grados}
+                catalogoOpcionesTerminales={responseGetCatalogoOpcionesTerminales.catalogo_opciones_terminales}
             />
         </div>
     );

@@ -28,7 +28,6 @@ const EncargadosComponent = async ({
         getEncargados(idCurso,token)
     ]);
 
-    console.log(responseGetCatalogoMaestros);
     if( !responseGetCatalogoMaestros.success || !responseGetCatalogoRoles.success || !responseGetEncargados.success ){
         notFound();
     }

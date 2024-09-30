@@ -3,6 +3,7 @@ import { getCatalogoNivelesCurriculares, GetCatalogoNivelesCurricularesType } fr
 import { getCatalogoProgramas, GetCatalogoProgramasType } from "@/utils/facultades/getCatalogoProgramas";
 import { getCatalogoLGACs, GetCatalogoLGACsType } from "@/utils/facultades/getCatalogoLGACs";
 import { getLGACs, GetLGACsType } from "@/utils/facultades/getLGACs";
+import { notFound } from 'next/navigation';
 
 const LGACsComponent = async ({
     className,
@@ -30,6 +31,12 @@ const LGACsComponent = async ({
         getCatalogoLGACs(token),
         getLGACs(idCurso, token),
     ]);
+
+    console.log('debug',getLGACsResponse);
+
+    if( !getCatalogoNivelesCurricularesResponse.success || !getCatalogoProgramasResponse.success || !getCatalogoLGACsResponse.success || !getLGACsResponse.success ){
+        notFound();
+    }
 
     return (
         <>

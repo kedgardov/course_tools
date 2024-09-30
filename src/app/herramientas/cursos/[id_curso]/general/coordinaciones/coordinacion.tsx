@@ -1,5 +1,6 @@
 'use client'
 
+import Alert from "@/components/alert";
 import DeleteButton from "@/components/deleteButton";
 import EditButton from "@/components/editButton";
 import SecondarySubmit from "@/components/secondarySubmit";
@@ -7,26 +8,32 @@ import SelectInput from "@/components/selectInput";
 import TertiaryButton from "@/components/tertiaryButton";
 import { CoordinacionCatalogoType, CoordinacionCursoDataScheme, CoordinacionCursoDataType, CoordinacionCursoType } from "@/models/coordinacion";
 import WidthType from "@/models/width";
+import { updateCoordinacionCurso } from "@/utils/cursos/updateCoordinacionCurso";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 const Coordinacion = ({
+    className,
+    token,
     coordinacion,
     catalogoCoordinaciones,
-    className,
-    idCurso,
     widthList,
     handleDelete,
+    startLoadingMode,
+    stopLoadingMode,
 }:{
+    className: string,
+    token: string,
     coordinacion: CoordinacionCursoType,
     catalogoCoordinaciones: CoordinacionCatalogoType[],
-    className: string,
-    idCurso: number,
     widthList: [WidthType, WidthType],
     handleDelete: (id: number) => void,
+    startLoadingMode: () => void,
+    stopLoadingMode: () => void,
 }) => {
     const [editMode, setEditMode] = useState<boolean>(false);
+    const [ error, setError ] = useState<string | null>(null);
 
     const { register, reset, handleSubmit, formState: { errors, isDirty } } = useForm<CoordinacionCursoDataType>({
         resolver: zodResolver(CoordinacionCursoDataScheme),
@@ -38,9 +45,21 @@ const Coordinacion = ({
         setEditMode(false);
     }
 
-    const onSubmit: SubmitHandler<CoordinacionCursoDataType> = (data) => {
-        reset(data);
-        setEditMode(false);
+    const onSubmit: SubmitHandler<CoordinacionCursoDataType> = async (data) => {
+        startLoadingMode();
+        const updatedCoordinacion: CoordinacionCursoType = {
+            id: coordinacion.id,
+            id_curso: coordinacion.id_curso,
+            id_coordinacion: data.id_coordinacion,
+        };
+        const response = await updateCoordinacionCurso(updatedCoordinacion, token);
+        if( response.success ){
+            reset(data);
+            setEditMode(false);
+        } else {
+            setError(response.message);
+        }
+        stopLoadingMode();
     };
 
     return (
@@ -73,6 +92,10 @@ const Coordinacion = ({
             </>
             )}
             </div>
+            <Alert
+                error={error}
+                setError={setError}
+            />
         </form>
     );
 };

@@ -89,7 +89,7 @@ const FiltrosTesis = ({
     };
 
     useEffect(() => {
-        console.time('FilterTimer');
+
         const newTesis = catalogoTesis.filter((tesis) =>
             selectedPronaces.some((pronace) => pronace.id === tesis.id_pronace) &&
             selectedCoordinaciones.some((coordinacion) => coordinacion.id === tesis.id_coordinacion) &&
@@ -98,13 +98,14 @@ const FiltrosTesis = ({
             selectedAnos.some((ano) => tesis.fecha.includes(ano))
         );
         setCurrentTesis(newTesis);
-        console.timeEnd('FilterTimer');
+
     },[catalogoTesis, setCurrentTesis, selectedPronaces, selectedCoordinaciones, catalogoOpcionesTerminales, selectedGrados, selectedAnos, selectedOpcionesTerminales]);
 
 
 return (
     <div>
-        <div>
+        <h2 className='title-2 mx-2'>Filtrar por Pronace</h2>
+        <div className='divider-dark mb-2'>
             <button onClick={() => setSelectedPronaces(catalogoPronaces)} className='filter-button-todos'>
                 Todos
             </button>
@@ -122,7 +123,8 @@ return (
             </button>
         </div>
 
-        <div>
+        <h2 className='title-2 mx-2'>Filtrar por Coordinación</h2>
+        <div className='divider-dark mb-2'>
             <button onClick={() => setSelectedCoordinaciones(catalogoCoordinaciones)} className='filter-button-todos'>
                 Todas
             </button>
@@ -140,7 +142,8 @@ return (
             </button>
         </div>
 
-        <div>
+        <h2 className='title-2 mx-2'>Filtrar por Programa</h2>
+        <div className='divider-dark mb-2'>
             <button onClick={() => setSelectedGrados(catalogoGrados)} className='filter-button-todos'>
                 Todas
             </button>
@@ -158,7 +161,8 @@ return (
             </button>
         </div>
 
-        <div>
+        <h2 className='title-2 mx-2'>Filtrar por Fecha</h2>
+        <div className='divider-dark mb-2'>
             <button onClick={() => setSelectedAnos(catalogoAnos)} className='filter-button-todos'>
                 Todos
             </button>
@@ -176,7 +180,8 @@ return (
             </button>
         </div>
 
-        <div>
+        <h2 className='title-2 mx-2'>Filtrar por Opción Terminal</h2>
+        <div className='divider-dark mb-2'>
             <button onClick={() => setSelectedOpcionesTerminales(catalogoOpcionesTerminales)} className='filter-button-todos'>
                 Todas
             </button>

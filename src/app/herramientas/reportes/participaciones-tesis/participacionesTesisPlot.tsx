@@ -5,9 +5,9 @@ import { ParticipacionTesisType } from "@/models/participacionTesis";
 import { PronaceType } from "@/models/pronace";
 import { RolTesisType } from "@/models/rolTesis";
 import { CoordinacionType } from "@/utils/repo_tesis/coordinaciones/getCatalogoCoordinaciones";
-import BarsPlot from "./BarsPlot";
 import { useEffect, useState } from "react";
 import { OpcionTerminalType } from "@/models/opcionTerminal";
+import BarsPlot from "@/components/barsPlot";
 
   const countMaestrosByPronace = (currentParticipaciones: ParticipacionTesisType[]) => {
         return currentParticipaciones.reduce((acc, { id_maestro, id_pronace }) => {
@@ -222,14 +222,14 @@ const ParticipacionesTesisPlot = ({
 
 
     return (
-        <div>
+        <div className={`${className}`}>
             <button className='m-2 bg-blue-300 p-2' onClick={() => setSelectedCategory('pronace')} > Pronace </button>
             <button className='m-2 bg-blue-300 p-2' onClick={() => setSelectedCategory('coordinacion')} > Coordinacion </button>
             <button className='m-2 bg-blue-300 p-2' onClick={() => setSelectedCategory('programa')} > Programa </button>
             <button className='m-2 bg-blue-300 p-2' onClick={() => setSelectedCategory('fecha')} > Fecha </button>
             <button className='m-2 bg-blue-300 p-2' onClick={() => setSelectedCategory('rolTesis')} > Rol en Comite </button>
             <button className='m-2 bg-blue-300 p-2' onClick={() => setSelectedCategory('opcion-terminal')} > Opcion Terminal </button>
-        <div className='w-2/3'>
+        <div className=''>
         <BarsPlot
             labels={currentPlotData.labels}
             data={currentPlotData.data}

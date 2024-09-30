@@ -135,120 +135,129 @@ const FiltrosParticipacionesTesis = ({
         }
     }
 
-
-    return (
-        <div className={`${className}`}>
-            {/* Pronace Filter */}
-            <div>
+return (
+    <div className={`${className}`}>
+        {/* Pronace Filter */}
+        <h2 className='title-2 mx-2'>Filtrar por Pronace</h2>
+        <div className='divider-dark mb-2'>
             <button onClick={() => setSelectedPronaces(catalogoPronaces)} className='filter-button-todos'>
-            Todos
-        </button>
+                Todos
+            </button>
             {catalogoPronaces.map((pronace) => (
                 <button
-                onClick={() => togglePronaceFilter(pronace.id)}
-                className={` ${selectedPronaces.find((p) => p.id === pronace.id) ? 'filter-button-on' : 'filter-button-off'}`}
-                key={pronace.id}>
+                    onClick={() => togglePronaceFilter(pronace.id)}
+                    className={`${selectedPronaces.find((p) => p.id === pronace.id) ? 'filter-button-on' : 'filter-button-off'}`}
+                    key={pronace.id}
+                >
                     {pronace.pronace}
                 </button>
             ))}
             <button onClick={() => setSelectedPronaces([])} className='filter-button-ninguno'>
-            Ninguno
-        </button>
-            </div>
+                Ninguno
+            </button>
+        </div>
 
-            {/* Coordinacion Filter */}
-            <div>
+        {/* Coordinacion Filter */}
+        <h2 className='title-2 mx-2'>Filtrar por Coordinación</h2>
+        <div className='divider-dark mb-2'>
             <button onClick={() => setSelectedCoordinaciones(catalogoCoordinaciones)} className='filter-button-todos'>
-            Todas
-        </button>
+                Todas
+            </button>
             {catalogoCoordinaciones.map((coordinacion) => (
                 <button
-                onClick={() => toggleCoordinacionFilter(coordinacion.id)}
-                className={`${selectedCoordinaciones.find((c) => c.id === coordinacion.id) ? 'filter-button-on' : 'filter-button-off'}`}
-                key={coordinacion.id}>
+                    onClick={() => toggleCoordinacionFilter(coordinacion.id)}
+                    className={`${selectedCoordinaciones.find((c) => c.id === coordinacion.id) ? 'filter-button-on' : 'filter-button-off'}`}
+                    key={coordinacion.id}
+                >
                     {coordinacion.coordinacion}
                 </button>
             ))}
             <button onClick={() => setSelectedCoordinaciones([])} className='filter-button-ninguno'>
-            Ninguna
-        </button>
-            </div>
+                Ninguna
+            </button>
+        </div>
 
-            {/* Grado Filter */}
-            <div>
+        {/* Grado Filter */}
+        <h2 className='title-2 mx-2'>Filtrar por Grado</h2>
+        <div className='divider-dark mb-2'>
             <button onClick={() => setSelectedGrados(catalogoGrados)} className='filter-button-todos'>
-            Todos
-        </button>
+                Todos
+            </button>
             {catalogoGrados.map((grado) => (
                 <button
-                onClick={() => toggleGradoFilter(grado.id)}
-                className={` ${selectedGrados.find((g) => g.id === grado.id) ? 'filter-button-on' : 'filter-button-off'}`}
-                key={grado.id}>
+                    onClick={() => toggleGradoFilter(grado.id)}
+                    className={`${selectedGrados.find((g) => g.id === grado.id) ? 'filter-button-on' : 'filter-button-off'}`}
+                    key={grado.id}
+                >
                     {grado.grado}
                 </button>
             ))}
             <button onClick={() => setSelectedGrados([])} className='filter-button-ninguno'>
-            Ninguno
-        </button>
-            </div>
+                Ninguno
+            </button>
+        </div>
 
-            {/* Año Filter */}
-            <div>
+        {/* Año Filter */}
+        <h2 className='title-2 mx-2'>Filtrar por Año</h2>
+        <div className='divider-dark mb-2'>
             <button onClick={() => setSelectedAnos(catalogoAnos)} className='filter-button-todos'>
-            Todos
-        </button>
+                Todos
+            </button>
             {catalogoAnos.map((ano) => (
                 <button
-                onClick={() => toggleAnoFilter(ano)}
-                className={` ${selectedAnos.find((a) => a === ano) ? 'filter-button-on' : 'filter-button-off'}`}
-                key={ano}>
+                    onClick={() => toggleAnoFilter(ano)}
+                    className={`${selectedAnos.find((a) => a === ano) ? 'filter-button-on' : 'filter-button-off'}`}
+                    key={ano}
+                >
                     {ano}
                 </button>
             ))}
             <button onClick={() => setSelectedAnos([])} className='filter-button-ninguno'>
-            Ninguno
-        </button>
-            </div>
+                Ninguno
+            </button>
+        </div>
 
-            {/* RolTesis Filter */}
-            <div>
+        {/* Rol Tesis Filter */}
+        <h2 className='title-2 mx-2'>Filtrar por Rol de Tesis</h2>
+        <div className='divider-dark mb-2'>
             <button onClick={() => setSelectedRolesTesis(catalogoRolesTesis)} className='filter-button-todos'>
-            Todos
-        </button>
+                Todos
+            </button>
             {catalogoRolesTesis.map((rolTesis) => (
                 <button
-                onClick={() => toggleRolTesisFilter(rolTesis.id)}
-                className={`${selectedRolesTesis.find((r) => r.id === rolTesis.id) ? 'filter-button-on' : 'filter-button-off'}`}
-                key={rolTesis.id}>
+                    onClick={() => toggleRolTesisFilter(rolTesis.id)}
+                    className={`${selectedRolesTesis.find((r) => r.id === rolTesis.id) ? 'filter-button-on' : 'filter-button-off'}`}
+                    key={rolTesis.id}
+                >
                     {rolTesis.rol_tesis}
                 </button>
             ))}
             <button onClick={() => setSelectedRolesTesis([])} className='filter-button-ninguno'>
-            Ninguno
-        </button>
-            </div>
+                Ninguno
+            </button>
+        </div>
 
-             {/* Opcion Terminal Filter */}
-            <div>
+        {/* Opcion Terminal Filter */}
+        <h2 className='title-2 mx-2'>Filtrar por Opción Terminal</h2>
+        <div className='divider-dark mb-2'>
             <button onClick={() => setSelectedOpcionesTerminales(catalogoOpcionesTerminales)} className='filter-button-todos'>
-            Todos
-        </button>
+                Todos
+            </button>
             {catalogoOpcionesTerminales.map((opcion) => (
                 <button
-                onClick={() => toggleOpcionTerminalFilter(opcion.id)}
-                className={`${selectedOpcionesTerminales.find((ot) => ot.id === opcion.id) ? 'filter-button-on' : 'filter-button-off'}`}
-                key={opcion.id}>
+                    onClick={() => toggleOpcionTerminalFilter(opcion.id)}
+                    className={`${selectedOpcionesTerminales.find((ot) => ot.id === opcion.id) ? 'filter-button-on' : 'filter-button-off'}`}
+                    key={opcion.id}
+                >
                     {opcion.opcion_terminal}
                 </button>
             ))}
             <button onClick={() => setSelectedOpcionesTerminales([])} className='filter-button-ninguno'>
-            Ninguno
-        </button>
-            </div>
+                Ninguno
+            </button>
+        </div>
+    </div>
+);
 
-
-
-            </div>
-    );
 };
 export default FiltrosParticipacionesTesis;

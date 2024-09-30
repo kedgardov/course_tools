@@ -3,37 +3,34 @@ import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
   const token = request.cookies.get('authToken') || null;
-  const { pathname } = new URL(request.url);
+  const { pathname } = request.nextUrl;
 
-  // Creating a response object
-  let response = NextResponse.next();
-
-  if (pathname === '/login') {
-    if (token) {
-      return NextResponse.redirect(new URL('/herramientas', request.url));
-    }
-    return response; // Continue to login if no token
-  }
-
-  if (!token) {
+  // If there's no token, redirect to login page regardless of the path
+  if (!token && pathname !== '/login') {
     return NextResponse.redirect(new URL('/login', request.url));
   }
 
-  // Handle course-specific redirection
+  // If the user is already logged in, redirect them away from the login page
+  if (pathname === '/login' && token) {
+    return NextResponse.redirect(new URL('/herramientas', request.url));
+  }
+
+  // Course-specific redirection if the path matches /herramientas/cursos/:id
   const match = pathname.match(/^\/herramientas\/cursos\/(\d+)\/?$/);
   if (match) {
     const id = match[1];
     return NextResponse.redirect(new URL(`/herramientas/cursos/${id}/general`, request.url));
   }
 
-  // Correctly set the Authorization header for downstream requests
+  // Allow the request to pass through and add headers for authorization
+  const response = NextResponse.next();
   response.headers.set('Authorization', `Bearer ${token}`);
-  response.headers.set('current-url', request.nextUrl.pathname);
+  response.headers.set('current-url', pathname);
 
   return response;
 }
 
-// Configuring paths for middleware application
+// Apply middleware to the specified paths
 export const config = {
-  matcher: ['/herramientas/cursos/:path*', '/login'],
+  matcher: ['/herramientas/:path*', '/login'],
 };

@@ -38,7 +38,7 @@ const CursosFinder = ({
 
     return (
         <section className={`${className}}`}>
-            <h1 className='title-1-dark mb-4'>Lista de Cursos</h1>
+            <h1 className='title-1'>Buscador de Cursos</h1>
             <input
                 id='buscador-de-cursos'
                 aria-label='buscador-de-cursos'

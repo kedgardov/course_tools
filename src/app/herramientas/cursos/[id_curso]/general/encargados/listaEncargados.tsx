@@ -9,6 +9,10 @@ import { useState } from "react";
 import ListHeaders from '@/components/listHeaders';
 import PrimaryButton from '@components/primaryButton';
 import NewEncargado from './newEncargado'; // Assuming a similar component to handle new Encargado
+import LoadingComponent from "@/components/loading";
+import { insertEncargadoCurso } from "@/utils/encargados/insertEncargado";
+import Alert from "@/components/alert";
+import { deleteEncargado } from "@/utils/encargados/deleteEncargado";
 
 const ListaEncargados = ({
     className,
@@ -30,25 +34,46 @@ const ListaEncargados = ({
 
     const [addingMode, setAddingMode] = useState<boolean>(false);
     const [currentEncargados, setCurrentEncargados] = useState<EncargadoType[]>(encargados);
+    const [ loadingMode, setLoadingMode ] = useState(false);
+    const [ error, setError ] = useState< string | null>(null);
 
-    const handleDelete = (id: number) => {
-        const updatedEncargados = currentEncargados.filter((encargado) => encargado.id !== id);
-        setCurrentEncargados(updatedEncargados);
+    const handleDelete = async (id: number) => {
+        setLoadingMode(true);
+        const response = await deleteEncargado(id, token);
+        if( response.success ){
+            const updatedEncargados = currentEncargados.filter((encargado) => encargado.id !== id);
+            setCurrentEncargados(updatedEncargados);
+            setAddingMode(false);
+        } else {
+            setError(response.message);
+        }
+        setLoadingMode(false);
     };
 
-    const handleAdd = (data: EncargadoType) => {
+    const handleAdd = async (data: EncargadoType) => {
+        setLoadingMode(true);
         const newEncargado: EncargadoType = {
             id: 0,
             id_curso: idCurso,
             id_maestro: data.id_maestro,
             id_rol: data.id_rol,
         };
-        setCurrentEncargados((prev) => [...prev, newEncargado]);
+        const response = await insertEncargadoCurso(newEncargado, token);
+        if ( response.success ){
+            setCurrentEncargados( prev => [...prev, { ...newEncargado,id: response.id }] );
+            setAddingMode(false);
+        } else {
+            setError(response.message);
+        }
+        setLoadingMode(false);
     };
 
     return (
         <section className={`${className}`}>
-            <h2 className='title-2'>Encargados</h2>
+            <div className='m-1 title-2-container'>
+                <h2 className='title-2'>Encargados</h2>
+                <LoadingComponent isLoading={loadingMode}/>
+            </div>
             <ul>
                 <ListHeaders
                     className=''
@@ -60,12 +85,13 @@ const ListaEncargados = ({
                         <Encargado
                             className='divider-dark p-1'
                             token={token}
-                            idCurso={idCurso}
                             encargado={encargado}
                             catalogoMaestros={catalogoMaestros}
                             catalogoRoles={catalogoRoles}
                             widthList={widths}
                             handleDelete={() => handleDelete(encargado.id)}
+                            startLoadingMode={() => setLoadingMode(true)}
+                            stopLoadingMode={() => setLoadingMode(false)}
                         />
                     </li>
                 ))}
@@ -75,7 +101,6 @@ const ListaEncargados = ({
                     catalogoMaestros={catalogoMaestros}
                     catalogoRoles={catalogoRoles}
                     className='divider-dark p-1'
-                    idCurso={idCurso}
                     widthList={widths}
                     handleAdd={handleAdd}
                     selfDestruct={() => setAddingMode(false)}
@@ -83,6 +108,10 @@ const ListaEncargados = ({
             ) : (
                 <PrimaryButton className='flex ml-auto mr-4' handleAction={() => setAddingMode(true)} buttonLabel='Nuevo Encargado' />
             )}
+        <Alert
+            error={error}
+            setError={setError}
+        />
         </section>
     );
 };

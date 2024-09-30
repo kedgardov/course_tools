@@ -1,13 +1,16 @@
 'use client'
+import Alert from "@/components/alert";
 import DeleteButton from "@/components/deleteButton";
 import EditButton from "@/components/editButton";
 import SecondarySubmit from "@/components/secondarySubmit";
 import SelectInput from "@/components/selectInput";
+import SelectInputFilter from "@/components/selectInputFilter";
 import TertiaryButton from "@/components/tertiaryButton";
 import { EncargadoDataScheme, EncargadoDataType, EncargadoType } from "@/models/encargado";
 import { MaestroType } from "@/models/maestro";
 import { RolType } from "@/models/rol";
 import WidthType from "@/models/width";
+import { updateEncargadoCurso } from "@/utils/encargados/updateEncargado";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useState } from "react";
@@ -16,25 +19,28 @@ import { SubmitHandler, useForm } from "react-hook-form";
 const Encargado = ({
     className,
     token,
-    idCurso,
     encargado,
     catalogoMaestros,
     catalogoRoles,
     widthList,
     handleDelete,
+    startLoadingMode,
+    stopLoadingMode,
 }:{
     className: string,
     token: string,
-    idCurso: number,
     encargado: EncargadoType,
     catalogoMaestros: MaestroType[],
     catalogoRoles: RolType[],
     widthList: [WidthType, WidthType, WidthType, WidthType],
     handleDelete: (id: number) => void,
+    startLoadingMode: () => void,
+    stopLoadingMode: () => void,
 }) => {
     const [editMode, setEditMode] = useState<boolean>(false);
+    const [ error, setError ] = useState<string | null>(null);
 
-    const { register, reset, handleSubmit, formState: { errors, isDirty } } = useForm<EncargadoDataType>({
+    const { register, reset, setValue, handleSubmit, formState: { errors, isDirty } } = useForm<EncargadoDataType>({
         resolver: zodResolver(EncargadoDataScheme),
         defaultValues: EncargadoDataScheme.parse(encargado),
     });
@@ -44,20 +50,34 @@ const Encargado = ({
         setEditMode(false);
     };
 
-    const onSubmit: SubmitHandler<EncargadoDataType> = (data) => {
-        reset(data);
-        setEditMode(false);
+    const onSubmit: SubmitHandler<EncargadoDataType> = async (data) => {
+        startLoadingMode();
+        const updatedEncargado: EncargadoType = {
+            id: encargado.id,
+            id_curso: encargado.id_curso,
+            id_maestro: data.id_maestro,
+            id_rol: data.id_rol,
+        };
+        const response =  await updateEncargadoCurso(updatedEncargado, token);
+        if ( response.success ){
+            reset(data);
+            setEditMode(false);
+        } else {
+            setError(response.message);
+        }
+        stopLoadingMode();
     }
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={`${className} flex`}>
             <div className={widthList[0]}>
-                <SelectInput<MaestroType>
+                <SelectInputFilter<MaestroType>
                     className='w-full'
                     idPrefix='id-maestro-encargado'
                     idRaw={`${encargado.id}`}
                     register={register('id_maestro', { valueAsNumber: true })}
                     editMode={editMode}
+                    setValue={setValue}
                     options={catalogoMaestros}
                     error={errors.id_maestro}
                     placeholder='Selecciona un docente'
@@ -99,6 +119,10 @@ const Encargado = ({
             </>
             )}
             </div>
+            <Alert
+                error={error}
+                setError={setError}
+            />
         </form>
     );
 };

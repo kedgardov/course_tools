@@ -1,7 +1,7 @@
 import { parseId } from "@/utils/parseId";
 import { notFound } from "next/navigation";
 import DatosBasicos from './datosBasicos';
-import LGACs from "./lgacs";
+//import LGACs from "./lgacs";
 import OpcionesTerminales from './opcionesTerminales';
 import Coordinaciones from "./coordinaciones";
 import { cookies } from "next/headers";
@@ -19,6 +19,9 @@ const General = ({
 
     const cookieStore = cookies();
     const token = cookieStore.get('authToken')?.value || '';
+    if ( token === '' ){
+        notFound();
+    }
 
     return (
         <section>
@@ -27,11 +30,11 @@ const General = ({
                 idCurso={idCurso}
                 token={token}
             />
-            <LGACs
+            {/*<LGACs
                 className='border p-2'
                 idCurso={idCurso}
                 token={token}
-            />
+                />*/}
             <OpcionesTerminales
                 className='border p-2'
                 idCurso={idCurso}

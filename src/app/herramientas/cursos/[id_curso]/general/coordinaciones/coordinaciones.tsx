@@ -25,7 +25,6 @@ const CoordinacionesComponent = async ({
     ]);
 
     if(!responseGetCatalogoCoordinaciones.success || !responseGetCoordinaciones.success){
-        console.log(responseGetCoordinaciones);
         notFound();
     }
 
