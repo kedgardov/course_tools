@@ -9,6 +9,8 @@ import { notFound } from "next/navigation";
 import ReporteParticipacionesTesis from "./reporteParticipacionesTesis";
 import { getParticipacionesTesis, GetParticipacionesTesisType } from "@/utils/maestros/getParticipacionesTesis";
 import { getCatalogoOpcionesTerminales, GetCatalogoOpcionesTerminalesType } from "@/utils/repo_tesis/opcionesTerminales/getCatalogoOpcionesTerminales";
+import { GetTesisResponseType } from "@/utils/repo_tesis/tesis/getTesis";
+import { getTesisMini, GetTesisMiniResponseType } from "@/utils/repo_tesis/tesis/getTesisMini";
 
 
 
@@ -24,6 +26,7 @@ const ReporteParticipacionesTesisServer = async () => {
         responseGetCatalogoGrados,
         responseGetParticipacionesTesis,
         responseGetCatalogoOpcionesTerminales,
+        responseGetTesisMini,
     ]:[
         GetCatalogoMaestrosType,
         GetCatalogoRolesTesisType,
@@ -32,6 +35,7 @@ const ReporteParticipacionesTesisServer = async () => {
         GetCatalogoGradosType,
         GetParticipacionesTesisType,
         GetCatalogoOpcionesTerminalesType,
+        GetTesisMiniResponseType,
     ] = await Promise.all([
         getCatalogoMaestros(token),
         getCatalogoRolesTesis(token),
@@ -40,9 +44,10 @@ const ReporteParticipacionesTesisServer = async () => {
         getCatalogoGrados(token),
         getParticipacionesTesis(token),
         getCatalogoOpcionesTerminales(token),
+        getTesisMini(token),
     ]);
 
-    if ( !responseGetCatalogoMaestros.success || !responseGetCatalogoRolesTesis.success || !responseGetCatalogoCoordinaciones.success ||
+    if ( !responseGetTesisMini.success|| !responseGetCatalogoMaestros.success || !responseGetCatalogoRolesTesis.success || !responseGetCatalogoCoordinaciones.success ||
          !responseGetCatalogoPronaces.success || !responseGetCatalogoGrados || !responseGetParticipacionesTesis || !responseGetCatalogoOpcionesTerminales.success ){
         notFound();
     }
@@ -60,6 +65,7 @@ const ReporteParticipacionesTesisServer = async () => {
             catalogoAnos={catalogoAnos}
             catalogoOpcionesTerminales={responseGetCatalogoOpcionesTerminales.catalogo_opciones_terminales}
             participacionesTesis={responseGetParticipacionesTesis.participaciones_tesis}
+            tesisMini={responseGetTesisMini.tesis_mini}
         />
     );
 };

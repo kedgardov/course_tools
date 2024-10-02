@@ -6,6 +6,7 @@ import OpcionesTerminales from './opcionesTerminales';
 import Coordinaciones from "./coordinaciones";
 import { cookies } from "next/headers";
 import Encargados from "./encargados";
+import HorasCurso from "./horasCursoForm";
 
 const General = ({
     params,
@@ -46,6 +47,11 @@ const General = ({
                 token={token}
             />
             <Encargados
+                className='border p-2'
+                idCurso={idCurso}
+                token={token}
+            />
+            <HorasCurso
                 className='border p-2'
                 idCurso={idCurso}
                 token={token}

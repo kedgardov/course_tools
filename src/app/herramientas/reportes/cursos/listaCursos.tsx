@@ -25,6 +25,10 @@ const ListaCursos = ({
                     'w-[40%]','w-[20%]','w-[20%]','w-[20%]'
     ];
 
+
+
+
+
     return (
         <section className={`${className}`}>
             <ul>

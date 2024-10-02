@@ -12,6 +12,9 @@ import ListaParticipacionesTesis from "./listaParticipacionesTesis";
 import FiltrosParticipacionesTesis from "./filtrosParticipacionesTesis";
 import ParticipacionesTesisPlot from "./participacionesTesisPlot";
 import { OpcionTerminalType } from "@/models/opcionTerminal";
+import { downloadCSV } from "@/utils/downloadCSV";
+import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
+import { TesisMiniType } from "@/models/tesis";
 
 const ReporteParticipacionesTesis = ({
     className,
@@ -23,6 +26,7 @@ const ReporteParticipacionesTesis = ({
     catalogoAnos,
     catalogoOpcionesTerminales,
     participacionesTesis,
+    tesisMini,
 }:{
     className: string,
     catalogoMaestros: MaestroType[],
@@ -33,10 +37,32 @@ const ReporteParticipacionesTesis = ({
     catalogoAnos: string[],
     catalogoOpcionesTerminales: OpcionTerminalType[],
     participacionesTesis: ParticipacionTesisType[],
+    tesisMini: TesisMiniType[],
 }) => {
     const widths: [ WidthType, WidthType, WidthType ] = ['w-[60%]', 'w-[20%]','w-[20%]'];
     const [ currentParticipantes, setCurrentParticipantes ] = useState<ParticipacionesDocentesType[]>([]);
     const [ currentParticipaciones, setCurrentParticipaciones ] = useState<ParticipacionTesisType[]>(participacionesTesis);
+
+
+    const handleDownloadCSV = () => {
+        const data1 = currentParticipantes.map((participante) => ({
+            docente: catalogoMaestros.find((d) => d.id === participante.id_maestro)?.label || '',
+            participaciones: participante.participaciones,
+        }));
+        const data2 = currentParticipaciones.map((participacion) => ({
+            docente: catalogoMaestros.find((m) => m.id === participacion.id_maestro)?.label || '',
+            tesis: tesisMini.find((t) => t.id === participacion.id_tesis)?.titulo || '',
+            rol_tesis: catalogoRolesTesis.find((rt) => rt.id === participacion.id_rol_tesis)?.rol_tesis || '',
+            coordinacion: catalogoCoordinaciones.find((c) => c.id === participacion.id_coordinacion)?.coordinacion || '',
+            opcion_terminal: catalogoOpcionesTerminales.find((ot) => ot.id === participacion.id_opcion_terminal)?.opcion_terminal || '',
+            pronace: catalogoPronaces.find((p) => p.id === participacion.id_pronace)?.pronace || '',
+            fecha: participacion.fecha,
+            programa: catalogoGrados.find((g) => g.id === participacion.id_grado)?.grado || '',
+            //pendiente autor
+        }));
+        downloadCSV(data1, 'ParticipacionesTesis');
+        downloadCSV(data2, 'PartipipacionesTesisDetallado');
+    };
 
     return (
         <div className={`${className}`}>
@@ -62,7 +88,12 @@ const ReporteParticipacionesTesis = ({
                 participacionesTesis={participacionesTesis}
                 catalogoOpcionesTerminales={catalogoOpcionesTerminales}
             />
-            {`Total de ${Object.keys(currentParticipantes).length} Docentes Participando`}
+            <div className='flex items-center m-1 space-x-2'>
+                <p>{`Total de ${Object.keys(currentParticipantes).length} Docentes Participando`}</p>
+                <button title='Descargar Participaciones Tesis' onClick={()=>handleDownloadCSV()}>
+                    <ArrowDownTrayIcon className='size-6'/>
+                </button>
+            </div>
             <ListaParticipacionesTesis
                 className=''
                 currentParticipantes={currentParticipantes}

@@ -12,20 +12,20 @@ export function middleware(request: NextRequest) {
 
   // If the user is already logged in, redirect them away from the login page
   if (pathname === '/login' && token) {
-    return NextResponse.redirect(new URL('/herramientas', request.url));
+    const response = NextResponse.redirect(new URL('/herramientas/cursos', request.url));
+    // Disable caching for the login page
+    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate');
+    return response;
   }
 
-  // Course-specific redirection if the path matches /herramientas/cursos/:id
-  const match = pathname.match(/^\/herramientas\/cursos\/(\d+)\/?$/);
-  if (match) {
-    const id = match[1];
-    return NextResponse.redirect(new URL(`/herramientas/cursos/${id}/general`, request.url));
-  }
-
-  // Allow the request to pass through and add headers for authorization
+  // Allow the request to pass through for other pages
   const response = NextResponse.next();
   response.headers.set('Authorization', `Bearer ${token}`);
-  response.headers.set('current-url', pathname);
+
+  // Disable caching only for the login page
+  if (pathname === '/login') {
+    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate');
+  }
 
   return response;
 }

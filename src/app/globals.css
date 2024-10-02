@@ -47,6 +47,23 @@ body {
     @apply bg-more-light rounded-lg transition-all duration-500 ease-in-out overflow-hidden;
   }
 
+  .logo-square-container {
+    @apply border border-more-dark/0 w-40 h-40 m-4;
+  }
+
+  .logo-square-box {
+    @apply border border-[10px] border-primary-light rounded-[50px]
+    flex justify-center w-40 h-40 m-4 shadow-2xl
+    transition-all ease-in-out duration-500 hover:scale-105;
+  }
+
+  .landing-nav-button {
+    @apply py-1  px-4 bg-gradient-radial from-more-light/90 to-more-light rounded-full shadow-xl border flex items-center justify-center;
+  }
+
+  .landing-nav-text {
+    @apply  font-semibold text-dark cursor-pointer uppercase;
+  }
 
 
   /*Sidebar Style*/
@@ -110,8 +127,6 @@ body {
     @apply ml-auto text-3xl text-left transition ease-in-out duration-500;
   }
 
-
-
   .curso-general-input-horas {
     @apply border rounded p-2 w-1/5 flex flex-col;
   }
@@ -140,7 +155,7 @@ body {
   }
 
   .title-1-container {
-    @apply flex h-12
+    @apply flex;
   }
 
   .error-text {

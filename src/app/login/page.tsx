@@ -10,6 +10,8 @@ import Alert from '@components/alert';
 import { login } from '@utils/session/login';
 
 const Login = (): React.JSX.Element => {
+
+
     const router = useRouter();
     const [serverError, setServerError] = useState<string | null>(null);
 
@@ -21,7 +23,7 @@ const Login = (): React.JSX.Element => {
         const response = await login(credentials);
         if (response.success) {
             sessionStorage.setItem('labelDocente',response.label);
-            router.push('/herramientas/cursos');
+            router.refresh();
         } else {
             setServerError(response.message);
         }

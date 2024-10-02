@@ -9,6 +9,8 @@ import ListaTesis from "./listaTesis";
 import WidthType from "@/models/width";
 import TesisPlot from "./tesisPlot";
 import { OpcionTerminalType } from "@/models/opcionTerminal";
+import { downloadCSV } from "@/utils/downloadCSV";
+import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
 
 const ReporteTesis = ({
     className,
@@ -34,6 +36,19 @@ const ReporteTesis = ({
     const [currentTesis, setCurrentTesis] = useState<TesisMiniType[]>(tesisMini);
 
 
+    const handleDownloadCSV = () => {
+        const dataToDownload = currentTesis.map((tesis) => ({
+            tesis: tesis.titulo,
+            coordinacion: catalogoCoordinaciones.find((c) => c.id === tesis.id_coordinacion)?.coordinacion || '',
+            fecha: tesis.fecha,
+            pronace: catalogoPronaces.find((p) => p.id === tesis.id_pronace)?.pronace || '',
+            programa: catalogoGrados.find((g) => g.id === tesis.id_grado)?.grado || '',
+            opcion_terminal: catalogoOpcionesTerminales.find((ot) => ot.id === tesis.id_opcion_terminal)?.opcion_terminal || '',
+            //pendiente autores
+        }));
+        downloadCSV(dataToDownload, 'Tesis');
+    };
+
     return (
         <div>
             <TesisPlot
@@ -54,7 +69,12 @@ const ReporteTesis = ({
                 catalogoAnos={catalogoAnos}
                 catalogoOpcionesTerminales={catalogoOpcionesTerminales}
             />
-            {`Total de ${currentTesis.length} tesis`}
+            <div className='flex items-center m-1 space-x-2'>
+            <p>{`Total de ${currentTesis.length} Tesis Publicadas`}</p>
+            <button title='Descargar Lista de Tesis' onClick={() => handleDownloadCSV()}>
+                <ArrowDownTrayIcon className='size-6'/>
+            </button>
+            </div>
             <ListaTesis
                 className=''
                 tesisList={currentTesis}

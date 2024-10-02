@@ -2,7 +2,6 @@
 import { useState } from 'react';
 import { AcademicCapIcon, BookOpenIcon, ChartPieIcon, ChevronLeftIcon, Cog6ToothIcon, HomeIcon, SquaresPlusIcon, StarIcon, UsersIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import CourseToolsIcon from '@/components/CourseToolsIcons';
 
 const SidebarClient = () => {
     const [isExpanded, setIsExpanded] = useState<boolean>(true);
@@ -136,7 +135,7 @@ const SidebarTitle = ({
     return (
         <Link href={link} className={`${className} sidebar-link group`}>
             {icon}
-            <div className={`sidebar-text-container-lg ${isTransparent ? 'text-more-light/0' : 'text-more-light'} ${showText ? 'w-58' : 'w-0'}`}>
+            <div className={`sidebar-text-container ${isTransparent ? 'text-more-light/0' : 'text-more-light'} ${showText ? 'w-58' : 'w-0'}`}>
                 {showText && <h2>{label}</h2>}
             </div>
             {!showText && <div className='sidebar-tooltip'>{label}</div>}
@@ -199,5 +198,5 @@ const SidebarDivider = ({
 }: {
     isExpanded: boolean,
 }) => {
-    return <div className={`sidebar-divider ${isExpanded ? 'w-76' : 'w-16'}`}></div>;
+    return <div className={`sidebar-divider ${isExpanded ? 'w-56' : 'w-16'}`}></div>;
 };

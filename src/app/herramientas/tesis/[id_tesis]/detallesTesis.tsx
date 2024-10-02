@@ -86,7 +86,7 @@ const DetallesTesisComponent = ({
         setLoading(true);
         const response = await updateTesis(idTesis, data, token);
         if (!response.success) {
-            console.log(response);
+            //console.log(response);
             setError(response.message);
         }
         setLoading(false);
@@ -97,11 +97,7 @@ const DetallesTesisComponent = ({
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit)} className={className}>
-                <div className='flex justify-center'>
-                    <Link href={`/tesis/detalles/${idTesis - 1}`}><ArrowLeftIcon className='size-8' /></Link>
-                    <Link href={`/tesis/detalles/${idTesis + 1}`}><ArrowRightIcon className='size-8' /></Link>
-                </div>
-                {loading && (
+            {loading && (
                     <p>Cargando....</p>
                 )}
                 {!editMode ? (
@@ -251,11 +247,7 @@ const DetallesTesisComponent = ({
                     showBorder={true}
                 />
 
-                <div className='flex justify-center'>
-                    <Link href={`/tesis/detalles/${idTesis - 1}`}><ArrowLeftIcon className='size-8' /></Link>
-                    <Link href={`/tesis/detalles/${idTesis + 1}`}><ArrowRightIcon className='size-8' /></Link>
-                </div>
-                <Alert error={error} setError={() => setError(null)} />
+            <Alert error={error} setError={() => setError(null)} />
                 <section>
                 <h2 className='title-2'>Comite Directivo</h2>
                 <ul>

@@ -7,6 +7,7 @@ import { getCatalogoMaestros, GetCatalogoMaestrosType } from "@/utils/maestros/g
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import ReporteParticipacionesCursos from "./reporteParticipacionesCursos";
+import { getCursosMini, GetCursosMiniType } from "@/utils/cursos/getCursosMini";
 
 const ReporteParticipacionesCursosServer = async () => {
 
@@ -24,13 +25,15 @@ const ReporteParticipacionesCursosServer = async () => {
         responseGetCatalogoNivelesCurriculares,
         responseGetCatalogoOpcionesTerminales,
         responseGetParticipacionesCursos,
+        responseGetCursosMini,
     ]:[
         GetCatalogoMaestrosType,
         GetCatalogoRolesType,
         GetCatalogoProgramasType,
         GetCatalogoNivelesCurricularesType,
         GetCatalogoOpcionesTerminalesType,
-        GetParticipacionesCursosType
+        GetParticipacionesCursosType,
+        GetCursosMiniType,
     ] = await Promise.all([
         getCatalogoMaestros(token),
         getCatalogoRoles(token),
@@ -38,13 +41,14 @@ const ReporteParticipacionesCursosServer = async () => {
         getCatalogoNivelesCurriculares(token),
         getCatalogoOpcionesTerminales(token),
         getParticipacionesCursos(token),
+        getCursosMini(token),
     ]);
 
-    if( !responseGetCatalogoMaestros.success || !responseGetCatalogoRoles.success || !responseGetCatalogoProgramas.success ||
+    if( !responseGetCursosMini.success || !responseGetCatalogoMaestros.success || !responseGetCatalogoRoles.success || !responseGetCatalogoProgramas.success ||
         !responseGetCatalogoNivelesCurriculares.success || !responseGetCatalogoOpcionesTerminales.success || !responseGetParticipacionesCursos.success){
         notFound();
     }
-
+    console.log(responseGetCursosMini);
 
     return (
         <ReporteParticipacionesCursos
@@ -55,6 +59,7 @@ const ReporteParticipacionesCursosServer = async () => {
             catalogoNivelesCurriculares={responseGetCatalogoNivelesCurriculares.catalogo_niveles_curriculares}
             catalogoOpcionesTerminales={responseGetCatalogoOpcionesTerminales.catalogo_opciones_terminales}
             participacionesCursos={responseGetParticipacionesCursos.participaciones_cursos}
+            cursosMini={responseGetCursosMini.cursos_mini}
         />
     );
 };

@@ -2,6 +2,8 @@ import { useRef } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, BarController, ChartOptions, Chart } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import html2canvas from 'html2canvas';
+import { ArrowDownTrayIcon } from '@heroicons/react/24/outline';
 
 // Register necessary Chart.js components and plugins
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, BarController, ChartDataLabels);
@@ -22,6 +24,7 @@ const BarsPlot = ({
 
     // Define the ref type as a Chart.js instance
     const chartRef = useRef<Chart<'bar'>>(null);
+    const divRef = useRef<HTMLDivElement>(null);
 
     const chartData = {
         labels: labels,
@@ -51,7 +54,7 @@ const BarsPlot = ({
                 display: false,
             },
             title: {
-                display: true,
+                display: false,
                 text: title,
                 font: {
                     size: 20,
@@ -113,25 +116,27 @@ const BarsPlot = ({
     };
 
     // Function to download the plot
-    const downloadPlot = () => {
-        const chart = chartRef.current;
+    const downloadPlot = async () => {
+        const chart = divRef.current;
         if (chart) {
-            const imageURL = chart.toBase64Image(); // Converts chart to a base64 image
+            const canvas = await html2canvas(chart);
+            const image = canvas.toDataURL('image/png');
             const link = document.createElement('a');
-            link.href = imageURL;
+            link.href = image;
             link.download = 'grafica.png'; // Set file name for download
             link.click(); // Trigger the download
         }
     };
 
     return (
-        <div className='flex'>
-            <div className='flex-grow'>
+        <div ref={divRef} className='flex justify-center'>
+            <div className='w-[80%]'>
+                <div className='flex justify-center space-x-2'>
+                    <h2 className='title-2'>{title}</h2>
+                    <button title='Descargar Grafica' onClick={() => downloadPlot()}><ArrowDownTrayIcon className='size-6'/></button>
+                </div>
                 <Bar ref={chartRef} data={chartData} options={chartOptions} />
             </div>
-            <button onClick={downloadPlot} className="h-8 mt-4 p-1 bg-primary-light text-white rounded hover:bg-blue-700 self-end">
-                Descargar Gráfica
-            </button>
         </div>
     );
 };
