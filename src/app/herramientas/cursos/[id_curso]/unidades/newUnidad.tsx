@@ -52,9 +52,9 @@ const NewUnidad = ({
                     idPrefix='titulo-unidad'
                     idRaw='0'
                     editMode={true}
-                    register={register('titulo')}
+                    register={register('unidad')}
                     placeholder='Ingrese el Titulo de la Unidad'
-                    error={errors.titulo}
+                    error={errors.unidad}
                     showBorder={false}
                 />
                 </div>

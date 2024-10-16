@@ -11,6 +11,7 @@ import TesisPlot from "./tesisPlot";
 import { OpcionTerminalType } from "@/models/opcionTerminal";
 import { downloadCSV } from "@/utils/downloadCSV";
 import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
+import { Coordinacion2Type } from "@/models/coordinacion2";
 
 const ReporteTesis = ({
     className,
@@ -21,6 +22,7 @@ const ReporteTesis = ({
     catalogoGrados,
     catalogoAnos,
     catalogoOpcionesTerminales,
+    catalogoCoordinaciones2,
 }:{
     className: string,
     token: string,
@@ -30,6 +32,7 @@ const ReporteTesis = ({
     catalogoGrados: GradoType[],
     catalogoAnos: string[],
     catalogoOpcionesTerminales: OpcionTerminalType[],
+    catalogoCoordinaciones2: Coordinacion2Type[],
 }) => {
     const widths: [WidthType, WidthType] = ['w-[80%]', 'w-[20%]'];
 
@@ -39,7 +42,7 @@ const ReporteTesis = ({
     const handleDownloadCSV = () => {
         const dataToDownload = currentTesis.map((tesis) => ({
             tesis: tesis.titulo,
-            coordinacion: catalogoCoordinaciones.find((c) => c.id === tesis.id_coordinacion)?.coordinacion || '',
+            coordinacion: catalogoCoordinaciones2.find((c) => c.id === tesis.id_coordinacion_2)?.coordinacion_2 || '',
             fecha: tesis.fecha,
             pronace: catalogoPronaces.find((p) => p.id === tesis.id_pronace)?.pronace || '',
             programa: catalogoGrados.find((g) => g.id === tesis.id_grado)?.grado || '',
@@ -59,6 +62,7 @@ const ReporteTesis = ({
                 catalogoCoordinaciones={catalogoCoordinaciones}
                 catalogoAnos={catalogoAnos}
                 catalogoOpcionesTerminales={catalogoOpcionesTerminales}
+                catalogoCoordinaciones2={catalogoCoordinaciones2}
             />
             <FiltrosTesis
                 catalogoTesis={tesisMini}
@@ -68,6 +72,7 @@ const ReporteTesis = ({
                 catalogoGrados={catalogoGrados}
                 catalogoAnos={catalogoAnos}
                 catalogoOpcionesTerminales={catalogoOpcionesTerminales}
+                catalogoCoordinaciones2={catalogoCoordinaciones2}
             />
             <div className='flex items-center m-1 space-x-2'>
             <p>{`Total de ${currentTesis.length} Tesis Publicadas`}</p>

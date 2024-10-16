@@ -1,6 +1,7 @@
-import { getCurso } from "@/utils/cursos/getCurso";
+import { getCurso, GetCursoType } from "@/utils/cursos/getCurso";
 import { notFound } from "next/navigation";
 import HorasCursoForm from "./horasCursoForm";
+import { canEditCurso, getPermisosInCurso, GetPermisosInCursoType } from "@/utils/permisosCurso";
 
 const HorasCursoServer = async ({
     className,
@@ -12,18 +13,30 @@ const HorasCursoServer = async ({
     token: string,
 }) => {
 
-    const response = await getCurso(idCurso, token);
+    const [
+        responseGetCurso,
+        responseGetPermisosCurso,
+    ]:[
+        GetCursoType,
+        GetPermisosInCursoType,
+    ] = await Promise.all([
+        getCurso(idCurso, token),
+        getPermisosInCurso(idCurso, token),
+    ]);
 
-    if ( !response.success || response.curso === null ){
+    if ( !responseGetCurso.success || !responseGetPermisosCurso.success || responseGetCurso.curso === null ){
         notFound();
     }
+
+    const canEdit = canEditCurso(responseGetPermisosCurso.roles_curso);
 
     return (
         <HorasCursoForm
             className=''
             idCurso={idCurso}
             token={token}
-            curso={response.curso}
+            curso={responseGetCurso.curso}
+            canEdit={canEdit}
         />
     );
 };

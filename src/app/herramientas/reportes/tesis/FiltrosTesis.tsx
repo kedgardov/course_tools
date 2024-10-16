@@ -1,10 +1,13 @@
 'use client'
 
+import { Coordinacion2Type } from "@/models/coordinacion2";
 import { GradoType } from "@/models/grado";
 import { OpcionTerminalType } from "@/models/opcionTerminal";
 import { PronaceType } from "@/models/pronace";
 import { TesisMiniType } from "@/models/tesis";
 import { CoordinacionType } from "@/utils/repo_tesis/coordinaciones/getCatalogoCoordinaciones";
+import { FunnelIcon } from "@heroicons/react/24/outline";
+
 import { useEffect, useState } from "react";
 
 const FiltrosTesis = ({
@@ -15,6 +18,7 @@ const FiltrosTesis = ({
     catalogoGrados,
     catalogoAnos,
     catalogoOpcionesTerminales,
+    catalogoCoordinaciones2,
 }:{
     catalogoTesis: TesisMiniType[]
     setCurrentTesis: (newTesis: TesisMiniType[]) => void,
@@ -22,14 +26,21 @@ const FiltrosTesis = ({
     catalogoCoordinaciones: CoordinacionType[],
     catalogoGrados: GradoType[],
     catalogoAnos: string[],
-    catalogoOpcionesTerminales: OpcionTerminalType[]
+    catalogoOpcionesTerminales: OpcionTerminalType[],
+    catalogoCoordinaciones2: Coordinacion2Type[],
 }) => {
 
     const [selectedPronaces, setSelectedPronaces] = useState<PronaceType[]>(catalogoPronaces);
-    const [selectedCoordinaciones, setSelectedCoordinaciones] = useState<CoordinacionType[]>(catalogoCoordinaciones);
+    const [selectedCoordinaciones, setSelectedCoordinaciones] = useState<Coordinacion2Type[]>(catalogoCoordinaciones2);
     const [selectedGrados, setSelectedGrados] = useState<GradoType[]>(catalogoGrados);
     const [selectedOpcionesTerminales, setSelectedOpcionesTerminales] = useState<OpcionTerminalType[]>(catalogoOpcionesTerminales);
     const [selectedAnos, setSelectedAnos] = useState<string[]>(catalogoAnos);
+
+    const [showPronaceFilter, setShowPronaceFilter] = useState<boolean>(false);
+    const [showCoordinacionFilter, setShowCoordinacionFilter] = useState<boolean>(false);
+    const [showProgramaFilter, setShowProgramaFilter] = useState<boolean>(false);
+    const [showFechaFilter, setShowFechaFilter] = useState<boolean>(false);
+    const [showOpcionTerminalFilter, setShowOpcionTerminalFilter] = useState<boolean>(false);
 
     const togglePronaceFilter = (idPronace: number) => {
         if( selectedPronaces.find((p) => p.id === idPronace)){
@@ -48,7 +59,7 @@ const FiltrosTesis = ({
             const newSelectedCoordinaciones = selectedCoordinaciones.filter((c) => c.id !== idCoordinacion);
             setSelectedCoordinaciones(newSelectedCoordinaciones);
         }else{
-            const newSelectedCoordinacion = catalogoCoordinaciones.find((c) => c.id === idCoordinacion);
+            const newSelectedCoordinacion = catalogoCoordinaciones2.find((c) => c.id === idCoordinacion);
             if( newSelectedCoordinacion ){
                 setSelectedCoordinaciones([...selectedCoordinaciones, newSelectedCoordinacion]);
             }
@@ -92,7 +103,7 @@ const FiltrosTesis = ({
 
         const newTesis = catalogoTesis.filter((tesis) =>
             selectedPronaces.some((pronace) => pronace.id === tesis.id_pronace) &&
-            selectedCoordinaciones.some((coordinacion) => coordinacion.id === tesis.id_coordinacion) &&
+            selectedCoordinaciones.some((coordinacion) => coordinacion.id === tesis.id_coordinacion_2) &&
             selectedGrados.some((grado) => grado.id === tesis.id_grado ) &&
             selectedOpcionesTerminales.some((opcion) => opcion.id === tesis.id_opcion_terminal) &&
             selectedAnos.some((ano) => tesis.fecha.includes(ano))
@@ -104,8 +115,11 @@ const FiltrosTesis = ({
 
 return (
     <div>
-        <h2 className='title-2 mx-2'>Filtrar por Pronace</h2>
-        <div className='divider-dark mb-2'>
+        <button onClick={() => setShowPronaceFilter(prev => !prev)} className='mx-2 space-x-2 flex items-center'>
+            <FunnelIcon className='h-6 w-6 stroke-2'/>
+            <h2 className='title-2'>Filtrar por Pronace</h2>
+        </button>
+        <div className={`divider-dark mb-2 overflow-hidden transition-all ease-in-out duration-500 ${ !showPronaceFilter? 'max-h-0': 'max-h-80' }`}>
             <button onClick={() => setSelectedPronaces(catalogoPronaces)} className='filter-button-todos'>
                 Todos
             </button>
@@ -123,18 +137,22 @@ return (
             </button>
         </div>
 
-        <h2 className='title-2 mx-2'>Filtrar por Coordinación</h2>
-        <div className='divider-dark mb-2'>
-            <button onClick={() => setSelectedCoordinaciones(catalogoCoordinaciones)} className='filter-button-todos'>
+        <button onClick={() => setShowCoordinacionFilter(prev => !prev)} className='mx-2 space-x-2 flex items-center'>
+            <FunnelIcon className='h-6 w-6 stroke-2' />
+            <h2 className='title-2 mx-2'>Filtrar por Coordinación</h2>
+        </button>
+
+        <div className={`divider-dark mb-2 overflow-hidden transition-all ease-in-out duration-500 ${!showCoordinacionFilter? 'max-h-0' : 'max-h-80'}`}>
+            <button onClick={() => setSelectedCoordinaciones(catalogoCoordinaciones2)} className='filter-button-todos'>
                 Todas
             </button>
-            {catalogoCoordinaciones.map((coordinacion) => (
+            {catalogoCoordinaciones2.map((coordinacion) => (
                 <button
                     onClick={() => toggleCoordinacionFilter(coordinacion.id)}
                     key={`coordinaciones-filter-${coordinacion.id}`}
                     className={`${selectedCoordinaciones.find((c) => c.id === coordinacion.id) ? 'filter-button-on' : 'filter-button-off'}`}
                 >
-                    {coordinacion.coordinacion}
+                    {coordinacion.coordinacion_2}
                 </button>
             ))}
             <button onClick={() => setSelectedCoordinaciones([])} className='filter-button-ninguno'>
@@ -142,8 +160,11 @@ return (
             </button>
         </div>
 
-        <h2 className='title-2 mx-2'>Filtrar por Programa</h2>
-        <div className='divider-dark mb-2'>
+        <button onClick={() => setShowProgramaFilter(prev => !prev)} className='mx-2 space-x-2 flex items-center'>
+            <FunnelIcon className='h-6 w-6 stroke-2' />
+            <h2 className='title-2 mx-2'>Filtrar por Programa</h2>
+        </button>
+        <div className={`divider-dark mb-2 overflow-hidden transition-all ease-in-out duration-500 ${!showProgramaFilter? 'max-h-0' : 'max-h-80'}`}>
             <button onClick={() => setSelectedGrados(catalogoGrados)} className='filter-button-todos'>
                 Todas
             </button>
@@ -161,8 +182,11 @@ return (
             </button>
         </div>
 
-        <h2 className='title-2 mx-2'>Filtrar por Fecha</h2>
-        <div className='divider-dark mb-2'>
+        <button onClick={() => setShowFechaFilter(prev => !prev)} className='mx-2 space-x-2 flex items-center'>
+    <FunnelIcon className='h-6 w-6 stroke-2' />
+    <h2 className='title-2 mx-2'>Filtrar por Fecha</h2>
+</button>
+<div className={`divider-dark mb-2 overflow-hidden transition-all ease-in-out duration-500 ${!showFechaFilter ? 'max-h-0' : 'max-h-80'}`}>
             <button onClick={() => setSelectedAnos(catalogoAnos)} className='filter-button-todos'>
                 Todos
             </button>
@@ -180,8 +204,11 @@ return (
             </button>
         </div>
 
-        <h2 className='title-2 mx-2'>Filtrar por Opción Terminal</h2>
-        <div className='divider-dark mb-2'>
+        <button onClick={() => setShowOpcionTerminalFilter(prev => !prev)} className='mx-2 space-x-2 flex items-center'>
+    <FunnelIcon className='h-6 w-6 stroke-2' />
+    <h2 className='title-2 mx-2'>Filtrar por Opción Terminal</h2>
+</button>
+<div className={`divider-dark mb-2 overflow-hidden transition-all ease-in-out duration-500 ${!showOpcionTerminalFilter ? 'max-h-0' : 'max-h-80'}`}>
             <button onClick={() => setSelectedOpcionesTerminales(catalogoOpcionesTerminales)} className='filter-button-todos'>
                 Todas
             </button>

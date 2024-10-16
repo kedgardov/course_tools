@@ -1,7 +1,8 @@
-import { UseFormRegister, UseFormSetValue, UseFormWatch } from 'react-hook-form';
+import { FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import { UnidadDetallesType } from '@models/unidad';
 import { ActividadType } from '@/models/actividad';
 import { useEffect } from 'react';
+import SelectInput from '@/components/selectInput';
 
 
 const ActividadForm = ({
@@ -15,6 +16,8 @@ const ActividadForm = ({
     actividades,
     setValue,
     watch,
+    editMode,
+    errors,
 }: {
     className: string,
     tipo: string,
@@ -26,6 +29,8 @@ const ActividadForm = ({
     actividades: ActividadType[],
     setValue: UseFormSetValue<any>,
     watch: UseFormWatch<any>,
+    editMode: boolean,
+    errors: FieldErrors,
 }) => {
 
     const idActividad = Number(watch(id_actividad_field));
@@ -45,17 +50,20 @@ const ActividadForm = ({
     return (
         <div className={`${className}`}>
             <p className="text-xl pb-2">Actividad {tipo}</p>
-            <select
-                id={`actividad-${tipo}`}
-                {...register(id_actividad_field)}
-                className="w-full p-2 border rounded"
-            >
-                <option value="">Actividades sugeridas</option>
-                {actividades.map((actividad) => (
-                    <option key={actividad.id} value={actividad.id}>{actividad.actividad}</option>
-                ))}
-            </select>
 
+            <SelectInput<ActividadType>
+                className=''
+                idRaw='0'
+                idPrefix={`id-actividad-${tipo}`}
+                register={register(id_actividad_field, { valueAsNumber: true})}
+                editMode={editMode}
+                options={actividades}
+                error={undefined}
+                placeholder='Seleccione una actividad'
+                idKey='id'
+                valueKey='actividad'
+                showBorder={true}
+            />
             <textarea
                 id={`descripcion-${tipo}`}
                 {...register(descripcion_actividad_field)}

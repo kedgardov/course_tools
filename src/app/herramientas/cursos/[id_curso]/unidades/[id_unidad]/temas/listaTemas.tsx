@@ -11,17 +11,24 @@ import PrimaryButton from '@/components/primaryButton';
 import NewTema from './newTema';
 import Link from 'next/link';
 import { ArrowTurnLeftUpIcon } from '@heroicons/react/24/outline';
+import { UnidadType } from '@/models/unidad';
+import { insertTema } from '@/utils/temas/insertTema';
+import Alert from '@/components/alert';
 
 const ListaTemas = ({
     className,
     temas,
     idCurso,
     idUnidad,
+    unidad,
+    token,
 }:{
     className: string,
     temas: TemaType[],
     idCurso: number,
     idUnidad: number,
+    unidad: UnidadType,
+    token: string,
 }) => {
 
     const widths: [WidthType, WidthType, WidthType] = ['w-[8%]', 'w-[62%]', 'w-[30%]'];
@@ -29,6 +36,8 @@ const ListaTemas = ({
     const [currentTemas, setCurrentTemas] = useState<TemaType[]>(temas);
     const [order, setOrder] = useState(temas.map(t => t.id));
     const [addingMode, setAddingMode] = useState<boolean>(false);
+    const [ error, setError ] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
 
     const onReorder = (newOrder: number[]) => {
@@ -40,15 +49,23 @@ const ListaTemas = ({
        setCurrentTemas(updatedTemas);
     };
 
-    const handleAddTema = (data: TemaDataType) => {
+    const handleAddTema = async (data: TemaDataType) => {
+        setIsLoading(true);
         const newTema: TemaType = {
             id:0,
             numero: order.length+1,
             id_unidad: idUnidad,
-            titulo: data.titulo,
+            tema: data.tema,
         };
-        setCurrentTemas(prev => [...prev, newTema]);
-        setOrder(prev => [...prev, newTema.id]);
+        const response = await insertTema(idCurso, newTema, token);
+        if ( response.success ){
+            setCurrentTemas(prev => [...prev, {...newTema,id: response.id}]);
+            setOrder(prev => [...prev, response.id]);
+            setAddingMode(false);
+        } else {
+            setError(response.message);
+        }
+        setIsLoading(false);
     };
 
     const handleDeleteTema = (id: number) => {
@@ -67,11 +84,11 @@ const ListaTemas = ({
     return (
         <section className={`${className}`}>
             <div className='flex'>
-                <Link className='button-3 flex w-fit' href={`/cursos/${idCurso}/unidades`}>
+                <Link className='button-3 flex w-fit' href={`/herramientas/cursos/${idCurso}/unidades`}>
                     <ArrowTurnLeftUpIcon className='size-6'/>
                     Regresar
                 </Link>
-                <h2 className='title-2'>Temas de la Unidad</h2>
+                <h2 className='title-2'>{`Temas de la Unidad: ${unidad.unidad}`}</h2>
             </div>
             <ListHeaders
                 className=''
@@ -97,6 +114,8 @@ const ListaTemas = ({
                             idUnidad={idUnidad}
                             handleDeleteTema={handleDeleteTema}
                             widthList={widths}
+                            idCurso={idCurso}
+                            token={token}
                         />
                         </Reorder.Item>
                     ));
@@ -114,6 +133,7 @@ const ListaTemas = ({
             ):(
                 <PrimaryButton className='flex ml-auto mr-4' handleAction={ () => setAddingMode(true) } buttonLabel='Agregar' />
             )}
+            <Alert error={error} setError={setError}/>
         </section>
     );
 };

@@ -22,7 +22,7 @@ const NewEncargado = ({
     catalogoMaestros: MaestroType[],
     catalogoRoles: RolType[],
     className: string,
-    widthList: [WidthType, WidthType, WidthType, WidthType],
+    widthList: WidthType[],
     handleAdd: (data: EncargadoType) => void,
     selfDestruct: () => void,
 }) => {

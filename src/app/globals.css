@@ -53,16 +53,15 @@ body {
 
   .logo-square-box {
     @apply border border-[10px] border-primary-light rounded-[50px]
-    flex justify-center w-40 h-40 m-4 shadow-2xl
+    flex justify-center w-40 h-40 m-4
     transition-all ease-in-out duration-500 hover:scale-105;
   }
 
   .landing-nav-button {
     @apply py-1  px-4 bg-gradient-radial from-more-light/90 to-more-light rounded-full shadow-xl border flex items-center justify-center;
   }
-
   .landing-nav-text {
-    @apply  font-semibold text-dark cursor-pointer uppercase;
+    @apply  font-semibold text-dark cursor-pointer ;
   }
 
 
@@ -76,27 +75,27 @@ body {
   }
 
   .sidebar-background-expanded {
-    @apply w-80;
+    @apply w-60;
   }
 
   .sidebar-background-contracted {
-    @apply w-20;
+    @apply w-14;
   }
 
   .sidebar-link {
-    @apply mx-2 p-2 flex items-center transition ease-in-out duration-500 border border-0 rounded-xl;
+    @apply mx-1 p-1 flex items-center transition ease-in-out duration-500 border border-0 rounded-xl;
   }
 
   .sidebar-link-expanded {
-    @apply w-76 hover:bg-more-dark/40 hover:shadow;
+    @apply w-[232px] hover:bg-more-dark/40 hover:shadow;
   }
 
   .sidebar-link-contracted {
-    @apply w-16;
+    @apply w-12;
   }
 
   .sidebar-icon {
-    @apply p-2 h-12 w-12 border border-0 transition-all ease-in-out duration-500 rounded-3xl;
+    @apply p-2 h-10 w-10 border border-0 transition-all ease-in-out duration-500 rounded-3xl;
   }
 
   .sidebar-icon-lg {
@@ -120,11 +119,11 @@ body {
   }
 
   .sidebar-text-container {
-    @apply ml-auto text-2xl text-left transition ease-in-out duration-500;
+    @apply ml-auto text-lg text-left transition ease-in-out duration-500;
   }
 
   .sidebar-text-container-lg {
-    @apply ml-auto text-3xl text-left transition ease-in-out duration-500;
+    @apply ml-auto text-xl text-left transition ease-in-out duration-500;
   }
 
   .curso-general-input-horas {
@@ -138,6 +137,11 @@ body {
   .title-3-u {
     @apply text-xl uppercase text-dark;
   }
+
+  .title-3 {
+    @apply text-xl capitalize;
+  }
+
   .title-2 {
     @apply text-2xl capitalize;
   }
@@ -200,7 +204,7 @@ body {
 
 
   .button-3 {
-    @apply px-2 py-1 capitalize border rounded border-less-dark border-opacity-0 h-8
+    @apply px-2 py-1 capitalize border rounded border-less-dark border-opacity-0
     transition ease-in-out duration-500
     hover:border-opacity-100;
   }
@@ -234,11 +238,11 @@ body {
   }
 
   .input-label {
-    @apply px-1;
+    @apply p-0;
   }
 
   .input-label-container {
-    @apply flex px-2 h-6;
+    @apply flex px-0 h-6;
   }
 
   .input-label-loading {

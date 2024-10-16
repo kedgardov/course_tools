@@ -22,7 +22,8 @@ const ListaOpcionesTerminales = ({
     catalogoNivelesCurriculares,
     catalogoOpcionesTerminales,
     catalogoProgramas,
-    opcionesTerminales
+    opcionesTerminales,
+    canEdit,
 }:{
     className: string,
     idCurso: number,
@@ -31,9 +32,11 @@ const ListaOpcionesTerminales = ({
     catalogoOpcionesTerminales: OpcionTerminalType[],
     catalogoProgramas: ProgramaType[],
     opcionesTerminales: OpcionTerminalCursoType[],
+    canEdit: boolean,
 }) => {
 
-    const widthList: [WidthType, WidthType, WidthType, WidthType] = ['w-[35%]', 'w-[25%]', 'w-[20%]', 'w-[20%]'];
+    const widthList: WidthType[] = canEdit? ['w-[35%]', 'w-[25%]', 'w-[20%]', 'w-[20%]'] : ['w-[40%]','w-[35%]','w-[25%]'] ;
+    const headers: string[] = canEdit? ['Opcion Terminal', 'Programa', 'Nivel Academico', 'Acciones']:['Opcion Terminal', 'Programa', 'Nivel Academico'];
 
     const [currentOpcionesTerminales, setCurrentOpcionesTerminales] = useState<OpcionTerminalCursoType[]>(opcionesTerminales);
     const [addingMode, setAddingMode] = useState(false);
@@ -87,7 +90,7 @@ const ListaOpcionesTerminales = ({
             <ul>
                 <ListHeaders
                     className=''
-                    headersList={['Opcion Terminal', 'Programa', 'Nivel Academico', 'Acciones']}
+                    headersList={headers}
                     widthList={widthList}
                 />
                 {opcionesTerminales.length === 0? (
@@ -99,6 +102,7 @@ const ListaOpcionesTerminales = ({
                     <li key={opcionTerminal.id} className="divider-dark p-1">
                         <OpcionTerminal
                             className="flex"
+                            canEdit={canEdit}
                             opcionTerminal={opcionTerminal}
                             token={token}
                             handleDelete={handleDelete}
@@ -111,6 +115,8 @@ const ListaOpcionesTerminales = ({
                         />
                     </li>)
                 ))}
+                {canEdit && (
+                <>
                 {addingMode ? (
                     <li className="divider-dark p-1">
                         <NewOpcionTerminal
@@ -129,6 +135,8 @@ const ListaOpcionesTerminales = ({
                         handleAction={startAddingMode}
                         buttonLabel="Agregar"
                     />
+                )}
+                    </>
                 )}
             </ul>
             <Alert

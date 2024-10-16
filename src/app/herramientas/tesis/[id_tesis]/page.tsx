@@ -12,6 +12,7 @@ import { getCatalogoMaestros, GetCatalogoMaestrosType } from "@/utils/maestros/g
 import { getCatalogoRolesTesis, GetCatalogoRolesTesisType } from "@/utils/maestros/getCatalogoRolesTesis";
 import { getComiteDirectivoTesis, GetComiteDirectivoTesisType } from "@/utils/repo_tesis/tesis/getComiteDirectivoTesis";
 import { getCatalogoOpcionesTerminales, GetCatalogoOpcionesTerminalesType } from "@/utils/repo_tesis/opcionesTerminales/getCatalogoOpcionesTerminales";
+import { getCatalogoCoordinaciones2, GetCatalogoCoordinaciones2Type } from "@/utils/repo_tesis/coordinaciones/getCatalogoCoordinaciones2";
 
 
 const DetallesTesis = async ({
@@ -38,6 +39,7 @@ const DetallesTesis = async ({
         responseGetCatalogoRolesTesis,
         responseGetComiteDirectivo,
         responseGetCatalogoOpcionesTerminales,
+        responseGetCatalogoCoordinaciones2,
     ]: [
         GetTesisResponseType,
         GetCatalogoCoordinacionesType,
@@ -49,6 +51,7 @@ const DetallesTesis = async ({
         GetCatalogoRolesTesisType,
         GetComiteDirectivoTesisType,
         GetCatalogoOpcionesTerminalesType,
+        GetCatalogoCoordinaciones2Type,
     ] = await Promise.all([
         getTesis(idTesis, token),
         getCatalogoCoordinaciones(token),
@@ -60,8 +63,8 @@ const DetallesTesis = async ({
         getCatalogoRolesTesis(token),
         getComiteDirectivoTesis(idTesis, token),
         getCatalogoOpcionesTerminales(token),
+        getCatalogoCoordinaciones2(token),
     ]);
-
 
     if (!responseGetTesis.tesis) {
         notFound();
@@ -83,6 +86,7 @@ const DetallesTesis = async ({
                 catalogoMaestros={responseGetCatalogoMaestros.catalogo_maestros}
                 catalogoRolesTesis={responseGetCatalogoRolesTesis.catalogo_roles_tesis}
                 catalogoOpcionesTerminales={responseGetCatalogoOpcionesTerminales.catalogo_opciones_terminales}
+                catalogoCoordinaciones2={responseGetCatalogoCoordinaciones2.catalogo_coordinaciones_2}
             />
            
         </section>

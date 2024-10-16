@@ -19,14 +19,17 @@ const CoordinacionesList = ({
     catalogo_coordinaciones,
     className,
     token,
+    canEdit,
 }:{
     idCurso: number,
     coordinaciones: CoordinacionCursoType[],
     catalogo_coordinaciones: CoordinacionCatalogoType[],
     className: string,
     token: string,
+    canEdit: boolean,
 }) => {
-    const widths: [WidthType, WidthType] = ['w-[60%]','w-[40%]'];
+    const widths: WidthType[] = canEdit? ['w-[60%]','w-[40%]']:['w-[100%]'];
+    const headers: string[] = canEdit? ['Sede', 'Acciones']:['Sede'];
 
     const [addingMode, setAddingMode] = useState<boolean>(false);
     const [currentCoordinaciones, setCurrentCoordinaciones] = useState<CoordinacionCursoType[]>(coordinaciones);
@@ -71,13 +74,13 @@ const CoordinacionesList = ({
     return (
         <section className={`${className}`}>
             <div className='m-1 title-2-container'>
-                <h2 className='title-2'>Coordinaciones</h2>
+                <h2 className='title-2'>Sedes</h2>
                 <LoadingComponent isLoading={loadingMode}/>
             </div>
             <ul>
                 <ListHeaders
                     className=''
-                    headersList={['Coordinacion', 'Acciones']}
+                    headersList={headers}
                     widthList={widths}
                 />
                 {currentCoordinaciones.map((coordinacion) => (
@@ -91,10 +94,13 @@ const CoordinacionesList = ({
                             stopLoadingMode={stopLoadingMode}
                             widthList={widths}
                             handleDelete={handleDelete}
+                            canEdit={canEdit}
                         />
                     </li>
                 ))}
                 </ul>
+                {canEdit && (
+                <>
                 {addingMode? (
                     <NewCoordinacion
                         catalogoCoordinaciones={catalogo_coordinaciones}
@@ -107,6 +113,8 @@ const CoordinacionesList = ({
                     />
                 ):(
                   <PrimaryButton className='flex ml-auto mr-4' handleAction={ () => setAddingMode(true) } buttonLabel='Nueva Coordinacion'/>
+                )}
+                </>
                 )}
             <Alert
                 error={error}

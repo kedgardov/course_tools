@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 
-const CriterioScheme = z.object({
+export const CriterioScheme = z.object({
     id: z.number().int().nonnegative(),
     id_curso: z.number().int().nonnegative(),
     criterio: z.string({message:'Ingrese un criterio'}).min(1,{message:'Ingrese un Criterio'}).max(50, {message: 'Maximo 50 caracteres'}),

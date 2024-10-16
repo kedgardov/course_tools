@@ -89,8 +89,8 @@ const Fuente = ({
                 ):(
                     <>
                         <div className='w-1/2'>
-                            <Link className='button-3' href={`/cursos/${idCurso}/fuentes/${fuente.id}/detalles`}>Ver Detalles</Link>
-                            <Link className='button-3' href={`/cursos/${idCurso}/fuentes/${fuente.id}/autores`}>Ver Autores</Link>
+                            <Link className='button-3' href={`/herramientas/cursos/${idCurso}/fuentes/${fuente.id}/detalles`}>Ver Detalles</Link>
+                            <Link className='button-3' href={`/herramientas/cursos/${idCurso}/fuentes/${fuente.id}/autores`}>Ver Autores</Link>
                         </div>
                         <div className='w-1/2'>
                             <UpdateButton title='Actualizar Cita Bibligrafica' className='mx-2' handleUpdate={()=>console.log('update')}/>

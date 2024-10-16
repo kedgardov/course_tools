@@ -24,6 +24,7 @@ const DatosBasicosForm = ({
     curso,
     catalogoTiposCursos,
     catalogoModalidadesCursos,
+    canEdit,
 }:{
     className: string,
     idCurso: number,
@@ -31,6 +32,7 @@ const DatosBasicosForm = ({
     curso: CursoType,
     catalogoTiposCursos: TipoCursoType[],
     catalogoModalidadesCursos: ModalidadCursoType[],
+    canEdit: boolean,
 }) => {
     const [error, setError] = useState<string | null>(null);
     const [editMode, setEditMode] = useState<boolean>(false);
@@ -70,7 +72,7 @@ const DatosBasicosForm = ({
             <fieldset>
                 <legend className='m-1 title-2-container'>
                     <h2 className='title-2'>Datos Basicos</h2>
-                    {!editMode && !loading && (
+                    {canEdit && !editMode && !loading && (
                         <EditButton
                             className='mx-1'
                             title='Editar datos basicos del curso'
@@ -81,6 +83,7 @@ const DatosBasicosForm = ({
                         <p>Loading</p>
                     )}
                 </legend>
+                <div className='px-2'>
                 <TextInputLabel
                     className='m-1'
                     label='Nombre del Curso en Ingles'
@@ -93,7 +96,7 @@ const DatosBasicosForm = ({
                     error={errors.nombre_ingles}
                     showBorder={true}
                 />
-                <div className='flex'>
+                <div className='flex my-4'>
                     <SelectInputLabel <TipoCursoType>
                         className='m-1'
                         idPrefix='id-tipo-curso'
@@ -137,6 +140,7 @@ const DatosBasicosForm = ({
                         />
                     </div>
                 )}
+        </div>
             </fieldset>
         </form>
             <Alert error={error} setError={setError}/>

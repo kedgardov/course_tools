@@ -26,7 +26,7 @@ const NewOpcionTerminal= ({
     catalogoOpcionesTerminales: OpcionTerminalType[],
     catalogoProgramas: ProgramaType[],
     catalogoNivelesCurriculares: NivelCurricularType[],
-    widthList: [WidthType, WidthType, WidthType, WidthType]
+    widthList: WidthType[],
 }) => {
 
     const { register, handleSubmit, reset, formState:{ errors, isDirty } } = useForm<OpcionTerminalCursoDataType>({
@@ -34,7 +34,6 @@ const NewOpcionTerminal= ({
     });
 
     const onSubmit: SubmitHandler<OpcionTerminalCursoDataType> = (data) => {
-        console.log(data);
         handleAddOpcionTerminal(data);
     }
 

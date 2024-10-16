@@ -1,0 +1,46 @@
+import { getHabilidadesCurso, GetHabilidadesCursoType } from "@/utils/habilidades/getHabilidadesCurso";
+import TablaHabilidadesCurso from "./tablaHabilidadesCurso"
+import { getCatalogoHabilidades, GetCatalogoHabilidadesType } from "@/utils/habilidades/getCatalogoHabilidades";
+import { getCatalogoGruposHabilidades, GetCatalogoGruposHabilidadesType } from "@/utils/habilidades/getCatalogoGruposHabilidades";
+import { notFound } from "next/navigation";
+
+const HabilidadesCurso = async ({
+    className,
+    idCurso,
+    token,
+}:{
+    className: string,
+    idCurso: number,
+    token: string,
+}) => {
+
+    const [
+        responseGetHabilidadesCurso,
+        responseGetCatalogoHabilidades,
+        responseGetCatalogoGruposHabilidades,
+    ]:[
+        GetHabilidadesCursoType,
+        GetCatalogoHabilidadesType,
+        GetCatalogoGruposHabilidadesType,
+    ] = await Promise.all([
+        getHabilidadesCurso(idCurso, token),
+        getCatalogoHabilidades(token),
+        getCatalogoGruposHabilidades(token),
+    ]);
+
+    if ( !responseGetHabilidadesCurso.success || !responseGetCatalogoHabilidades.success || !responseGetCatalogoGruposHabilidades.success ){
+        notFound();
+    }
+
+    return (
+        <TablaHabilidadesCurso
+            className={className}
+            idCurso={idCurso}
+            token={token}
+            habilidadesCurso={responseGetHabilidadesCurso.habilidades_curso}
+            catalogoHabilidades={responseGetCatalogoHabilidades.catalogo_habilidades}
+            catalogoGruposHabilidades={responseGetCatalogoGruposHabilidades.catalogo_grupos_habilidades}
+        />
+    );
+};
+export default HabilidadesCurso;

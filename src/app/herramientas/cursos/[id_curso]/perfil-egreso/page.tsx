@@ -1,8 +1,14 @@
-import { getCurso } from "@/utils/cursos/getCurso";
+import { getCurso, GetCursoType } from "@/utils/cursos/getCurso";
 import { parseId } from "@/utils/parseId";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import PerfilEgresoForm from "./perfilEgresoForm";
+import { getHabilidadesCurso, GetHabilidadesCursoType } from "@/utils/habilidades/getHabilidadesCurso";
+import { getCatalogoHabilidades, GetCatalogoHabilidadesType } from "@/utils/habilidades/getCatalogoHabilidades";
+import { getCatalogoGruposHabilidades, GetCatalogoGruposHabilidadesType } from "@/utils/habilidades/getCatalogoGruposHabilidades";
+import { GrupoHabilidadType } from "@/models/grupoHabilidad";
+import { HabilidadCursoType, HabilidadType } from "@/models/habilidad";
+import TablaHabilidadesCurso from "./tablaHabilidadesCurso";
 
 const PerfilEgreso = async ({
     params,
@@ -20,22 +26,51 @@ const PerfilEgreso = async ({
         notFound();
     }
 
-    const response = await getCurso(idCurso, token);
+
+    const [
+        responseGetHabilidadesCurso,
+        responseGetCatalogoHabilidades,
+        responseGetCatalogoGruposHabilidades,
+        responseGetCurso,
+    ]:[
+        GetHabilidadesCursoType,
+        GetCatalogoHabilidadesType,
+        GetCatalogoGruposHabilidadesType,
+        GetCursoType,
+    ] = await Promise.all([
+        getHabilidadesCurso(idCurso, token),
+        getCatalogoHabilidades(token),
+        getCatalogoGruposHabilidades(token),
+        getCurso(idCurso, token),
+    ]);
 
 
-    if ( !response.success || response.curso === null ){
+     if ( !responseGetHabilidadesCurso.success || !responseGetCatalogoHabilidades.success || !responseGetCatalogoGruposHabilidades.success ||
+          !responseGetCurso.success || responseGetCurso.curso === null){
+         notFound();
+     }
 
-        notFound();
-
-    }
 
     return (
+        <section>
+            <TablaHabilidadesCurso
+                idCurso={idCurso}
+                className=''
+                token={token}
+                habilidadesCurso={responseGetHabilidadesCurso.habilidades_curso}
+                catalogoHabilidades={responseGetCatalogoHabilidades.catalogo_habilidades}
+                catalogoGruposHabilidades={responseGetCatalogoGruposHabilidades.catalogo_grupos_habilidades}
+            />
         <PerfilEgresoForm
             className=''
             token={token}
             idCurso={idCurso}
-            curso={response.curso}
+            curso={responseGetCurso.curso}
+            habilidadesCurso={responseGetHabilidadesCurso.habilidades_curso}
+            catalogoHabilidades={responseGetCatalogoHabilidades.catalogo_habilidades}
+            catalogoGruposHabilidades={responseGetCatalogoGruposHabilidades.catalogo_grupos_habilidades}
         />
+        </section>
     );
 };
 export default PerfilEgreso;

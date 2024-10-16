@@ -1,4 +1,5 @@
 'use client'
+import { Coordinacion2Type } from "@/models/coordinacion2";
 import { GradoType } from "@/models/grado";
 import { OpcionTerminalType } from "@/models/opcionTerminal";
 import { ParticipacionesDocentesType, ParticipacionTesisType } from "@/models/participacionTesis";
@@ -18,6 +19,7 @@ const FiltrosParticipacionesTesis = ({
     catalogoAnos,
     catalogoOpcionesTerminales,
     participacionesTesis,
+    catalogoCoordinaciones2,
 }:{
     className: string,
     setCurrentParticipantes: ( participantes: ParticipacionesDocentesType[] ) => void,
@@ -29,10 +31,11 @@ const FiltrosParticipacionesTesis = ({
     catalogoAnos: string[],
     catalogoOpcionesTerminales: OpcionTerminalType[],
     participacionesTesis: ParticipacionTesisType[],
+    catalogoCoordinaciones2: Coordinacion2Type[],
 }) => {
 
     const [selectedPronaces, setSelectedPronaces] = useState<PronaceType[]>(catalogoPronaces);
-    const [selectedCoordinaciones, setSelectedCoordinaciones] = useState<CoordinacionType[]>(catalogoCoordinaciones);
+    const [selectedCoordinaciones, setSelectedCoordinaciones] = useState<Coordinacion2Type[]>(catalogoCoordinaciones2);
     const [selectedGrados, setSelectedGrados] = useState<GradoType[]>(catalogoGrados);
     const [selectedAnos, setSelectedAnos] = useState<string[]>(catalogoAnos);
     const [selectedRolesTesis, setSelectedRolesTesis] = useState<RolTesisType[]>(catalogoRolesTesis);
@@ -48,7 +51,7 @@ const FiltrosParticipacionesTesis = ({
     useEffect(()=>{
         const newParticipacionesTesis = participacionesTesis.filter((participacion) =>
             selectedPronaces.some((pronace) => pronace.id === participacion.id_pronace) &&
-            selectedCoordinaciones.some((coordinacion) => coordinacion.id === participacion.id_coordinacion) &&
+            selectedCoordinaciones.some((coordinacion) => coordinacion.id === participacion.id_coordinacion_2) &&
             selectedGrados.some((grado) => grado.id === participacion.id_grado ) &&
             selectedAnos.some((ano) => participacion.fecha.includes(ano)) &&
             selectedRolesTesis.some((rolTesis) => rolTesis.id === participacion.id_rol_tesis) &&
@@ -83,7 +86,7 @@ const FiltrosParticipacionesTesis = ({
             const newSelectedCoordinaciones = selectedCoordinaciones.filter((c) => c.id !== idCoordinacion);
             setSelectedCoordinaciones(newSelectedCoordinaciones);
         }else{
-            const newSelectedCoordinacion = catalogoCoordinaciones.find((c) => c.id === idCoordinacion);
+            const newSelectedCoordinacion = catalogoCoordinaciones2.find((c) => c.id === idCoordinacion);
             if( newSelectedCoordinacion ){
                 setSelectedCoordinaciones([...selectedCoordinaciones, newSelectedCoordinacion]);
             }
@@ -160,16 +163,16 @@ return (
         {/* Coordinacion Filter */}
         <h2 className='title-2 mx-2'>Filtrar por Coordinación</h2>
         <div className='divider-dark mb-2'>
-            <button onClick={() => setSelectedCoordinaciones(catalogoCoordinaciones)} className='filter-button-todos'>
+            <button onClick={() => setSelectedCoordinaciones(catalogoCoordinaciones2)} className='filter-button-todos'>
                 Todas
             </button>
-            {catalogoCoordinaciones.map((coordinacion) => (
+            {catalogoCoordinaciones2.map((coordinacion) => (
                 <button
                     onClick={() => toggleCoordinacionFilter(coordinacion.id)}
                     className={`${selectedCoordinaciones.find((c) => c.id === coordinacion.id) ? 'filter-button-on' : 'filter-button-off'}`}
                     key={coordinacion.id}
                 >
-                    {coordinacion.coordinacion}
+                    {coordinacion.coordinacion_2}
                 </button>
             ))}
             <button onClick={() => setSelectedCoordinaciones([])} className='filter-button-ninguno'>

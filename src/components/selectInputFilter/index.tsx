@@ -39,7 +39,7 @@ const SelectInputFilter = <T,>({
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     return (
-        <div className={`${className} flex`}>
+        <div className={`${className} flex items-start`}>
             <SelectInput <T>
                 className='flex-grow'
                 idPrefix={idPrefix}

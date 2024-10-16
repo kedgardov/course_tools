@@ -26,16 +26,18 @@ const Encargado = ({
     handleDelete,
     startLoadingMode,
     stopLoadingMode,
+    canEdit,
 }:{
     className: string,
     token: string,
     encargado: EncargadoType,
     catalogoMaestros: MaestroType[],
     catalogoRoles: RolType[],
-    widthList: [WidthType, WidthType, WidthType, WidthType],
+    widthList: WidthType[],
     handleDelete: (id: number) => void,
     startLoadingMode: () => void,
     stopLoadingMode: () => void,
+    canEdit: boolean,
 }) => {
     const [editMode, setEditMode] = useState<boolean>(false);
     const [ error, setError ] = useState<string | null>(null);
@@ -69,7 +71,7 @@ const Encargado = ({
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className={`${className} flex`}>
+        <form onSubmit={handleSubmit(onSubmit)} className={`${className} flex items-center `}>
             <div className={widthList[0]}>
                 <SelectInputFilter<MaestroType>
                     className='w-full'
@@ -106,6 +108,8 @@ const Encargado = ({
                     Ver Maestro
                 </Link>
             </div>
+
+            {canEdit && (
             <div className={`${widthList[3]} flex`}>
             {editMode? (
             <>
@@ -119,6 +123,8 @@ const Encargado = ({
             </>
             )}
             </div>
+
+            )}
             <Alert
                 error={error}
                 setError={setError}

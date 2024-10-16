@@ -21,6 +21,7 @@ const ListaEncargados = ({
     catalogoMaestros,
     catalogoRoles,
     encargados,
+    canEdit,
 }: {
     className: string,
     token: string,
@@ -28,9 +29,11 @@ const ListaEncargados = ({
     catalogoMaestros: MaestroType[],
     catalogoRoles: RolType[],
     encargados: EncargadoType[],
+    canEdit: boolean,
 }) => {
 
-    const widths: [WidthType, WidthType, WidthType, WidthType] = ['w-[50%]', 'w-[20%]', 'w-[15%]', 'w-[15%]'];
+    const widths: WidthType[] = canEdit? ['w-[50%]', 'w-[20%]', 'w-[15%]', 'w-[15%]']:['w-[60%]', 'w-[30%]', 'w-[20%]'];
+    const headers: string[] = canEdit? ['Encargada/o','Rol','Ver Docente','Acciones']:['Encargada/o','Rol','Ver Docente'];
 
     const [addingMode, setAddingMode] = useState<boolean>(false);
     const [currentEncargados, setCurrentEncargados] = useState<EncargadoType[]>(encargados);
@@ -77,7 +80,7 @@ const ListaEncargados = ({
             <ul>
                 <ListHeaders
                     className=''
-                    headersList={['Encargado', 'Rol', 'Links', 'Acciones']}
+                    headersList={headers}
                     widthList={widths}
                 />
                 {currentEncargados.map((encargado) => (
@@ -92,10 +95,13 @@ const ListaEncargados = ({
                             handleDelete={() => handleDelete(encargado.id)}
                             startLoadingMode={() => setLoadingMode(true)}
                             stopLoadingMode={() => setLoadingMode(false)}
+                            canEdit={canEdit}
                         />
                     </li>
                 ))}
             </ul>
+            {canEdit && (
+            <>
             {addingMode ? (
                 <NewEncargado
                     catalogoMaestros={catalogoMaestros}
@@ -107,6 +113,8 @@ const ListaEncargados = ({
                 />
             ) : (
                 <PrimaryButton className='flex ml-auto mr-4' handleAction={() => setAddingMode(true)} buttonLabel='Nuevo Encargado' />
+            )}
+            </>
             )}
         <Alert
             error={error}

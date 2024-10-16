@@ -9,8 +9,8 @@ import { notFound } from "next/navigation";
 import ReporteParticipacionesTesis from "./reporteParticipacionesTesis";
 import { getParticipacionesTesis, GetParticipacionesTesisType } from "@/utils/maestros/getParticipacionesTesis";
 import { getCatalogoOpcionesTerminales, GetCatalogoOpcionesTerminalesType } from "@/utils/repo_tesis/opcionesTerminales/getCatalogoOpcionesTerminales";
-import { GetTesisResponseType } from "@/utils/repo_tesis/tesis/getTesis";
 import { getTesisMini, GetTesisMiniResponseType } from "@/utils/repo_tesis/tesis/getTesisMini";
+import { getCatalogoCoordinaciones2, GetCatalogoCoordinaciones2Type } from "@/utils/repo_tesis/coordinaciones/getCatalogoCoordinaciones2";
 
 
 
@@ -27,6 +27,7 @@ const ReporteParticipacionesTesisServer = async () => {
         responseGetParticipacionesTesis,
         responseGetCatalogoOpcionesTerminales,
         responseGetTesisMini,
+        responseGetCatalogoCoordinaciones2,
     ]:[
         GetCatalogoMaestrosType,
         GetCatalogoRolesTesisType,
@@ -36,6 +37,7 @@ const ReporteParticipacionesTesisServer = async () => {
         GetParticipacionesTesisType,
         GetCatalogoOpcionesTerminalesType,
         GetTesisMiniResponseType,
+        GetCatalogoCoordinaciones2Type,
     ] = await Promise.all([
         getCatalogoMaestros(token),
         getCatalogoRolesTesis(token),
@@ -45,10 +47,13 @@ const ReporteParticipacionesTesisServer = async () => {
         getParticipacionesTesis(token),
         getCatalogoOpcionesTerminales(token),
         getTesisMini(token),
+        getCatalogoCoordinaciones2(token),
     ]);
 
     if ( !responseGetTesisMini.success|| !responseGetCatalogoMaestros.success || !responseGetCatalogoRolesTesis.success || !responseGetCatalogoCoordinaciones.success ||
-         !responseGetCatalogoPronaces.success || !responseGetCatalogoGrados || !responseGetParticipacionesTesis || !responseGetCatalogoOpcionesTerminales.success ){
+         !responseGetCatalogoPronaces.success || !responseGetCatalogoGrados || !responseGetParticipacionesTesis || !responseGetCatalogoOpcionesTerminales.success ||
+         !responseGetCatalogoCoordinaciones2.success
+        ){
         notFound();
     }
 
@@ -66,6 +71,7 @@ const ReporteParticipacionesTesisServer = async () => {
             catalogoOpcionesTerminales={responseGetCatalogoOpcionesTerminales.catalogo_opciones_terminales}
             participacionesTesis={responseGetParticipacionesTesis.participaciones_tesis}
             tesisMini={responseGetTesisMini.tesis_mini}
+            catalogoCoordinaciones2={responseGetCatalogoCoordinaciones2.catalogo_coordinaciones_2}
         />
     );
 };

@@ -19,7 +19,7 @@ const NewCoordinacion = ({
     catalogoCoordinaciones: CoordinacionCatalogoType[],
     className: string,
     idCurso: number,
-    widthList: [WidthType, WidthType],
+    widthList: WidthType[],
     handleAdd: (data: CoordinacionCursoDataType) => void,
     selfDestruct: () => void,
 }) => {

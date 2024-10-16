@@ -10,17 +10,21 @@ import SecondarySubmit from '@/components/secondarySubmit';
 import TertiaryButton from '@/components/tertiaryButton';
 import DeleteButton from '@/components/deleteButton';
 import EditButton from '@/components/editButton';
+import { updateCriterio } from '@/utils/criterios/updateCriterio';
+import Alert from '@/components/alert';
 
 const Criterio = ({
     className,
     criterio,
     handleDelete,
     widthList,
+    token,
 }:{
     className: string,
     criterio: CriterioType,
     handleDelete: (id: number) => void,
     widthList: [WidthType, WidthType, WidthType],
+    token: string,
 }) => {
 
     const { register, reset, handleSubmit, formState:{ errors, isDirty } } = useForm<CriterioDataType>({
@@ -29,16 +33,26 @@ const Criterio = ({
     });
 
     const [editMode, setEditMode] = useState<boolean>(false);
+    const [ error, setError ] = useState<string | null>(null);
 
     const handleCancel = () => {
         reset();
         setEditMode(false);
     };
 
-    const onSubmit: SubmitHandler<CriterioDataType> = (data) => {
-        console.log(data);
-        setEditMode(false);
-        reset(data);
+    const onSubmit: SubmitHandler<CriterioDataType> = async (data) => {
+        const updatedCriterio: CriterioType = {
+            ...criterio,
+            criterio: data.criterio,
+            valor: data.valor,
+        };
+        const response = await updateCriterio(updatedCriterio, token);
+        if( response.success ){
+            setEditMode(false);
+            reset(data);
+        } else {
+            setError(response.message);
+        }
     };
 
     return (
@@ -80,6 +94,7 @@ const Criterio = ({
                 </>
                 )}
                 </div>
+            <Alert error={error} setError={setError} />
             </form>
     );
 

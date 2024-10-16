@@ -13,14 +13,15 @@ const TabsNavbar = ({
 
 
     useEffect(() => {
-         const tabs: string[] = [
+        const tabs: string[] = [
             'general',
+            'perfil-egreso',
             'objetivos',
             'unidades',
             'evaluacion',
             'colaboradores',
             'fuentes'
-         ];
+        ];
         const getTab = (path: string) => {
             const tab = tabs.find((tab) => path.includes(tab));
         return tab ? tab : '';
@@ -32,6 +33,7 @@ const TabsNavbar = ({
     return (
         <nav className='flex'>
             <Link className={`tab ${currentTab === 'general' ? 'selected-tab' : ''}`} href={`/herramientas/cursos/${idCurso}/general`}>General</Link>
+            <Link className={`tab ${currentTab === 'perfil-egreso' ? 'selected-tab' : ''}`} href={`/herramientas/cursos/${idCurso}/perfil-egreso`}>Perfil de Egreso</Link>
             <Link className={`tab ${currentTab === 'objetivos' ? 'selected-tab' : ''}`} href={`/herramientas/cursos/${idCurso}/objetivos`}>Objetivos</Link>
             <Link className={`tab ${currentTab === 'unidades' ? 'selected-tab' : ''}`} href={`/herramientas/cursos/${idCurso}/unidades`}>Contenido</Link>
             <Link className={`tab ${currentTab === 'evaluacion' ? 'selected-tab' : ''}`} href={`/herramientas/cursos/${idCurso}/evaluacion`}>Evaluación</Link>

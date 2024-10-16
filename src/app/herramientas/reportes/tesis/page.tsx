@@ -6,6 +6,7 @@ import { cookies } from "next/headers";
 import ReporteTesis from "./ReporteTesis";
 import { notFound } from "next/navigation";
 import { GetCatalogoOpcionesTerminalesType, getCatalogoOpcionesTerminales } from "@/utils/repo_tesis/opcionesTerminales/getCatalogoOpcionesTerminales";
+import { getCatalogoCoordinaciones2, GetCatalogoCoordinaciones2Type } from "@/utils/repo_tesis/coordinaciones/getCatalogoCoordinaciones2";
 
 
 const ReporteTesisServer = async () => {
@@ -18,28 +19,30 @@ const ReporteTesisServer = async () => {
         responseGetCatalogoGrados,
         responseGetCatalogoPronaces,
         responseGetCatalogoOpcionesTerminales,
+        responseGetCatalogoCoordinaciones2,
     ]:[
         GetTesisMiniResponseType,
         GetCatalogoCoordinacionesType,
         GetCatalogoGradosType,
         GetCatalogoPronacesType,
         GetCatalogoOpcionesTerminalesType,
+        GetCatalogoCoordinaciones2Type,
     ] = await Promise.all([
         getTesisMini(token),
         getCatalogoCoordinaciones(token),
         getCatalogoGrados(token),
         getCatalogoPronaces(token),
         getCatalogoOpcionesTerminales(token),
+        getCatalogoCoordinaciones2(token),
     ]);
 
     if( !responseGetTesisMini.success && !responseGetCatalogoCoordinaciones.success && !responseGetCatalogoGrados.success &&
-        !responseGetCatalogoPronaces.success && !responseGetCatalogoOpcionesTerminales.success ){
+        !responseGetCatalogoPronaces.success && !responseGetCatalogoCoordinaciones2.success && !responseGetCatalogoOpcionesTerminales.success ){
         notFound();
     }
 
     const catalogoAnos: string[] = ['2018','2019', '2020', '2021', '2022', '2023', '2024'];
 
-    console.log(responseGetCatalogoOpcionesTerminales);
     return (
         <ReporteTesis
             className='p-4'
@@ -50,6 +53,7 @@ const ReporteTesisServer = async () => {
             catalogoGrados={responseGetCatalogoGrados.catalogo_grados}
             catalogoAnos={catalogoAnos}
             catalogoOpcionesTerminales={responseGetCatalogoOpcionesTerminales.catalogo_opciones_terminales}
+            catalogoCoordinaciones2={responseGetCatalogoCoordinaciones2.catalogo_coordinaciones_2}
         />
     );
 };

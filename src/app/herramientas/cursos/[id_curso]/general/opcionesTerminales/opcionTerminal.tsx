@@ -28,6 +28,7 @@ const OpcionTerminal = ({
     widthList,
     startLoadingMode,
     stopLoadingMode,
+    canEdit,
 }:{
     className: string,
     token: string,
@@ -36,9 +37,10 @@ const OpcionTerminal = ({
     catalogoOpcionesTerminales: OpcionTerminalType[],
     catalogoProgramas: ProgramaType[],
     catalogoNivelesCurriculares: NivelCurricularType[],
-    widthList:[WidthType, WidthType, WidthType, WidthType],
+    widthList: WidthType[],
     startLoadingMode: () => void,
     stopLoadingMode: () => void,
+    canEdit: boolean,
 }) => {
 
     const [editMode, setEditMode] = useState<boolean>(false);
@@ -122,8 +124,9 @@ const OpcionTerminal = ({
                     showBorder={false}
                 />
             </div>
+            {canEdit && (
             <div className={widthList[3]}>
-            {editMode? (
+                    {editMode? (
                 <div className='flex'>
                     <SecondarySubmit isDirty={isDirty} className='w-1/2 mx-1' buttonLabel='Guardar'/>
                     <TertiaryButton className='w-1/2 mx-1' handleAction={() => handleCancel()} buttonLabel='Cancelar'/>
@@ -135,6 +138,7 @@ const OpcionTerminal = ({
                 </>
             )}
             </div>
+            )}
             <Alert
                 error={error}
                 setError={setError}

@@ -8,6 +8,7 @@ import { CoordinacionType } from "@/utils/repo_tesis/coordinaciones/getCatalogoC
 import { useEffect, useState } from "react";
 import { OpcionTerminalType } from "@/models/opcionTerminal";
 import BarsPlot from "@/components/barsPlot";
+import { Coordinacion2Type } from "@/models/coordinacion2";
 
   const countMaestrosByPronace = (currentParticipaciones: ParticipacionTesisType[]) => {
         return currentParticipaciones.reduce((acc, { id_maestro, id_pronace }) => {
@@ -27,14 +28,14 @@ import BarsPlot from "@/components/barsPlot";
     };
 
      const countMaestrosByCoordinacion = (currentParticipaciones: ParticipacionTesisType[]) => {
-        return currentParticipaciones.reduce((acc, { id_maestro, id_coordinacion }) => {
+        return currentParticipaciones.reduce((acc, { id_maestro, id_coordinacion_2 }) => {
             // Initialize the maestros map if it doesn't exist for this pronace
-            if (!acc.has(id_coordinacion)) {
-                acc.set(id_coordinacion, new Map<number, number>());
+            if (!acc.has(id_coordinacion_2)) {
+                acc.set(id_coordinacion_2, new Map<number, number>());
             }
 
             // Get the maestrosMap for this pronace
-            const maestrosMap = acc.get(id_coordinacion)!; // We know it's safe because of the `has` check
+            const maestrosMap = acc.get(id_coordinacion_2)!; // We know it's safe because of the `has` check
 
             // Initialize maestro's participation count if it doesn't exist
             maestrosMap.set(id_maestro, (maestrosMap.get(id_maestro) || 0) + 1);
@@ -141,6 +142,7 @@ const ParticipacionesTesisPlot = ({
     catalogoAnos,
     catalogoRolesTesis,
     catalogoOpcionesTerminales,
+    catalogoCoordinaciones2,
 }:{
     className: string,
     currentParticipaciones: ParticipacionTesisType[],
@@ -150,6 +152,7 @@ const ParticipacionesTesisPlot = ({
     catalogoAnos: string[],
     catalogoRolesTesis: RolTesisType[],
     catalogoOpcionesTerminales: OpcionTerminalType[],
+    catalogoCoordinaciones2: Coordinacion2Type[],
 }) => {
     type CategoryType = 'pronace' | 'coordinacion' | 'fecha' | 'programa' | 'rolTesis' | 'opcion-terminal';
     const [ selectedCategory, setSelectedCategory ] = useState<CategoryType>('pronace');
@@ -171,8 +174,8 @@ const ParticipacionesTesisPlot = ({
             case 'coordinacion':
                 const coordinacionCounts = countMaestrosByCoordinacion(currentParticipaciones);
                 setCurrentPlotData({
-                    labels: catalogoCoordinaciones.map((c) => c.coordinacion),
-                    data: catalogoCoordinaciones.map((c) => coordinacionCounts.get(c.id)?.size || 0),
+                    labels: catalogoCoordinaciones2.map((c) => c.coordinacion_2),
+                    data: catalogoCoordinaciones2.map((c) => coordinacionCounts.get(c.id)?.size || 0),
                     title: 'Participantes Por Coordinacion',
                     xLabel: 'Numero de Participantes',
                     yLabel: 'Coordinaciones',
@@ -218,7 +221,7 @@ const ParticipacionesTesisPlot = ({
                     yLabel: 'Opciones Terminales',
                 });
         };
-    },[currentParticipaciones, catalogoPronaces, catalogoCoordinaciones, catalogoGrados, catalogoAnos, catalogoRolesTesis, selectedCategory, catalogoOpcionesTerminales]);
+    },[currentParticipaciones, catalogoPronaces, catalogoCoordinaciones2, catalogoGrados, catalogoAnos, catalogoRolesTesis, selectedCategory, catalogoOpcionesTerminales]);
 
 
     return (

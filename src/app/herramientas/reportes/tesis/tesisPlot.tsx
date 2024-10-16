@@ -7,6 +7,7 @@ import { GradoType } from "@/models/grado";
 import { useEffect, useState } from "react";
 import { OpcionTerminalType } from "@/models/opcionTerminal";
 import BarsPlot from "@/components/barsPlot";
+import { Coordinacion2Type } from "@/models/coordinacion2";
 
 const countByPronace = (tesis: TesisMiniType[]) => {
         return tesis.reduce((acc, { id_pronace }) => {
@@ -16,8 +17,8 @@ const countByPronace = (tesis: TesisMiniType[]) => {
     };
 
     const countByCoordinacion = (tesis: TesisMiniType[]) => {
-        return tesis.reduce((acc, { id_coordinacion }) => {
-            acc[id_coordinacion] = (acc[id_coordinacion] || 0) + 1;
+        return tesis.reduce((acc, { id_coordinacion_2 }) => {
+            acc[id_coordinacion_2] = (acc[id_coordinacion_2] || 0) + 1;
             return acc;
         }, {} as { [key: number]: number });
     };
@@ -58,6 +59,7 @@ const TesisPlot = ({
     catalogoCoordinaciones,
     catalogoAnos,
     catalogoOpcionesTerminales,
+    catalogoCoordinaciones2,
 }:{
     className: string,
     currentTesis: TesisMiniType[],
@@ -65,7 +67,8 @@ const TesisPlot = ({
     catalogoProgramas: GradoType[],
     catalogoCoordinaciones: CoordinacionType[],
     catalogoAnos: string[],
-    catalogoOpcionesTerminales: OpcionTerminalType[]
+    catalogoOpcionesTerminales: OpcionTerminalType[],
+    catalogoCoordinaciones2: Coordinacion2Type[],
 }) => {
 
     type CategoryType = 'pronace' | 'coordinacion' | 'fecha' | 'programa' | 'opcion-terminal';
@@ -95,9 +98,9 @@ const TesisPlot = ({
                 const coordinacionCounts = countByCoordinacion(currentTesis);
                 //setCoordinacionFrequency(coordinacionCounts);
                 setCurrentPlotData({
-                    labels: catalogoCoordinaciones.map((c) => c.coordinacion),
+                    labels: catalogoCoordinaciones2.map((c) => c.coordinacion_2),
                     //data: catalogoCoordinaciones.map((c) => coordinacionFrequency[c.id]),
-                    data: catalogoCoordinaciones.map((c) => coordinacionCounts[c.id]),
+                    data: catalogoCoordinaciones2.map((c) => coordinacionCounts[c.id]),
                     title: 'Frecuencia Por Coordinacion',
                     xLabel: 'Frecuencia',
                     yLabel: 'Coordinaciones',
@@ -141,7 +144,7 @@ const TesisPlot = ({
                 });
                 break;
         }
-    },[currentTesis, selectedCategory, catalogoAnos, catalogoProgramas, catalogoCoordinaciones, catalogoPronaces, catalogoOpcionesTerminales]);
+    },[currentTesis, selectedCategory, catalogoAnos, catalogoProgramas, catalogoCoordinaciones2, catalogoPronaces, catalogoOpcionesTerminales]);
 
     return (
         <div className={`${className}`}>

@@ -15,6 +15,7 @@ import { OpcionTerminalType } from "@/models/opcionTerminal";
 import { downloadCSV } from "@/utils/downloadCSV";
 import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
 import { TesisMiniType } from "@/models/tesis";
+import { Coordinacion2Type } from "@/models/coordinacion2";
 
 const ReporteParticipacionesTesis = ({
     className,
@@ -27,6 +28,7 @@ const ReporteParticipacionesTesis = ({
     catalogoOpcionesTerminales,
     participacionesTesis,
     tesisMini,
+    catalogoCoordinaciones2,
 }:{
     className: string,
     catalogoMaestros: MaestroType[],
@@ -38,6 +40,7 @@ const ReporteParticipacionesTesis = ({
     catalogoOpcionesTerminales: OpcionTerminalType[],
     participacionesTesis: ParticipacionTesisType[],
     tesisMini: TesisMiniType[],
+    catalogoCoordinaciones2: Coordinacion2Type[],
 }) => {
     const widths: [ WidthType, WidthType, WidthType ] = ['w-[60%]', 'w-[20%]','w-[20%]'];
     const [ currentParticipantes, setCurrentParticipantes ] = useState<ParticipacionesDocentesType[]>([]);
@@ -53,7 +56,7 @@ const ReporteParticipacionesTesis = ({
             docente: catalogoMaestros.find((m) => m.id === participacion.id_maestro)?.label || '',
             tesis: tesisMini.find((t) => t.id === participacion.id_tesis)?.titulo || '',
             rol_tesis: catalogoRolesTesis.find((rt) => rt.id === participacion.id_rol_tesis)?.rol_tesis || '',
-            coordinacion: catalogoCoordinaciones.find((c) => c.id === participacion.id_coordinacion)?.coordinacion || '',
+            coordinacion: catalogoCoordinaciones2.find((c) => c.id === participacion.id_coordinacion_2)?.coordinacion_2 || '',
             opcion_terminal: catalogoOpcionesTerminales.find((ot) => ot.id === participacion.id_opcion_terminal)?.opcion_terminal || '',
             pronace: catalogoPronaces.find((p) => p.id === participacion.id_pronace)?.pronace || '',
             fecha: participacion.fecha,
@@ -75,6 +78,7 @@ const ReporteParticipacionesTesis = ({
                 catalogoAnos={catalogoAnos}
                 catalogoRolesTesis={catalogoRolesTesis}
                 catalogoOpcionesTerminales={catalogoOpcionesTerminales}
+                catalogoCoordinaciones2={catalogoCoordinaciones2}
             />
             <FiltrosParticipacionesTesis
                 className=''
@@ -87,6 +91,7 @@ const ReporteParticipacionesTesis = ({
                 catalogoAnos={catalogoAnos}
                 participacionesTesis={participacionesTesis}
                 catalogoOpcionesTerminales={catalogoOpcionesTerminales}
+                catalogoCoordinaciones2={catalogoCoordinaciones2}
             />
             <div className='flex items-center m-1 space-x-2'>
                 <p>{`Total de ${Object.keys(currentParticipantes).length} Docentes Participando`}</p>

@@ -16,9 +16,9 @@ export const CursoScheme = z.object({
     horas_practicas_semestre: z.number({message: 'Ingrese un valor'}).int().nonnegative({message:'No numeros negativos'}).lt(100, { message:'Max 100 horas por semana' }).nullable(),
     horas_semestre: z.number({message: 'Ingrese un valor'}).int().nonnegative({message:'No numeros negativos'}).lt(300, { message:'Max 300 horas por semestre' }).nullable(),
     creditos: z.number({message:'Ingrese un valor'}).int({message:'Solo numeros enteros'}).nonnegative({message:'Solo numeros positivos'}).nullable(),
-    vinculo_objetivos_posgrado: z.string().max(1200, {message: 'Maximo 1200 caracteres'}).nullable(),
-    conocimientos: z.string().max(800, { message: 'Maximo 800 caracteres' }).nullable(),
-    actitudes: z.string().max(800, { message: 'Maximo 800 caracteres' }).nullable(),
+    vinculo_objetivos_posgrado: z.string().min(1, {message: 'Ingrese los vinculos del curso con los objetivos del posgrado'}).max(1200, {message: 'Maximo 1200 caracteres'}).nullable(),
+    conocimientos: z.string().min(1, {message: 'Ingrese los conocimientos a desarrollar en este curso'}).max(800, {message: 'Maximo 800 caracteres'}).nullable(),
+    actitudes: z.string().min(1, {message: 'Ingrese las actitudes a desarrollar en este curso'}).max(800, {message: 'Maximo 800 caracteres'}).nullable(),
     id_rol: z.number().int().nonnegative(),
 });
 
@@ -55,6 +55,7 @@ export type CursoOpcionTerminalType = z.infer<typeof CursoOpcionTerminalScheme>;
 export const CursoEgresoScheme = CursoScheme.pick({
     conocimientos: true,
     actitudes: true,
+    vinculo_objetivos_posgrado: true,
 });
 export type CursoEgresoType = z.infer<typeof CursoEgresoScheme>;
 

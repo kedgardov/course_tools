@@ -1,21 +1,30 @@
-import { CriterioType } from '@models/criterio';
+import { getCriteriosCurso } from '@/utils/criterios/getCriteriosCurso';
 import ListaCriterios from './listaCriterios';
 import { parseId } from '@utils/parseId';
+import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
 
-const Evaluacion = ({params}:{params:{id_curso: string}}) => {
-
+const Evaluacion = async ({
+    params
+}:{
+    params:{id_curso: string}
+}) => {
     const idCurso = parseId(params.id_curso);
     if(!idCurso){
         notFound();
     }
 
-    const criterios: CriterioType[] = [
-        {id:1, id_curso:1, criterio:'Tareas', valor:30},
-        {id:2, id_curso:1, criterio:'Examen', valor:30},
-        {id:3, id_curso:1, criterio:'Presentacion', valor:30},
-        {id:4, id_curso:1, criterio:'Participacion', valor:10},
-    ];
+    const cookieStoke = cookies();
+    const token = cookieStoke.get('authToken')?.value || '';
+    if( token === '' ){
+        notFound();
+    }
+
+    const responseGetCriteriosCurso = await getCriteriosCurso( idCurso, token );
+
+    if ( !responseGetCriteriosCurso.success ){
+        notFound();
+    }
 
     return (
         <section>
@@ -23,7 +32,8 @@ const Evaluacion = ({params}:{params:{id_curso: string}}) => {
             <ListaCriterios
                 className=''
                 idCurso={idCurso}
-                criterios={criterios}
+                criterios={responseGetCriteriosCurso.criterios}
+                token={token}
             />
         </section>
     );

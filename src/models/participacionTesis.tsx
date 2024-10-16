@@ -6,6 +6,7 @@ export const ParticipacionTesisScheme = z.object({
     id_tesis: z.number().int().nonnegative(),
     id_rol_tesis:z.number().int().nonnegative(),
     id_coordinacion: z.number().int().nonnegative(),
+    id_coordinacion_2: z.number().int().nonnegative(),
     id_pronace: z.number().int().nonnegative(),
     id_opcion_terminal: z.number().int().nonnegative(),
     id_grado: z.number().int().nonnegative(),

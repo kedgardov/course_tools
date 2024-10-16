@@ -135,7 +135,7 @@ const SidebarTitle = ({
     return (
         <Link href={link} className={`${className} sidebar-link group`}>
             {icon}
-            <div className={`sidebar-text-container ${isTransparent ? 'text-more-light/0' : 'text-more-light'} ${showText ? 'w-58' : 'w-0'}`}>
+            <div className={`sidebar-text-container-lg ${isTransparent ? 'text-more-light/0' : 'text-more-light'} ${showText ? 'w-44' : 'w-0'}`}>
                 {showText && <h2>{label}</h2>}
             </div>
             {!showText && <div className='sidebar-tooltip'>{label}</div>}
@@ -161,7 +161,7 @@ const SidebarEntry = ({
     return (
         <Link href={link} className={`${className} sidebar-link group`}>
             {icon}
-            <div className={`sidebar-text-container ${isTransparent ? 'text-more-light/0' : 'text-more-light'} ${showText ? 'w-58' : 'w-0'}`}>
+            <div className={`sidebar-text-container ${isTransparent ? 'text-more-light/0' : 'text-more-light'} ${showText ? 'w-44' : 'w-0'}`}>
                 {showText && <h2>{label}</h2>}
             </div>
             {!showText && <div className='sidebar-tooltip'>{label}</div>}
@@ -185,7 +185,7 @@ const ToggleButton = ({
     return (
         <button className={`${className} sidebar-link group`} onClick={() => handleToggle()}>
             <ChevronLeftIcon className={`sidebar-icon ${isExpanded ? 'sidebar-icon-expanded rotate-0' : 'sidebar-icon-contracted -rotate-180'}`} />
-            <div className={`sidebar-text-container ${isTransparent ? 'text-more-light/0' : 'text-more-light'} ${showText ? 'w-58' : 'w-0'}`}>
+            <div className={`sidebar-text-container ${isTransparent ? 'text-more-light/0' : 'text-more-light'} ${showText ? 'w-44' : 'w-0'}`}>
                 {showText && <h2>Minimizar</h2>}
             </div>
             {!showText && <div className={`sidebar-tooltip`}>Maximizar</div>}
@@ -198,5 +198,5 @@ const SidebarDivider = ({
 }: {
     isExpanded: boolean,
 }) => {
-    return <div className={`sidebar-divider ${isExpanded ? 'w-56' : 'w-16'}`}></div>;
+    return <div className={`sidebar-divider ${isExpanded ? 'w-56' : 'w-10'}`}></div>;
 };

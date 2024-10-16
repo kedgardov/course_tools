@@ -3,6 +3,7 @@ import { getCurso, GetCursoType } from '@/utils/cursos/getCurso';
 import { getCatalogoTipos, GetCatalogoTiposType } from '@/utils/cursos/getCatalogoTipos';
 import { getCatalogoModalidades, GetCatalogoModalidadesType } from '@/utils/cursos/getCatalogoModaliades';
 import { notFound } from 'next/navigation';
+import { canEditCurso, getPermisosInCurso } from '@/utils/permisosCurso';
 
 
 
@@ -34,6 +35,11 @@ const DatosBasicosComponent = async ({
         notFound();
     }
 
+
+    const testPermisos = await getPermisosInCurso(idCurso, token);
+    const canEdit = canEditCurso(testPermisos.roles_curso);
+
+
     return (
         <DatosBasicosForm
             className={className}
@@ -42,6 +48,7 @@ const DatosBasicosComponent = async ({
             curso={getCursoResponse.curso}
             catalogoTiposCursos={getCatalogoTiposResponse.catalogo_tipos}
             catalogoModalidadesCursos={getCatalogoModalidadesResponse.catalogo_modalidades}
+            canEdit={canEdit}
         />
     );
 };

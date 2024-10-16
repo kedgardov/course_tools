@@ -50,7 +50,7 @@ const Fuentes = ({ params }:{ params:{ id_curso: string }}) => {
         <section>
             <h2 className='title-2'>Lista de fuentes</h2>
             <ListaFuentes
-                className=''
+                className='my-2'
                 idCurso={idCurso}
                 fuentes={fuentes}
                 catalogoTiposFuentes={catalogoTiposFuentes}

@@ -22,15 +22,17 @@ const Coordinacion = ({
     handleDelete,
     startLoadingMode,
     stopLoadingMode,
+    canEdit,
 }:{
     className: string,
     token: string,
     coordinacion: CoordinacionCursoType,
     catalogoCoordinaciones: CoordinacionCatalogoType[],
-    widthList: [WidthType, WidthType],
+    widthList: WidthType[],
     handleDelete: (id: number) => void,
     startLoadingMode: () => void,
     stopLoadingMode: () => void,
+    canEdit: boolean,
 }) => {
     const [editMode, setEditMode] = useState<boolean>(false);
     const [ error, setError ] = useState<string | null>(null);
@@ -79,6 +81,7 @@ const Coordinacion = ({
                     showBorder={false}
                 />
             </div>
+            {canEdit && (
             <div className={`${widthList[1]} flex`}>
             {editMode? (
             <>
@@ -92,6 +95,8 @@ const Coordinacion = ({
             </>
             )}
             </div>
+            )}
+
             <Alert
                 error={error}
                 setError={setError}

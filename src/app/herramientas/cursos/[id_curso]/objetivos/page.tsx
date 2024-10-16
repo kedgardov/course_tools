@@ -1,29 +1,40 @@
-import { ObjetivoType } from '@models/objetivo';
-
 import ObjetivoGeneral from './objetivoGeneral';
 import ObjetivosEspecificos from './objetivosEspecificos';
 import { parseId } from '@/utils/parseId';
 import { notFound } from 'next/navigation';
+import { getObjetivoGeneral, GetObjetivoGeneralType } from '@/utils/objetivos/getObjetivoGeneral';
+import { cookies } from 'next/headers';
+import { getObjetivosEspecificos, GetObjetivosEspecificosType } from '@/utils/objetivos/getObjetivosEspecificos';
 
- const objetivosEspecificos :ObjetivoType[] = [
-        {id:1, numero:1, id_curso:1, objetivo:'Objetivo 1',tipo:'especifico'},
-        {id:2, numero:2, id_curso:1, objetivo:'Objetivo 2', tipo:'especifico'},
-        {id:3, numero:3, id_curso:1, objetivo:'Objetivo 3',tipo:'especifico'},
-        {id:4, numero:4, id_curso:1, objetivo:'Objetivo 4',tipo:'especifico'},
-        {id:5, numero:5, id_curso:1, objetivo:'Objetivo 5',tipo:'especifico'},
- ];
-
-const objetivoGeneral: ObjetivoType =
-        {id:13, numero:0, id_curso:1, objetivo:'Objetivo General 1',tipo:'general'};
-
-const Objetivos = ({
+const Objetivos = async ({
     params,
 }:{
     params: { id_curso: string }
 }) => {
-
     const idCurso = parseId(params.id_curso);
     if(!idCurso){
+        notFound();
+    }
+    const cookieStoke = cookies();
+    const token = cookieStoke.get('authToken')?.value || '';
+    if( token === '' ){
+        notFound();
+    }
+
+
+    const [
+        responseGetObjetivoGeneral,
+        responseGetObjetivosEspecificos,
+    ]:[
+        GetObjetivoGeneralType,
+        GetObjetivosEspecificosType,
+    ] = await Promise.all([
+        getObjetivoGeneral(idCurso, token),
+        getObjetivosEspecificos(idCurso, token),
+    ]);
+
+
+    if (!responseGetObjetivosEspecificos.success || !responseGetObjetivoGeneral.success || !responseGetObjetivoGeneral.objetivo_general ){
         notFound();
     }
 
@@ -32,12 +43,14 @@ const Objetivos = ({
             <ObjetivoGeneral
                 className='w-full'
                 idCurso={idCurso}
-                objetivoGeneral={objetivoGeneral}
+                objetivoGeneral={responseGetObjetivoGeneral.objetivo_general}
+                token={token}
             />
             <ObjetivosEspecificos
                 className='w-full'
                 idCurso={idCurso}
-                objetivosEspecificos={objetivosEspecificos}
+                objetivosEspecificos={responseGetObjetivosEspecificos.objetivos_especificos}
+                token={token}
             />
         </div>
     );

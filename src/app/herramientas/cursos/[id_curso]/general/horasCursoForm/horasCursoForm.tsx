@@ -17,11 +17,13 @@ const HorasCursoForm = ({
     token,
     idCurso,
     curso,
+    canEdit,
 }:{
     className: string,
     token: string,
     idCurso: number,
     curso: CursoType,
+    canEdit: boolean,
 }) => {
     const [ editMode, setEditMode ] = useState<boolean>(false);
     const [ isLoading, setIsLoading ] = useState<boolean>(false);
@@ -64,8 +66,8 @@ const HorasCursoForm = ({
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={`${className}`}>
             <legend className='m-1 title-2-container'>
-                <h2 className='title-2'>Horas y Creditos</h2>
-                {!editMode && (
+                <h2 className='title-2'>Horas y Créditos</h2>
+                {canEdit && !editMode && (
                     <EditButton
                         className='mx-1'
                         title='Editar Informacion Sobre Horas y Creditos Del Curso'
@@ -101,7 +103,7 @@ const HorasCursoForm = ({
                 />
                 <NumberInputLabel
                     className='m-1 w-1/3'
-                    label='Total Horas (Semana)'
+                    label='Horas Totales (Semana)'
                     helpText='Total Horas Por Semana de Curso'
                     idPrefix='horas-semana'
                     idRaw={`${idCurso}`}
@@ -139,7 +141,7 @@ const HorasCursoForm = ({
                 />
                 <NumberInputLabel
                     className='m-1 w-1/3'
-                    label='Total Horas (Semestre)'
+                    label='Horas Totales (Semestre)'
                     helpText='Total Horas Por Semestre de Curso'
                     idPrefix='horas-semestre'
                     idRaw={`${idCurso}`}
@@ -150,9 +152,9 @@ const HorasCursoForm = ({
                     showBorder={true}
                 />
             </div>
-                <div className='flex m-2 p-2'>
+                <div className='flex m-2 p-2  w-1/3 ml-auto '>
                 <NumberInputLabel
-                    className='m-1 w-1/3 ml-auto'
+                    className='w-full'
                     label='Creditos'
                     helpText='Creditos del Curso'
                     idPrefix='creditos-curso'

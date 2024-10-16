@@ -32,13 +32,11 @@ const NewCriterio = ({
     };
 
     const onSubmit: SubmitHandler<CriterioDataType> = (data) => {
-        console.log(data);
         handleAddCriterio(data);
-        selfDestruct();
     };
 
     return (
-           <form className={`${className}`} onSubmit={handleSubmit(onSubmit)}>
+           <form className={`${className} space-x-2 `} onSubmit={handleSubmit(onSubmit)}>
                 <div className={widthList[0]}>
                     <TextInput
                         className='w-full'
@@ -63,9 +61,9 @@ const NewCriterio = ({
                         showBorder={false}
                     />
                 </div>
-            <div className={`flex ${widthList[2]}`}>
-                    <SecondarySubmit className='w-1/2 mx-1' isDirty={isDirty} buttonLabel='Guardar'/>
-                    <TertiaryButton className='w-1/2 mx-1' handleAction={() => handleCancel()} buttonLabel='Cancelar'/>
+            <div className={`flex space-x-2 ${widthList[2]}`}>
+                    <SecondarySubmit className='w-1/2' isDirty={isDirty} buttonLabel='Guardar'/>
+                    <TertiaryButton className='w-1/2' handleAction={() => handleCancel()} buttonLabel='Cancelar'/>
                 </div>
             </form>
     );

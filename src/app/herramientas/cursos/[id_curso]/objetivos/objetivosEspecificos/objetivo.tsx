@@ -10,20 +10,25 @@ import SecondarySubmit from "@/components/secondarySubmit";
 import TertiaryButton from "@/components/tertiaryButton";
 import EditButton from "@/components/editButton";
 import DeleteButton from "@/components/deleteButton";
+import { updateObjetivo } from "@/utils/objetivos/updateObjetivo";
+import Alert from "@/components/alert";
 
 const Objetivo = ({
     className,
+    token,
     objetivo,
     widthList,
     handleDelete,
 }:{
     objetivo: ObjetivoType,
+    token: string,
     className: string,
-    widthList: [WidthType, WidthType, WidthType],
+    widthList: [WidthType, WidthType],
     handleDelete: (id: number) => void,
 }) => {
 
     const [editMode, setEditMode] = useState<boolean>(false);
+    const [ error, setError ] = useState<string | null>(null);
 
     const { register, reset, handleSubmit, formState:{ errors, isDirty } } = useForm<ObjetivoDataType>({
         resolver: zodResolver(ObjetivoDataScheme),
@@ -35,16 +40,26 @@ const Objetivo = ({
         setEditMode(false);
     };
 
-    const onSubmit: SubmitHandler<ObjetivoDataType> = (data) => {
-        console.log(data);
-        reset(data);
-        setEditMode(false);
+    const onSubmit: SubmitHandler<ObjetivoDataType> = async (data) => {
+        const updatedObjetivo: ObjetivoType = {
+            id: objetivo.id,
+            id_curso: objetivo.id,
+            tipo: objetivo.tipo,
+            objetivo: data.objetivo,
+        };
+        const response = await updateObjetivo(updatedObjetivo, token);
+        if( response.success ){
+            reset(data);
+            setEditMode(false);
+        } else {
+            setError(response.message);
+        }
     };
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={`${className} flex`}>
-            <div className={`${widthList[0]} text-4xl flex items-center justify-center`}>{objetivo.numero}</div>
-            <div className={`${widthList[1]}`}>
+
+            <div className={`${widthList[0]} h-40`}>
                 <TextArea
                     className='w-full'
                     idPrefix={`objetivo-${objetivo.tipo}`}
@@ -56,7 +71,7 @@ const Objetivo = ({
                     showBorder={false}
                 />
             </div>
-            <div className={`${widthList[2]} flex items-center`}>
+            <div className={`${widthList[1]} flex items-center`}>
             {editMode? (
                 <>
                     <SecondarySubmit className='w-1/2 mx-1' isDirty={isDirty} buttonLabel='Guardar'/>
@@ -69,6 +84,7 @@ const Objetivo = ({
                 </>
             )}
             </div>
+            <Alert error={error} setError={setError}/>
         </form>
     );
 };

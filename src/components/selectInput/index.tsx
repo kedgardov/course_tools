@@ -32,9 +32,9 @@ const SelectInput = <T,>({
 
     const disabledModeType = showBorder? 'disabled-mode-border' : 'disabled-mode-no-border';
     return (
-        <>
+        <div className={`flex flex-col ${className}`}>
             <select
-                className={`input ${className} ${editMode ? 'edit-mode' : disabledModeType } ${error? 'input-error' : ''}`}
+                className={`input w-full ${editMode ? 'edit-mode' : disabledModeType } ${error? 'input-error' : ''}`}
                 id={`${idPrefix}-${idRaw}`}
                 aria-label={`${idPrefix}-${idRaw}`}
                 {...register}
@@ -51,7 +51,7 @@ const SelectInput = <T,>({
             ))}
             </select>
             {error && <p className='error-text'>{error.message}</p>}
-        </>
+        </div>
     );
 };
 

@@ -10,14 +10,12 @@ import TertiaryButton from "@/components/tertiaryButton";
 
 const NewObjetivo = ({
     className,
-    newNumber,
     widthList,
     handleAdd,
     selfDestruct,
 }:{
-    newNumber: number,
     className: string,
-    widthList: [WidthType, WidthType, WidthType],
+    widthList: [WidthType, WidthType],
     handleAdd: (data: ObjetivoDataType) => void,
     selfDestruct: () => void,
 }) => {
@@ -32,16 +30,12 @@ const NewObjetivo = ({
     };
 
     const onSubmit: SubmitHandler<ObjetivoDataType> = (data) => {
-        console.log(data);
-        reset(data);
         handleAdd(data);
-        selfDestruct();
     };
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={`${className} flex`}>
-            <div className={`${widthList[0]} text-4xl flex items-center justify-center`}>{newNumber}</div>
-            <div className={`${widthList[1]}`}>
+            <div className={`${widthList[0]}`}>
                 <TextArea
                     className='w-full'
                     idPrefix='objetivo-especifico'
@@ -53,7 +47,7 @@ const NewObjetivo = ({
                     showBorder={false}
                 />
             </div>
-            <div className={`${widthList[2]} flex items-center`}>
+            <div className={`${widthList[1]} flex items-center`}>
                 <SecondarySubmit className='w-1/2 mx-1' isDirty={isDirty} buttonLabel='Guardar'/>
                 <TertiaryButton className='w-1/2 mx-1' handleAction={() => handleCancel()} buttonLabel='Cancelar'/>
             </div>

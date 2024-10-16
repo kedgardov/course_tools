@@ -14,15 +14,14 @@ import TertiaryButton from "@/components/tertiaryButton";
 import EditButton from "@/components/editButton";
 import TextAreaLabel from "@/components/textAreaLabel";
 import SelectInputLabel from "@/components/selectInputLabel";
-import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { ComiteDirectivoType } from "@/models/comite_directivo";
 import { RolTesisType } from "@/models/rolTesis";
 import { MaestroType } from "@/models/maestro";
-import SelectInput from "@/components/selectInput";
 import ListHeaders from "@/components/listHeaders";
 import WidthType from "@/models/width";
 import { OpcionTerminalType } from "@/models/opcionTerminal";
+import { Coordinacion2Type } from "@/models/coordinacion2";
 
 // Function to trigger the download via the browser's native mechanism
 export function downloadPdf(id_tesis: number, token: string) {
@@ -47,6 +46,7 @@ const DetallesTesisComponent = ({
     catalogoRolesTesis,
     catalogoMaestros,
     catalogoOpcionesTerminales,
+    catalogoCoordinaciones2,
 }: {
     className: string,
     token: string,
@@ -61,6 +61,7 @@ const DetallesTesisComponent = ({
     catalogoRolesTesis: RolTesisType[],
     catalogoMaestros: MaestroType[],
     catalogoOpcionesTerminales: OpcionTerminalType[],
+    catalogoCoordinaciones2: Coordinacion2Type[],
 }) => {
     const widths: [WidthType, WidthType, WidthType] = ['w-[10%]', 'w-[50%]','w-[40%]'];
 
@@ -202,23 +203,38 @@ const DetallesTesisComponent = ({
                     />
 
             </div>
-
+            <div className='flex'>
             <SelectInputLabel
-                    className='flex-grow p-1'
+                    className='w-1/2 p-1'
                     idPrefix='id_coordinacion'
-                    idRaw='0'
-                    label='Coordinacion'
+                    idRaw={`${tesis.id}`}
+                    label='Sede'
                     helpText=''
                     register={register('id_coordinacion', { valueAsNumber: true })}
                     editMode={editMode}
                     options={catalogoCoordinaciones}
                     error={errors.id_coordinacion}
-                    placeholder='Ingrese Coordinacion'
+                    placeholder='Seleccione una Sede'
                     idKey='id'
                     valueKey='coordinacion'
                     showBorder={true}
                 />
-
+            <SelectInputLabel
+                className='w-1/2 p-1'
+                idPrefix='id-coordinacion-2'
+                idRaw={`${tesis.id}`}
+                label='Coordinacion'
+                helpText=''
+                register={register('id_coordinacion_2', { valueAsNumber:true})}
+                editMode={editMode}
+                options={catalogoCoordinaciones2}
+                error={errors.id_coordinacion_2}
+                placeholder='Seleccione una Coordinacion'
+                idKey='id'
+                valueKey='coordinacion_2'
+                showBorder={true}
+            />
+            </div>
                 <TextAreaLabel
                     className='h-[25rem]'
                     idPrefix='resumen'

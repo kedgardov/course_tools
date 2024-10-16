@@ -27,7 +27,7 @@ const General = ({
     return (
         <section>
             <DatosBasicos
-                className='border p-2'
+                className=' px-2 p-4'
                 idCurso={idCurso}
                 token={token}
             />
@@ -37,22 +37,22 @@ const General = ({
                 token={token}
                 />*/}
             <OpcionesTerminales
-                className='border p-2'
+                className=' px-2 py-4'
                 idCurso={idCurso}
                 token={token}
             />
             <Coordinaciones
-                className='border p-2'
+                className=' px-2 py-4'
                 idCurso={idCurso}
                 token={token}
             />
             <Encargados
-                className='border p-2'
+                className=' px-2 py-4'
                 idCurso={idCurso}
                 token={token}
             />
             <HorasCurso
-                className='border p-2'
+                className=' px-2 py-4'
                 idCurso={idCurso}
                 token={token}
             />
