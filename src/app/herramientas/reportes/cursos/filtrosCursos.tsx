@@ -1,4 +1,5 @@
 'use client'
+import ToggleFilterSection from "@/components/toggleFilterSection";
 import { NivelCurricularType } from "@/models/nivelCurricular";
 import { OpcionTerminalType } from "@/models/opcionTerminal";
 import { OpcionTerminalCursoType } from "@/models/opcionTerminalCurso";
@@ -73,7 +74,10 @@ const FiltrosCursos = ({
     return (
     <section className={`${className}`}>
         {/* Opcion Terminal Filter */}
-        <h2 className='title-2 mx-2'>Filtrar por Opción Terminal</h2>
+        <ToggleFilterSection
+            title='Filtrar por Opción Terminal'
+            initialShow={false}
+        >
         <div className='divider-dark mb-2'>
             <button
                 onClick={() => setSelectedOpcionesTerminales(catalogoOpcionesTerminales)}
@@ -97,9 +101,13 @@ const FiltrosCursos = ({
                 Ninguna
             </button>
         </div>
+        </ToggleFilterSection>
 
         {/* Programa Filter */}
-        <h2 className='title-2 mx-2'>Filtrar por Programa</h2>
+        <ToggleFilterSection
+            title='Filtrar por Programa Académico'
+            initialShow={false}
+        >
         <div className='divider-dark mb-2'>
             <button
                 onClick={() => setSelectedProgramas(catalogoProgramas)}
@@ -123,9 +131,13 @@ const FiltrosCursos = ({
                 Ninguno
             </button>
         </div>
+        </ToggleFilterSection>
 
         {/* Nivel Curricular Filter */}
-        <h2 className='title-2 mx-2'>Filtrar por Nivel Curricular</h2>
+        <ToggleFilterSection
+            title='Filtrar por Nivel Curricular'
+            initialShow={false}
+        >
         <div className='divider-dark mb-2'>
             <button
                 onClick={() => setSelectedNivelesCurriculares(catalogoNivelesCurriculares)}
@@ -149,6 +161,7 @@ const FiltrosCursos = ({
                 Ninguno
             </button>
         </div>
+        </ToggleFilterSection>
     </section>
 );
 

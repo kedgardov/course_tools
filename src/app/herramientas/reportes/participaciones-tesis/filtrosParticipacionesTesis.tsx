@@ -1,4 +1,5 @@
 'use client'
+import ToggleFilterSection from "@/components/toggleFilterSection";
 import { Coordinacion2Type } from "@/models/coordinacion2";
 import { GradoType } from "@/models/grado";
 import { OpcionTerminalType } from "@/models/opcionTerminal";
@@ -141,7 +142,10 @@ const FiltrosParticipacionesTesis = ({
 return (
     <div className={`${className}`}>
         {/* Pronace Filter */}
-        <h2 className='title-2 mx-2'>Filtrar por Pronace</h2>
+        <ToggleFilterSection
+            title='Filtrar por Pronace'
+            initialShow={false}
+        >
         <div className='divider-dark mb-2'>
             <button onClick={() => setSelectedPronaces(catalogoPronaces)} className='filter-button-todos'>
                 Todos
@@ -159,9 +163,13 @@ return (
                 Ninguno
             </button>
         </div>
+        </ToggleFilterSection>
 
         {/* Coordinacion Filter */}
-        <h2 className='title-2 mx-2'>Filtrar por Coordinación</h2>
+        <ToggleFilterSection
+            title='Filtrar por Coordinación'
+            initialShow={false}
+        >
         <div className='divider-dark mb-2'>
             <button onClick={() => setSelectedCoordinaciones(catalogoCoordinaciones2)} className='filter-button-todos'>
                 Todas
@@ -179,9 +187,13 @@ return (
                 Ninguna
             </button>
         </div>
+        </ToggleFilterSection>
 
         {/* Grado Filter */}
-        <h2 className='title-2 mx-2'>Filtrar por Grado</h2>
+        <ToggleFilterSection
+            title='Filtrar por Grado'
+            initialShow={false}
+        >
         <div className='divider-dark mb-2'>
             <button onClick={() => setSelectedGrados(catalogoGrados)} className='filter-button-todos'>
                 Todos
@@ -199,9 +211,13 @@ return (
                 Ninguno
             </button>
         </div>
+        </ToggleFilterSection>
 
         {/* Año Filter */}
-        <h2 className='title-2 mx-2'>Filtrar por Año</h2>
+        <ToggleFilterSection
+            title='Filtrar por Año'
+            initialShow={false}
+        >
         <div className='divider-dark mb-2'>
             <button onClick={() => setSelectedAnos(catalogoAnos)} className='filter-button-todos'>
                 Todos
@@ -219,9 +235,13 @@ return (
                 Ninguno
             </button>
         </div>
+        </ToggleFilterSection>
 
         {/* Rol Tesis Filter */}
-        <h2 className='title-2 mx-2'>Filtrar por Rol de Tesis</h2>
+        <ToggleFilterSection
+            title='Filtrar por Rol en Comité Directivo'
+            initialShow={false}
+        >
         <div className='divider-dark mb-2'>
             <button onClick={() => setSelectedRolesTesis(catalogoRolesTesis)} className='filter-button-todos'>
                 Todos
@@ -239,9 +259,13 @@ return (
                 Ninguno
             </button>
         </div>
+        </ToggleFilterSection>
 
         {/* Opcion Terminal Filter */}
-        <h2 className='title-2 mx-2'>Filtrar por Opción Terminal</h2>
+        <ToggleFilterSection
+            title='Filtrar por Opción Terminal'
+            initialShow={false}
+        >
         <div className='divider-dark mb-2'>
             <button onClick={() => setSelectedOpcionesTerminales(catalogoOpcionesTerminales)} className='filter-button-todos'>
                 Todos
@@ -259,6 +283,7 @@ return (
                 Ninguno
             </button>
         </div>
+        </ToggleFilterSection>
     </div>
 );
 

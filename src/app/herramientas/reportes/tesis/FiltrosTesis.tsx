@@ -1,12 +1,12 @@
 'use client'
 
+import ToggleFilterSection from "@/components/toggleFilterSection";
 import { Coordinacion2Type } from "@/models/coordinacion2";
 import { GradoType } from "@/models/grado";
 import { OpcionTerminalType } from "@/models/opcionTerminal";
 import { PronaceType } from "@/models/pronace";
 import { TesisMiniType } from "@/models/tesis";
 import { CoordinacionType } from "@/utils/repo_tesis/coordinaciones/getCatalogoCoordinaciones";
-import { FunnelIcon } from "@heroicons/react/24/outline";
 
 import { useEffect, useState } from "react";
 
@@ -35,12 +35,6 @@ const FiltrosTesis = ({
     const [selectedGrados, setSelectedGrados] = useState<GradoType[]>(catalogoGrados);
     const [selectedOpcionesTerminales, setSelectedOpcionesTerminales] = useState<OpcionTerminalType[]>(catalogoOpcionesTerminales);
     const [selectedAnos, setSelectedAnos] = useState<string[]>(catalogoAnos);
-
-    const [showPronaceFilter, setShowPronaceFilter] = useState<boolean>(false);
-    const [showCoordinacionFilter, setShowCoordinacionFilter] = useState<boolean>(false);
-    const [showProgramaFilter, setShowProgramaFilter] = useState<boolean>(false);
-    const [showFechaFilter, setShowFechaFilter] = useState<boolean>(false);
-    const [showOpcionTerminalFilter, setShowOpcionTerminalFilter] = useState<boolean>(false);
 
     const togglePronaceFilter = (idPronace: number) => {
         if( selectedPronaces.find((p) => p.id === idPronace)){
@@ -115,11 +109,11 @@ const FiltrosTesis = ({
 
 return (
     <div>
-        <button onClick={() => setShowPronaceFilter(prev => !prev)} className='mx-2 space-x-2 flex items-center'>
-            <FunnelIcon className='h-6 w-6 stroke-2'/>
-            <h2 className='title-2'>Filtrar por Pronace</h2>
-        </button>
-        <div className={`divider-dark mb-2 overflow-hidden transition-all ease-in-out duration-500 ${ !showPronaceFilter? 'max-h-0': 'max-h-80' }`}>
+        <ToggleFilterSection
+            title='Filtrar por Pronace'
+            initialShow={false}
+        >
+        <div className='divider-dark mb-2'>
             <button onClick={() => setSelectedPronaces(catalogoPronaces)} className='filter-button-todos'>
                 Todos
             </button>
@@ -136,13 +130,14 @@ return (
                 Ninguno
             </button>
         </div>
+        </ToggleFilterSection>
 
-        <button onClick={() => setShowCoordinacionFilter(prev => !prev)} className='mx-2 space-x-2 flex items-center'>
-            <FunnelIcon className='h-6 w-6 stroke-2' />
-            <h2 className='title-2 mx-2'>Filtrar por Coordinación</h2>
-        </button>
 
-        <div className={`divider-dark mb-2 overflow-hidden transition-all ease-in-out duration-500 ${!showCoordinacionFilter? 'max-h-0' : 'max-h-80'}`}>
+        <ToggleFilterSection
+            title='Filtrar por Coordinación'
+            initialShow={false}
+        >
+        <div className='divider-dark mb-2'>
             <button onClick={() => setSelectedCoordinaciones(catalogoCoordinaciones2)} className='filter-button-todos'>
                 Todas
             </button>
@@ -159,12 +154,15 @@ return (
                 Ninguna
             </button>
         </div>
+        </ToggleFilterSection>
 
-        <button onClick={() => setShowProgramaFilter(prev => !prev)} className='mx-2 space-x-2 flex items-center'>
-            <FunnelIcon className='h-6 w-6 stroke-2' />
-            <h2 className='title-2 mx-2'>Filtrar por Programa</h2>
-        </button>
-        <div className={`divider-dark mb-2 overflow-hidden transition-all ease-in-out duration-500 ${!showProgramaFilter? 'max-h-0' : 'max-h-80'}`}>
+
+
+        <ToggleFilterSection
+            title='Filtrar por Grado Obtenido'
+            initialShow={false}
+        >
+        <div className='divider-dark mb-2'>
             <button onClick={() => setSelectedGrados(catalogoGrados)} className='filter-button-todos'>
                 Todas
             </button>
@@ -181,12 +179,14 @@ return (
                 Ninguna
             </button>
         </div>
+        </ToggleFilterSection>
 
-        <button onClick={() => setShowFechaFilter(prev => !prev)} className='mx-2 space-x-2 flex items-center'>
-    <FunnelIcon className='h-6 w-6 stroke-2' />
-    <h2 className='title-2 mx-2'>Filtrar por Fecha</h2>
-</button>
-<div className={`divider-dark mb-2 overflow-hidden transition-all ease-in-out duration-500 ${!showFechaFilter ? 'max-h-0' : 'max-h-80'}`}>
+
+        <ToggleFilterSection
+            title='Filtrar por Fecha'
+            initialShow={false}
+        >
+        <div className='divider-dark mb-2'>
             <button onClick={() => setSelectedAnos(catalogoAnos)} className='filter-button-todos'>
                 Todos
             </button>
@@ -203,12 +203,13 @@ return (
                 Ninguno
             </button>
         </div>
+        </ToggleFilterSection>
 
-        <button onClick={() => setShowOpcionTerminalFilter(prev => !prev)} className='mx-2 space-x-2 flex items-center'>
-    <FunnelIcon className='h-6 w-6 stroke-2' />
-    <h2 className='title-2 mx-2'>Filtrar por Opción Terminal</h2>
-</button>
-<div className={`divider-dark mb-2 overflow-hidden transition-all ease-in-out duration-500 ${!showOpcionTerminalFilter ? 'max-h-0' : 'max-h-80'}`}>
+        <ToggleFilterSection
+            title='Filtrar por Opción Terminal'
+            initialShow={false}
+        >
+        <div className='divider-dark mb-2'>
             <button onClick={() => setSelectedOpcionesTerminales(catalogoOpcionesTerminales)} className='filter-button-todos'>
                 Todas
             </button>
@@ -222,14 +223,12 @@ return (
                 </button>
             ))}
             <button onClick={() => setSelectedOpcionesTerminales([])} className='filter-button-ninguno'>
-                Ninguno
+                Ninguna
             </button>
         </div>
-
+        </ToggleFilterSection>
     </div>
 );
-
-
 
 };
 export default FiltrosTesis;

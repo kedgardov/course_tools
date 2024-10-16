@@ -2,7 +2,7 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LockClosedIcon, UserIcon } from '@heroicons/react/24/solid';
-import { ExclamationTriangleIcon, AcademicCapIcon } from '@heroicons/react/24/outline';
+import { ExclamationTriangleIcon, SquaresPlusIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/navigation';
 import { signInSchema, signInType } from '@/models/signIn';
 import { useState } from 'react';
@@ -32,10 +32,10 @@ const Login = (): React.JSX.Element => {
     return (
         <div className='flex flex-col items-center flex-grow bg-gradient-radial from-primary to-primary-light justify-center text-dark'>
             <main className='flex flex-col h-[35rem] w-[25rem] p-4 rounded-md bg-gradient-radial from-gray-100 to-more-light shadow-xl items-center'>
-                <AcademicCapIcon className='h-2/5 flex-grow text-dark' />
+                <SquaresPlusIcon className='h-2/5 flex-grow text-dark' />
                 <form className='flex flex-col flex-grow items-center w-full h-3/5' onSubmit={handleSubmit(onSubmit)}>
                     <fieldset className='p-2 flex flex-col w-full h-3/4'>
-                        <legend className='uppercase text-4xl font-bold w-full text-center'>Course Tools</legend>
+                        <legend className=' text-4xl font-bold w-full text-center'>COURSEStools</legend>
                         <div className='m-2'>
                             <div className={`flex items-center bg-more-light border rounded-2xl shadow p-2 ${errors.username ? 'border-tertiary border-2' : 'border-gray-300'}`}>
                                 <UserIcon className={`size-5 ${errors.username ? 'text-tertiary' : ''}`} />

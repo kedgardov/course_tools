@@ -1,4 +1,5 @@
 'use client'
+import ToggleFilterSection from "@/components/toggleFilterSection";
 import { NivelCurricularType } from "@/models/nivelCurricular";
 import { OpcionTerminalType } from "@/models/opcionTerminal";
 import { ParticipacionCursoType, ParticipacionesDocentesType } from "@/models/participacionCurso";
@@ -120,7 +121,10 @@ const FiltrosParticipantesCursos = ({
 return (
     <div className={`${className}`}>
         {/* Opcion Terminal Filter */}
-        <h2 className='title-2 mx-2'>Filtrar por Opción Terminal</h2>
+        <ToggleFilterSection
+            title='Filtrar por Opción Terminal'
+            initialShow={false}
+        >
         <div className='divider-dark mb-2'>
             <button onClick={() => setSelectedOpcionesTerminales(catalogoOpcionesTerminales)} className='filter-button-todos'>
                 Todos
@@ -138,9 +142,13 @@ return (
                 Ninguna
             </button>
         </div>
+        </ToggleFilterSection>
 
         {/* Programa Filter */}
-        <h2 className='title-2 mx-2'>Filtrar por Programa</h2>
+        <ToggleFilterSection
+            title='Filtrar por Programa'
+            initialShow={false}
+        >
         <div className='divider-dark mb-2'>
             <button onClick={() => setSelectedProgramas(catalogoProgramas)} className='filter-button-todos'>
                 Todos
@@ -158,9 +166,13 @@ return (
                 Ninguno
             </button>
         </div>
+        </ToggleFilterSection>
 
         {/* Nivel Curricular Filter */}
-        <h2 className='title-2 mx-2'>Filtrar por Nivel Curricular</h2>
+        <ToggleFilterSection
+            title='Filtrar Por Nivel Curricular'
+            initialShow={false}
+        >
         <div className='divider-dark mb-2'>
             <button onClick={() => setSelectedNivelesCurriculares(catalogoNivelesCurriculares)} className='filter-button-todos'>
                 Todos
@@ -178,9 +190,12 @@ return (
                 Ninguno
             </button>
         </div>
-
+        </ToggleFilterSection>
         {/* Rol Filter */}
-        <h2 className='title-2 mx-2'>Filtrar por Rol</h2>
+        <ToggleFilterSection
+            title='Filtrar por Rol'
+            initialShow={false}
+        >
         <div className='divider-dark mb-2'>
             <button onClick={() => setSelectedRoles(catalogoRoles)} className='filter-button-todos'>
                 Todos
@@ -198,6 +213,7 @@ return (
                 Ninguno
             </button>
         </div>
+        </ToggleFilterSection>
     </div>
 );
 
