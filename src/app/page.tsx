@@ -1,7 +1,15 @@
 import { UserIcon } from "@heroicons/react/24/solid";
+import { cookies } from "next/headers";
 import Link from "next/link";
 
 const LandingPage = () => {
+
+
+    const cookieStoke = cookies();
+    const isLogged = cookieStoke.get('authToken')?.value || '';
+
+
+
     return (
         <div className='relative min-h-screen flex'>
             {/* Background: Left 1/3 section */}
@@ -45,7 +53,7 @@ const LandingPage = () => {
                     </div>
 
                     {/* Modal Right 2/3 section: For title and links */}
-                    <div className='rounded-r-xl w-2/3 flex flex-col items-center bg-gradient-radial from-primary-light to-primary relative overflow-hidden'>
+                    <div className='p-4 rounded-r-xl w-2/3 flex flex-col items-center bg-gradient-radial from-primary-light to-primary relative overflow-hidden'>
                         {/* Circles */}
                         <div className='absolute bottom-[11rem] left-[14rem] w-[8rem] h-[8rem] border-8 rounded-full border-white/10'></div>
                         <div className='absolute -bottom-[30rem] -left-32 w-[40rem] h-[40rem] border-8 rounded-full border-white/10'></div>
@@ -54,15 +62,20 @@ const LandingPage = () => {
                         <div className='absolute -top-12 -right-12 w-[8rem] h-[8rem] border-8 rounded-full border-white/10'></div>
 
 
-            <div className='w-full h-full items-center justify-center flex flex-col space-y-24'>
+            <div className='w-full h-full items-center justify-center flex flex-col space-y-8 xl:space-y-24'>
 
             {/* Title */}
-                        <h1 className='text-[2rem] lg:text-[2.8rem] 2xl:text-[4.5rem] xl:text-[3.5rem] font-bold uppercase tracking-tight text-more-light/95 '
+                        <div>
+                        <h1 className='text-center text-[2rem] lg:text-[2.8rem] 2xl:text-[4.5rem] xl:text-[3.5rem] font-bold uppercase tracking-tight text-more-light/95 tracking-widest'
                            style={{ filter: 'drop-shadow(6px 6px 12px rgba(0, 0, 0, 0.35))' }}
                         >
-                            <span className='text-[2.5rem] lg:text-[3.5rem] xl:text-[4.4rem] 2xl:text-[5.4rem]'>C</span>ourses <span className='text-[2.5rem] lg:text-[3.5rem] xl:text-[4.4rem] 2xl:text-[5.4rem]'>T</span>ools
+                            SOFIA
                         </h1>
+                        <p className='text-more-light uppercase'>SOFIA Organiza y Facilita Información Académica</p>
+                        </div>
 
+                        {!isLogged && (
+                        <>
                         <Link className='bg-more-light w-44 h-10 z-10 rounded-full shadow-lg' href='/login'>
                         <div className='flex items-center justify-center space-x-2 h-full w-full p-2'>
                             <UserIcon className='h-6 w-6' />
@@ -71,16 +84,13 @@ const LandingPage = () => {
                             </h2>
                         </div>
                         </Link>
-
+                        </>
+                        )}
 
                         {/* Navigation Links */}
                         <nav className='space-y-4 xl:flex xl:space-x-4 xl:items-end z-10'>
-                            <Link className='landing-nav-button w-40 h-10' href='/herramientas/cursos'>
-                                <h2 className='landing-nav-text'>Ver cursos</h2>
-                            </Link>
-
-                            <Link className='landing-nav-button w-40 h-10' href='/herramientas/tesis'>
-                                <h2 className='landing-nav-text'>Ver tesis</h2>
+                            <Link className='landing-nav-button w-40 h-10' href='/herramientas/mis-cursos'>
+                                <h2 className='landing-nav-text'>COURSES Tools</h2>
                             </Link>
 
                             <Link className='landing-nav-button w-40 h-10' href='/herramientas/reportes/tesis'>

@@ -239,7 +239,7 @@ return (
 
         {/* Rol Tesis Filter */}
         <ToggleFilterSection
-            title='Filtrar por Rol en Comité Directivo'
+            title='Filtrar por Rol en Comité de Tesis'
             initialShow={false}
         >
         <div className='divider-dark mb-2'>

@@ -12,7 +12,7 @@ export function middleware(request: NextRequest) {
 
   // If the user is already logged in, redirect them away from the login page
   if (pathname === '/login' && token) {
-    const response = NextResponse.redirect(new URL('/herramientas/cursos', request.url));
+    const response = NextResponse.redirect(new URL('/herramientas/tesis', request.url));
     // Disable caching for the login page
     response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate');
     return response;

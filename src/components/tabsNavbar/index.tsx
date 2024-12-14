@@ -24,7 +24,7 @@ const TabsNavbar = ({
         ];
         const getTab = (path: string) => {
             const tab = tabs.find((tab) => path.includes(tab));
-        return tab ? tab : '';
+            return tab ? tab : '';
         };
         const newTab = getTab(pathname);
         setCurrentTab(newTab);

@@ -22,15 +22,7 @@ import ListHeaders from "@/components/listHeaders";
 import WidthType from "@/models/width";
 import { OpcionTerminalType } from "@/models/opcionTerminal";
 import { Coordinacion2Type } from "@/models/coordinacion2";
-
-// Function to trigger the download via the browser's native mechanism
-export function downloadPdf(id_tesis: number, token: string) {
-    // Construct the URL with the required parameters
-    const url = `http://localhost/api/repositorio_tesis/tesis/download_pdf.php?id=${id_tesis}`;
-
-    // Navigate to the URL to start the download
-    window.location.href = url; // This will allow the browser to handle the download natively
-}
+import { downloadTesis } from "@/utils/repo_tesis/tesis/downloadTesis";
 
 const DetallesTesisComponent = ({
     className,
@@ -74,8 +66,11 @@ const DetallesTesisComponent = ({
     });
 
     // Handler function for downloading the PDF
-    const handleDownloadPdf = () => {
-        downloadPdf(idTesis, token); // Call the download function with the necessary parameters
+    const handleDownloadPdf = async () => {
+        const response = await downloadTesis(tesis.id, tesis.titulo, token);
+        if( !response.success ){
+            setError(response.message);
+        }
     };
 
     const handleCancel = () => {
@@ -278,9 +273,11 @@ const DetallesTesisComponent = ({
                 </ul>
                 </section>
             </form>
-            <button type='button' className='border rounded p-2' onClick={handleDownloadPdf}>
+            <div className='flex justify-center'>
+            <button type='button' className='border border-less-dark rounded-xl p-2 hover:font-bold hover:border-more-dark' onClick={handleDownloadPdf}>
                 Descargar PDF
             </button>
+            </div>
         </>
     );
 };

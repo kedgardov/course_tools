@@ -1,0 +1,163 @@
+// Import your types
+import { getPapersFromOrcid, GetPapersResponse, Paper } from "@/utils/maestros/getResearchPapers";
+import { parseId } from "@/utils/parseId";
+import { cookies } from "next/headers";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+
+const PublicacionesPage = async ({
+    params,
+}: {
+    params: {
+        id_docente: string;
+    };
+}) => {
+    console.log('Empezando Publicaciones Component');
+    const cookieStore = cookies();
+    const token = cookieStore.get("authToken")?.value || "";
+    if (token === "") {
+        notFound();
+    }
+
+    const idDocente = parseId(params.id_docente);
+    if (!idDocente) {
+        notFound();
+    }
+
+    const juveraID = "0000-0001-6353-4841";
+
+    console.log('Llamando Util Funcion');
+    const [responseGetPublicaciones]: [GetPapersResponse] = await Promise.all([
+        getPapersFromOrcid(juveraID),
+    ]);
+
+    if (!responseGetPublicaciones.success) {
+        notFound();
+    }
+
+    console.log('Cargando Pagina');
+    // Map and sort the papers
+    const sortedPapers = responseGetPublicaciones.papers
+        .map((paper) => {
+            let year: number | undefined = paper.year;
+
+            if (paper.publicationDate) {
+                const yearStr = paper.publicationDate.substring(0, 4);
+                const parsedYear = parseInt(yearStr, 10);
+                if (!isNaN(parsedYear)) {
+                    year = parsedYear;
+                }
+            }
+
+            return {
+                ...paper,
+                year,
+            };
+        })
+        .sort((a, b) => {
+            const yearA = a.year;
+            const yearB = b.year;
+
+            // Handle undefined values if year is undefined
+            if (yearA === undefined) return 1; // Place papers with unknown year at the end
+            if (yearB === undefined) return -1;
+
+            return yearB - yearA; // Descending order
+        });
+
+    // Group the papers by year
+    const papersByYear = sortedPapers.reduce<{ [key: string]: Paper[] }>((acc, paper) => {
+        const yearKey = paper.year !== undefined ? String(paper.year) : "Others";
+
+        if (!acc[yearKey]) {
+            acc[yearKey] = [];
+        }
+        acc[yearKey].push(paper);
+        return acc;
+    }, {});
+
+    // Get the years in descending order
+    const years = Object.keys(papersByYear)
+        .filter((year) => year !== "Others")
+        .map((year) => parseInt(year, 10))
+        .sort((a, b) => b - a);
+
+    return (
+        <div>
+            {years.map((year) => (
+                <div key={year}>
+                    <h2 className="text-xl font-bold my-4">{year}</h2>
+                    {papersByYear[String(year)].map((paper, index) => (
+                        <div key={index || `${year}-${index}`} className="p-2">
+                            <p>
+                                {paper.title} {paper.year && `(${paper.year})`}
+                            </p>
+                            {paper.type && <p>Type: {paper.type.replace("-", " ")}</p>}
+                            {paper.doi && (
+                                <Link
+                                    className="text-blue-400"
+                                    href={`https://doi.org/${paper.doi}`}
+                                >
+                                    {paper.doi}
+                                </Link>
+                            )}
+                            {paper.publicationDate && <p>Published: {paper.publicationDate}</p>}
+                            {paper.contributors.map((contributor, idx) => (
+                                <div key={idx} className="flex space-x-2">
+                                    <p>{contributor.name}</p>
+                                    {contributor.orcid && (
+                                        <a
+                                            href={contributor.orcid}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-blue-400"
+                                        >
+                                            {contributor.orcid}
+                                        </a>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    ))}
+                </div>
+            ))}
+            {"Others" in papersByYear && papersByYear["Others"].length > 0 && (
+                <div key="others">
+                    <h2 className="text-xl font-bold my-4">Others</h2>
+                    {papersByYear["Others"].map((paper, index) => (
+                        <div key={index || `others-${index}`} className="p-2">
+                            <p>{paper.title}</p>
+                            {paper.type && <p>Type: {paper.type.replace("-", " ")}</p>}
+                            {paper.doi && (
+                                <Link
+                                    className="text-blue-400"
+                                    href={`https://doi.org/${paper.doi}`}
+                                >
+                                    {paper.doi}
+                                </Link>
+                            )}
+                            {paper.publicationDate && <p>Published: {paper.publicationDate}</p>}
+                            {paper.contributors.map((contributor, idx) => (
+                                <div key={idx} className="flex space-x-2">
+                                    <p>{contributor.name}</p>
+                                    {contributor.orcid && (
+                                        <a
+                                            href={contributor.orcid}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-blue-400"
+                                        >
+                                            {contributor.orcid}
+                                        </a>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+};
+
+export default PublicacionesPage;

@@ -1,0 +1,26 @@
+import { parseId } from '@utils/parseId';
+import { notFound } from 'next/navigation';
+import DetallesFuenteForm from './detallesFuenteForm';
+import Link from 'next/link';
+import CitationForm from './detallesFuenteForm';
+
+const DetallesFuente = ({
+    params,
+}:{
+    params: { id_curso: string, id_fuente: string }
+}) => {
+    const idCurso = parseId(params.id_curso);
+    const idFuente = parseId(params.id_fuente);
+    if( !idCurso || !idFuente ){
+        return notFound();
+    }
+
+    return (
+        <section>
+            <CitationForm/>
+        </section>
+    );
+
+};
+
+export default DetallesFuente;

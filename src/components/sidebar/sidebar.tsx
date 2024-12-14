@@ -29,7 +29,7 @@ const SidebarClient = () => {
                         <SidebarTitle
                         className={`sidebar-link ${isExpanded ? 'sidebar-link-expanded' : 'sidebar-link-contracted'}`}
                         icon={<SquaresPlusIcon className={`sidebar-icon ${isExpanded ? 'sidebar-icon-expanded' : 'sidebar-icon-contracted'}`} />}
-                        label='Courses Tools'
+                        label='SOFIA'
                         link='/'
                         showText={showText}
                         isTransparent={isTransparent}
@@ -37,19 +37,11 @@ const SidebarClient = () => {
                     </div>
 
                     <SidebarDivider isExpanded={isExpanded} />
-                    <SidebarEntry
-                        className={`sidebar-link ${isExpanded ? 'sidebar-link-expanded' : 'sidebar-link-contracted'}`}
-                        icon={<HomeIcon className={`sidebar-icon ${isExpanded ? 'sidebar-icon-expanded' : 'sidebar-icon-contracted'}`} />}
-                        label='Inicio'
-                        link='/'
-                        showText={showText}
-                        isTransparent={isTransparent}
-                    />
 
                     <SidebarEntry
                         className={`${isExpanded ? 'sidebar-link-expanded' : 'sidebar-link-contracted'}`}
                         icon={<StarIcon className={`sidebar-icon ${isExpanded ? 'sidebar-icon-expanded' : 'sidebar-icon-contracted'}`} />}
-                        label='Mis Cursos'
+                        label='COURSESTools'
                         link='/herramientas/mis-cursos'
                         showText={showText}
                         isTransparent={isTransparent}
@@ -86,7 +78,7 @@ const SidebarClient = () => {
                         className={`${isExpanded ? 'sidebar-link-expanded' : 'sidebar-link-contracted'}`}
                         icon={<ChartPieIcon className={`sidebar-icon ${isExpanded ? 'sidebar-icon-expanded' : 'sidebar-icon-contracted'}`} />}
                         label='Reportes'
-                        link='/herramientas/reportes/cursos'
+                        link='/herramientas/reportes/tesis'
                         showText={showText}
                         isTransparent={isTransparent}
                     />

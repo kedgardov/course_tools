@@ -6,9 +6,8 @@ import PerfilEgresoForm from "./perfilEgresoForm";
 import { getHabilidadesCurso, GetHabilidadesCursoType } from "@/utils/habilidades/getHabilidadesCurso";
 import { getCatalogoHabilidades, GetCatalogoHabilidadesType } from "@/utils/habilidades/getCatalogoHabilidades";
 import { getCatalogoGruposHabilidades, GetCatalogoGruposHabilidadesType } from "@/utils/habilidades/getCatalogoGruposHabilidades";
-import { GrupoHabilidadType } from "@/models/grupoHabilidad";
-import { HabilidadCursoType, HabilidadType } from "@/models/habilidad";
 import TablaHabilidadesCurso from "./tablaHabilidadesCurso";
+import { canEditCurso, getPermisosInCurso, GetPermisosInCursoType } from "@/utils/permisosCurso";
 
 const PerfilEgreso = async ({
     params,
@@ -32,24 +31,28 @@ const PerfilEgreso = async ({
         responseGetCatalogoHabilidades,
         responseGetCatalogoGruposHabilidades,
         responseGetCurso,
+        responseGetPermisosCurso,
     ]:[
         GetHabilidadesCursoType,
         GetCatalogoHabilidadesType,
         GetCatalogoGruposHabilidadesType,
         GetCursoType,
+        GetPermisosInCursoType,
     ] = await Promise.all([
         getHabilidadesCurso(idCurso, token),
         getCatalogoHabilidades(token),
         getCatalogoGruposHabilidades(token),
         getCurso(idCurso, token),
+        getPermisosInCurso(idCurso, token),
     ]);
 
 
      if ( !responseGetHabilidadesCurso.success || !responseGetCatalogoHabilidades.success || !responseGetCatalogoGruposHabilidades.success ||
-          !responseGetCurso.success || responseGetCurso.curso === null){
+          !responseGetCurso.success || !responseGetPermisosCurso.success || responseGetCurso.curso === null){
          notFound();
      }
 
+    const canEdit = canEditCurso(responseGetPermisosCurso.roles_curso);
 
     return (
         <section>
@@ -60,16 +63,18 @@ const PerfilEgreso = async ({
                 habilidadesCurso={responseGetHabilidadesCurso.habilidades_curso}
                 catalogoHabilidades={responseGetCatalogoHabilidades.catalogo_habilidades}
                 catalogoGruposHabilidades={responseGetCatalogoGruposHabilidades.catalogo_grupos_habilidades}
+                canEdit={canEdit}
             />
-        <PerfilEgresoForm
-            className=''
-            token={token}
-            idCurso={idCurso}
-            curso={responseGetCurso.curso}
-            habilidadesCurso={responseGetHabilidadesCurso.habilidades_curso}
-            catalogoHabilidades={responseGetCatalogoHabilidades.catalogo_habilidades}
-            catalogoGruposHabilidades={responseGetCatalogoGruposHabilidades.catalogo_grupos_habilidades}
-        />
+            <PerfilEgresoForm
+                className=''
+                token={token}
+                idCurso={idCurso}
+                curso={responseGetCurso.curso}
+                habilidadesCurso={responseGetHabilidadesCurso.habilidades_curso}
+                catalogoHabilidades={responseGetCatalogoHabilidades.catalogo_habilidades}
+                catalogoGruposHabilidades={responseGetCatalogoGruposHabilidades.catalogo_grupos_habilidades}
+                canEdit={canEdit}
+            />
         </section>
     );
 };

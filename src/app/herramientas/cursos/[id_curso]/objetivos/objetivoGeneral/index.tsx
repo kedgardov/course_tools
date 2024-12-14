@@ -22,14 +22,16 @@ const ObjetivoGeneral = ({
     className,
     idCurso,
     token,
+    canEdit,
 }:{
     objetivoGeneral: ObjetivoType
     className: string,
     idCurso: number,
     token: string,
+    canEdit: boolean,
 }) => {
-    const widths: [WidthType, WidthType] = ['w-[80%]','w-[20%]'];
-
+    const widths: WidthType[] = canEdit? ['w-[80%]','w-[20%]']:['w-[100%]'];
+    const listHeaders: string[] = canEdit? ['Objetivo', 'Acciones']:['Objetivo'];
 
     const [editMode, setEditMode] = useState<boolean>(false);
     const [ isLoading, setIsLoading ] = useState<boolean>(false);
@@ -48,7 +50,7 @@ const ObjetivoGeneral = ({
     const onSubmit: SubmitHandler<ObjetivoDataType> = async (data) => {
         setIsLoading(true);
         const updatedObjetivo: ObjetivoType = {
-            id: objetivoGeneral.id,
+            id: idCurso,
             id_curso: objetivoGeneral.id,
             tipo: objetivoGeneral.tipo,
             objetivo: data.objetivo,
@@ -89,15 +91,16 @@ const ObjetivoGeneral = ({
             <SectionHeaders
                 className=''
                 sectionHeader='Objetivo General del Curso'
-                helpText='De clic aqui para habilitar le edicion del objetivo general del curso'
+                helpText='De clic aqui para habilitar la edicion del objetivo general del curso'
                 editMode={editMode}
                 startEditMode={() => setEditMode(true)}
                 isLoading={isLoading}
+                canEdit={canEdit}
             />
             <ul>
                 <ListHeaders
                     className='divider-dark'
-                    headersList={['Objetivo','Acciones']}
+                    headersList={listHeaders}
                     widthList={widths}
                 />
                 <li>
@@ -116,6 +119,8 @@ const ObjetivoGeneral = ({
                     showBorder={false}
                 />
             </div>
+
+            {canEdit && (
             <div className={`${widths[1]} flex items-center`}>
             {editMode? (
                 <>
@@ -129,6 +134,8 @@ const ObjetivoGeneral = ({
                 </>
             )}
             </div>
+            )}
+
             <Alert error={error} setError={setError}/>
         </form>
 

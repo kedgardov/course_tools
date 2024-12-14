@@ -328,6 +328,14 @@ body {
     hover:bg-pos-100;
 
 }
-
+.chart-data-button {
+  @apply m-2 p-2 rounded-xl;
+}
+.chart-data-button-selected {
+  @apply chart-data-button bg-blue-500;
+}
+.chart-data-button-not-selected {
+  @apply chart-data-button bg-blue-300;
+}
 
 }

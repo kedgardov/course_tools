@@ -1,0 +1,37 @@
+import React from 'react';
+import { Cite } from '@citation-js/core';
+import '@citation-js/plugin-csl';
+
+const data = {
+  type: 'book',
+  title: 'Example Book 334',
+  author: [
+    {
+      family: 'Doe',
+      given: 'John',
+    },
+  ],
+  issued: {
+    'date-parts': [[2020]],
+  },
+  publisher: 'Example Publisher',
+  'publisher-place': 'City Name',
+};
+
+const CitationTest: React.FC = () => {
+  const cite = new Cite(data);
+  const apaCitation = cite.format('bibliography', {
+    format: 'html', // Use 'html' for formatted output
+    template: 'apa',
+    lang: 'en-US',
+  });
+
+  return (
+    <div
+      className="citation-output"
+      dangerouslySetInnerHTML={{ __html: apaCitation }}
+    />
+  );
+};
+
+export default CitationTest;

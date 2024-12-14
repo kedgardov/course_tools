@@ -87,9 +87,9 @@ const CursosPlot = ({
     return (
         <div className={`${className}`}>
             {/* Category Selection Buttons */}
-            <button className='m-2 bg-blue-300 p-2' onClick={() => setSelectedCategory('opcion-terminal')} > Opción Terminal </button>
-            <button className='m-2 bg-blue-300 p-2' onClick={() => setSelectedCategory('programa')} > Programa </button>
-            <button className='m-2 bg-blue-300 p-2' onClick={() => setSelectedCategory('nivel-curricular')} > Nivel Curricular </button>
+            <button className={`${selectedCategory==='opcion-terminal'? 'chart-data-button-selected':'chart-data-button-not-selected'}`} onClick={() => setSelectedCategory('opcion-terminal')} > Opción Terminal </button>
+            <button className={`${selectedCategory==='programa'? 'chart-data-button-selected':'chart-data-button-not-selected'}`}  onClick={() => setSelectedCategory('programa')} > Programa </button>
+            <button className={`${selectedCategory==='nivel-curricular'? 'chart-data-button-selected':'chart-data-button-not-selected'}`}  onClick={() => setSelectedCategory('nivel-curricular')} > Nivel Curricular </button>
 
             {/* Bar Plot Display */}
             <div>

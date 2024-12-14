@@ -19,12 +19,14 @@ const Objetivo = ({
     objetivo,
     widthList,
     handleDelete,
+    canEdit,
 }:{
     objetivo: ObjetivoType,
     token: string,
     className: string,
-    widthList: [WidthType, WidthType],
+    widthList: WidthType[],
     handleDelete: (id: number) => void,
+    canEdit: boolean,
 }) => {
 
     const [editMode, setEditMode] = useState<boolean>(false);
@@ -71,6 +73,7 @@ const Objetivo = ({
                     showBorder={false}
                 />
             </div>
+            {canEdit && (
             <div className={`${widthList[1]} flex items-center`}>
             {editMode? (
                 <>
@@ -84,6 +87,7 @@ const Objetivo = ({
                 </>
             )}
             </div>
+            )}
             <Alert error={error} setError={setError}/>
         </form>
     );

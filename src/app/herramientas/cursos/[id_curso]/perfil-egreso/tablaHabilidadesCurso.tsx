@@ -19,6 +19,7 @@ const TablaHabilidadesCurso = ({
     habilidadesCurso,
     catalogoHabilidades,
     catalogoGruposHabilidades,
+    canEdit,
 }:{
     idCurso: number,
     className: string,
@@ -26,12 +27,18 @@ const TablaHabilidadesCurso = ({
     habilidadesCurso: HabilidadCursoType[],
     catalogoHabilidades: HabilidadType[],
     catalogoGruposHabilidades: GrupoHabilidadType[],
+    canEdit: boolean,
 }) => {
-    const widths: [WidthType, WidthType, WidthType] = ['w-[45%]','w-[35%]','w-[20%]'];
+    const widths: WidthType[] = canEdit? ['w-[45%]','w-[35%]','w-[20%]']:['w-[50%]','w-[50%]'] ;
+    const listHeaders: string[] = canEdit ? ['Grupo de Habilidades', 'Habilidad', 'Acciones']:['Grupo de Habilidades', 'Habilidad'];
+
+
     const [currentHabilidadesCurso, setCurrentHabilidadesCurso] = useState<HabilidadCursoType[]>(habilidadesCurso);
     const [addingMode, setAddingMode] = useState<boolean>(false);
     const [ isLoading, setIsLoading ] = useState<boolean>(false);
     const [ error, setError ] = useState<string | null>(null);
+
+
 
     const handleDelete = async (id: number) => {
         setIsLoading(true);
@@ -70,12 +77,12 @@ const TablaHabilidadesCurso = ({
                 <LoadingComponent isLoading={isLoading} />
             </div>
             {currentHabilidadesCurso.length === 0 ? (
-                <p className='italic p-2 text-less-dark'>Este curso aun no cuenta con Habilidades, para agregar una presione el boton de agregar</p>
+                <p className='italic p-2 text-less-dark'>Este curso aun no cuenta con Habilidades, si used es responsable de este curso, puede agregar habilidades dando clic en el boton Agregar </p>
             ):(
             <ul>
                 <ListHeaders
                     className=''
-                    headersList={['Grupo de Habiliades','Habilidad','Acciones']}
+                    headersList={listHeaders}
                     widthList={widths}
                 />
                 {currentHabilidadesCurso.map((habilidad) => (
@@ -88,25 +95,34 @@ const TablaHabilidadesCurso = ({
                         catalogoHabilidades={catalogoHabilidades}
                         className='divider-dark'
                         handleDelete={handleDelete}
+                        canEdit={canEdit}
                     />
                 ))}
             </ul>
             )}
-            {addingMode? (
-                <NewHabilidadCurso
-                    className=''
-                    token={token}
-                    widths={widths}
-                    catalogoGruposHabilidades={catalogoGruposHabilidades}
-                    catalogoHabilidades={catalogoHabilidades}
-                    handleAdd={handleAdd}
-                    selfDestruct={() => setAddingMode(false)}
+        {addingMode ? (
+            <NewHabilidadCurso
+            className=''
+            token={token}
+            widths={widths}
+            catalogoGruposHabilidades={catalogoGruposHabilidades}
+            catalogoHabilidades={catalogoHabilidades}
+            handleAdd={handleAdd}
+            selfDestruct={() => setAddingMode(false)}
                 />
-            ):(
-                <PrimaryButton className='ml-auto mr-4 flex' buttonLabel='Agregar' handleAction={() => setAddingMode(true)} />
-            )}
+        ) : (
+            canEdit && (
+                <PrimaryButton
+                className='ml-auto mr-4 flex'
+                buttonLabel='Agregar'
+                handleAction={() => setAddingMode(true)}
+            />
+            )
+        )}
+
+
             <Alert error={error} setError={setError}/>
-        </section>
+            </section>
     );
 };
 export default TablaHabilidadesCurso;

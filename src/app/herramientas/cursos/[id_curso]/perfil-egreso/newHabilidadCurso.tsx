@@ -21,7 +21,7 @@ const NewHabilidadCurso = ({
 }:{
     token: string,
     className: string,
-    widths: [ WidthType, WidthType, WidthType ],
+    widths: WidthType[],
     catalogoGruposHabilidades: GrupoHabilidadType[],
     catalogoHabilidades: HabilidadType[],
     handleAdd: (data: HabilidadCursoDataType) => void,

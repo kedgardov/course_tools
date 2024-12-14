@@ -62,6 +62,7 @@ const DetallesUnidad = async ({
 
     return (
         <section>
+            <h2 className='title-2'>{`Unidad ${responseGetUnidadCurso.unidad.unidad}`}</h2>
             <DetallesUnidadClient
                 unidad={responseGetUnidadCurso.unidad}
                 token={token}
@@ -77,6 +78,7 @@ const DetallesUnidad = async ({
                 idCurso={idCurso}
                 idUnidad={idUnidad}
                 token={token}
+                unidad={responseGetUnidadCurso.unidad}
             />
             <div className='flex w-full justify-center'>
                 <Link className='text-primary font-bold tracking-wide w-fit flex my-2 border border-primary rounded-xl p-2' href={`/herramientas/cursos/${idCurso}/unidades`} >

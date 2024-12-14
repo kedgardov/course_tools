@@ -2,6 +2,7 @@ import { getCatalogoTesis, GetCatalogoTesisType } from "@/utils/repo_tesis/tesis
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import TesisFinder from "./tesisFinder";
+import { getCatalogoCoordinaciones2, GetCatalogoCoordinaciones2Type } from "@/utils/repo_tesis/coordinaciones/getCatalogoCoordinaciones2";
 
 const Tesis = async () => {
 
@@ -11,9 +12,18 @@ const Tesis = async () => {
         notFound();
     }
 
-    const responseGetCatalogoTesis: GetCatalogoTesisType = await getCatalogoTesis(token);
+    const [
+        responseGetCatalogoTesis,
+        responseGetCatalogoCoordinaciones,
+    ]:[
+        GetCatalogoTesisType,
+        GetCatalogoCoordinaciones2Type,
+    ] = await Promise.all([
+        getCatalogoTesis(token),
+        getCatalogoCoordinaciones2(token),
+    ]);
 
-    if( !responseGetCatalogoTesis.success ){
+    if( !responseGetCatalogoTesis.success || !responseGetCatalogoCoordinaciones.success ){
         notFound();
     }
 
@@ -21,6 +31,7 @@ const Tesis = async () => {
         <TesisFinder
             className=''
             catalogoTesis={responseGetCatalogoTesis.catalogo_tesis}
+            catalogoCoordinaciones={responseGetCatalogoCoordinaciones.catalogo_coordinaciones_2}
         />
     );
 };

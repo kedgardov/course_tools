@@ -15,6 +15,7 @@ const Login = (): React.JSX.Element => {
     const router = useRouter();
     const [serverError, setServerError] = useState<string | null>(null);
 
+
     const { register, handleSubmit, formState: { errors } } = useForm<signInType>({
         resolver: zodResolver(signInSchema),
     });
@@ -35,7 +36,7 @@ const Login = (): React.JSX.Element => {
                 <SquaresPlusIcon className='h-2/5 flex-grow text-dark' />
                 <form className='flex flex-col flex-grow items-center w-full h-3/5' onSubmit={handleSubmit(onSubmit)}>
                     <fieldset className='p-2 flex flex-col w-full h-3/4'>
-                        <legend className=' text-4xl font-bold w-full text-center'>COURSEStools</legend>
+                        <legend className=' text-4xl font-bold w-full text-center tracking-wider'>SOFIA</legend>
                         <div className='m-2'>
                             <div className={`flex items-center bg-more-light border rounded-2xl shadow p-2 ${errors.username ? 'border-tertiary border-2' : 'border-gray-300'}`}>
                                 <UserIcon className={`size-5 ${errors.username ? 'text-tertiary' : ''}`} />

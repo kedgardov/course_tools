@@ -15,7 +15,7 @@ const NewObjetivo = ({
     selfDestruct,
 }:{
     className: string,
-    widthList: [WidthType, WidthType],
+    widthList: WidthType[],
     handleAdd: (data: ObjetivoDataType) => void,
     selfDestruct: () => void,
 }) => {

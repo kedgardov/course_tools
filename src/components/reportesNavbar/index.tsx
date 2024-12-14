@@ -26,9 +26,9 @@ const ReportesNavbar = () => {
 
     return (
         <nav className='flex'>
-            <Link className={`tab ${currentTab === 'cursos' ? 'selected-tab' : ''}`} href='/herramientas/reportes/cursos'>Cursos</Link>
             <Link className={`tab ${currentTab === 'tesis' ? 'selected-tab' : ''}`} href='/herramientas/reportes/tesis'>Tesis</Link>
             <Link className={`tab ${currentTab === 'participaciones-tesis' ? 'selected-tab' : ''}`} href='/herramientas/reportes/participaciones-tesis'>Participaciones Tesis</Link>
+            <Link className={`tab ${currentTab === 'cursos' ? 'selected-tab' : ''}`} href='/herramientas/reportes/cursos'>Cursos</Link>
             <Link className={`tab ${currentTab === 'participaciones-cursos' ? 'selected-tab' : ''}`} href='/herramientas/reportes/participaciones-cursos'>Participaciones Cursos</Link>
         </nav>
     );

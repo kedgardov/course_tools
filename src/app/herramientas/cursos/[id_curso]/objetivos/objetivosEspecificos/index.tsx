@@ -17,13 +17,16 @@ const ObjetivosEspecificos = ({
     className,
     idCurso,
     token,
+    canEdit,
 }: {
     objetivosEspecificos: ObjetivoType[],
     className: string,
     idCurso: number,
     token: string,
+    canEdit: boolean,
 }) => {
-    const widths: [WidthType, WidthType] = ['w-[70%]', 'w-[20%]'];
+    const widths: WidthType[] = canEdit? ['w-[70%]', 'w-[20%]']:['w-[100%]'];
+    const listHeaders: string[] = canEdit? ['Objetivo','Acciones']:['Objetivo'];
 
     const [addingMode, setAddingMode] = useState<boolean>(false);
     const [editMode, setEditMode] = useState<boolean>(false);
@@ -65,11 +68,12 @@ const ObjetivosEspecificos = ({
                 editMode={editMode}
                 startEditMode={() => setEditMode(true)}
                 isLoading={false}
+                canEdit={canEdit}
             />
 
             <ListHeaders
                 className='divider-dark'
-                headersList={['Objetivo', 'Acciones']}
+                headersList={listHeaders}
                 widthList={widths}
             />
 
@@ -87,6 +91,7 @@ const ObjetivosEspecificos = ({
                             token={token}
                             handleDelete={handleDeleteObjetivo}
                             widthList={widths}
+                            canEdit={canEdit}
                         />
                     ))}
                 </ul>
@@ -100,7 +105,9 @@ const ObjetivosEspecificos = ({
                     selfDestruct={() => setAddingMode(false)}
                 />
             ) : (
+                canEdit && (
                 <PrimaryButton className='flex ml-auto mr-4' handleAction={() => setAddingMode(true)} buttonLabel='Agregar' />
+                )
             )}
 
             <Alert error={error} setError={setError} />

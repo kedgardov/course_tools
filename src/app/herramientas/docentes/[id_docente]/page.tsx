@@ -9,6 +9,7 @@ import { getCatalogoPronaces, GetCatalogoPronacesType } from "@/utils/repo_tesis
 import TesisDocente from "./tesisDocente";
 import { getCatalogoGrados, GetCatalogoGradosType } from "@/utils/repo_tesis/grados/getCatalogoGrados";
 import { getCatalogoOpcionesTerminales, GetCatalogoOpcionesTerminalesType } from "@/utils/repo_tesis/opcionesTerminales/getCatalogoOpcionesTerminales";
+import Link from "next/link";
 
 const DetallesDocente = async ({
     params,
@@ -33,7 +34,6 @@ const DetallesDocente = async ({
         responseGetTesisMaestro,
         responseGetCatalogoGrados,
         responseGetCatalogoOpcionesTerminales,
-
     ]:[
         GetMaestroType,
         GetCatalogoRolesTesisType,
@@ -72,7 +72,7 @@ const DetallesDocente = async ({
                 catalogoGrados={responseGetCatalogoGrados.catalogo_grados}
                 catalogoOpcionesTerminales={responseGetCatalogoOpcionesTerminales.catalogo_opciones_terminales}
             />
-        </div>
+            </div>
     );
 };
 export default DetallesDocente;

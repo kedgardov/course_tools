@@ -54,5 +54,6 @@ export const TesisFinderScheme = TesisScheme.pick({
     id: true,
     titulo: true,
     resumen: true,
+    id_coordinacion_2: true,
 });
 export type TesisFinderType = z.infer< typeof TesisFinderScheme>;

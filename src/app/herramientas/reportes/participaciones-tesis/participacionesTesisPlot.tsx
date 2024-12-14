@@ -226,12 +226,12 @@ const ParticipacionesTesisPlot = ({
 
     return (
         <div className={`${className}`}>
-            <button className='m-2 bg-blue-300 p-2' onClick={() => setSelectedCategory('pronace')} > Pronace </button>
-            <button className='m-2 bg-blue-300 p-2' onClick={() => setSelectedCategory('coordinacion')} > Coordinacion </button>
-            <button className='m-2 bg-blue-300 p-2' onClick={() => setSelectedCategory('programa')} > Programa </button>
-            <button className='m-2 bg-blue-300 p-2' onClick={() => setSelectedCategory('fecha')} > Fecha </button>
-            <button className='m-2 bg-blue-300 p-2' onClick={() => setSelectedCategory('rolTesis')} > Rol en Comite </button>
-            <button className='m-2 bg-blue-300 p-2' onClick={() => setSelectedCategory('opcion-terminal')} > Opcion Terminal </button>
+            <button className={`${selectedCategory==='pronace'? 'chart-data-button-selected':'chart-data-button-not-selected'}`}  onClick={() => setSelectedCategory('pronace')} > Pronace </button>
+            <button className={`${selectedCategory==='coordinacion'? 'chart-data-button-selected':'chart-data-button-not-selected'}`}  onClick={() => setSelectedCategory('coordinacion')} > Coordinacion </button>
+            <button className={`${selectedCategory==='programa'? 'chart-data-button-selected':'chart-data-button-not-selected'}`}  onClick={() => setSelectedCategory('programa')} > Programa </button>
+            <button className={`${selectedCategory==='fecha'? 'chart-data-button-selected':'chart-data-button-not-selected'}`}  onClick={() => setSelectedCategory('fecha')} > Fecha </button>
+            <button className={`${selectedCategory==='rolTesis'? 'chart-data-button-selected':'chart-data-button-not-selected'}`}  onClick={() => setSelectedCategory('rolTesis')} > Rol en Comite </button>
+            <button className={`${selectedCategory==='opcion-terminal'? 'chart-data-button-selected':'chart-data-button-not-selected'}`}  onClick={() => setSelectedCategory('opcion-terminal')} > Opcion Terminal </button>
         <div className=''>
         <BarsPlot
             labels={currentPlotData.labels}

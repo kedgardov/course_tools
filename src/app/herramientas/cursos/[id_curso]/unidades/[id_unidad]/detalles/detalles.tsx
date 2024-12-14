@@ -127,15 +127,16 @@ const DetallesUnidadClient = ({
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form className='border p-2 m-2 rounded-xl' onSubmit={handleSubmit(onSubmit)}>
             <legend>
                 <SectionHeaders
                     className=''
-                    sectionHeader={`Detalles de la Unidad: ${unidad.unidad}`}
+                    sectionHeader='Detalles'
                     editMode={editMode}
                     helpText='De clic para entrar al modo edicion de detalles de esta unidad'
                     startEditMode={() => setEditMode(true)}
                     isLoading={isLoading}
+                    canEdit={true}
                 />
             </legend>
 

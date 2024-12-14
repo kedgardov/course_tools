@@ -3,6 +3,7 @@ import { MaestroType } from "@/models/maestro";
 import { useEffect, useState } from "react";
 import Fuse from 'fuse.js';
 import Link from "next/link";
+import ListHeaders from "@/components/listHeaders";
 
 
 const DocenteFinder = ({
@@ -45,10 +46,15 @@ const DocenteFinder = ({
             />
             </div>
             <ul className='m-2'>
+            <ListHeaders
+                className=''
+                headersList={['Nombre del Docente','Acciones']}
+                widthList={['w-[80%]','w-[20%]']}
+            />
             {currentMaestros.map((maestro) => (
-                <li key={maestro.id} className='p-2 divider-dark'>
-                    <Link className='text-blue-400 underline' href={`/herramientas/docentes/${maestro.id}`}>Ver Docente</Link>
-                    <span className='m-2'>{maestro.label}</span>
+                <li key={maestro.id} className='p-2 divider-dark flex items-center'>
+                    <span className='m-2 w-[80%]'>{maestro.label}</span>
+                    <Link className='text-blue-400 underline w-[20%] hover:text-blue-600' href={`/herramientas/docentes/${maestro.id}/actividad-academica`}>Ver Docente</Link>
                 </li>
             ))}
             </ul>

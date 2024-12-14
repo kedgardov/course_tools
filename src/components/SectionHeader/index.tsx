@@ -8,6 +8,7 @@ const SectionHeaders = ({
     editMode,
     startEditMode,
     isLoading,
+    canEdit,
 }:{
     className: string,
     sectionHeader: string,
@@ -15,13 +16,14 @@ const SectionHeaders = ({
     editMode: boolean,
     startEditMode: () => void,
     isLoading: boolean,
+    canEdit: boolean,
 }) => {
 
 
     return (
         <div className={`${className} flex space-x-2 items-center`}>
             <h2 className='title-2'>{sectionHeader}</h2>
-            {!editMode && <EditButton className='' handleEdit={startEditMode} title={helpText} />}
+            {!editMode && canEdit && <EditButton className='' handleEdit={startEditMode} title={helpText} />}
             <LoadingComponent isLoading={isLoading}/>
         </div>
     );

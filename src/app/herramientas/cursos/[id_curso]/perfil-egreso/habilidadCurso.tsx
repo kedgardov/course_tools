@@ -2,7 +2,6 @@
 import Alert from "@/components/alert";
 import DeleteButton from "@/components/deleteButton";
 import EditButton from "@/components/editButton";
-import LoadingComponent from "@/components/loading";
 import SecondarySubmit from "@/components/secondarySubmit";
 import SelectInput from "@/components/selectInput";
 import TertiaryButton from "@/components/tertiaryButton";
@@ -22,14 +21,16 @@ const HabilidadCurso = ({
     catalogoGruposHabilidades,
     catalogoHabilidades,
     handleDelete,
+    canEdit,
 }:{
     token: string,
     className: string,
     habilidad: HabilidadCursoType,
-    widths: [ WidthType, WidthType, WidthType ],
+    widths: WidthType[],
     catalogoGruposHabilidades: GrupoHabilidadType[],
     catalogoHabilidades: HabilidadType[],
     handleDelete: (idHabilidad: number) => void,
+    canEdit: boolean,
 }) => {
 
     const [ filteredHabilidades, setFilteredHabilidades ] = useState<HabilidadType[]>(catalogoHabilidades);
@@ -113,20 +114,21 @@ const HabilidadCurso = ({
                     idKey='id'
                     valueKey='habilidad'
                 />
-                <div className={`${widths[2]} flex`}>
+                {canEdit && (
+                    <>
                     {editMode? (
-                        <>
+                        <div className={`${widths[2]} flex`}>
                             <SecondarySubmit className='mx-2 w-1/2' buttonLabel='Guardar' isDirty={isDirty}/>
                             <TertiaryButton className='mx-2 w-1/2' buttonLabel='Cancelar' handleAction={() => handleCancel()} />
-                        </>
+                        </div>
                     ):(
-                        <>
+                        <div className={`${widths[2]} flex`}>
                             <EditButton className='mx-2' title='Editar Habilidad del Curso' handleEdit={() => setEditMode(true)} />
                             <DeleteButton className='mx-2' title='Eliminar Habilidad del Curso' handleDelete={() => handleDelete(habilidad.id)}/>
-                        </>
+                        </div>
                     )}
-                    <LoadingComponent isLoading={isLoading}/>
-                </div>
+                    </>
+                )}
             </form>
             <Alert error={apiError} setError={setApiError}/>
         </li>

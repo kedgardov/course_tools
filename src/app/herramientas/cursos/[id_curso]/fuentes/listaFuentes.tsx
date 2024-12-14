@@ -1,88 +1,45 @@
-'use client';
-import { useState } from 'react';
-import { FuenteMiniDataType, FuenteMiniType } from "@/models/fuente";
-import { TipoFuenteType } from "@/models/tipoFuente";
-import Fuente from './fuente';
-import NewFuente from './newFuente';
-import PrimaryButton from '@components/primaryButton';
-import ListHeaders from '@components/listHeaders';
+import { AutorFuenteType, FuenteType } from "@/models/fuente";
+import Fuente from "./fuente";
+import WidthType from "@/models/width";
+import ListHeaders from "@/components/listHeaders";
 
-import WidthType from '@models/width';
-import Confirm from '@/components/confirm';
+const widths: WidthType[] = ['w-[80%]','w-[20%]'];
 
-const ListaFuentes = ({
+
+const ListaFuentesCurso = ({
     className,
+    token,
     idCurso,
     fuentes,
-    catalogoTiposFuentes,
+    autores,
 }:{
     className: string,
+    token: string,
     idCurso: number,
-    fuentes: FuenteMiniType[],
-    catalogoTiposFuentes: TipoFuenteType[],
+    fuentes: FuenteType[],
+    autores: AutorFuenteType[],
 }) => {
-
-    const [currentFuentes, setCurrentFuentes] = useState<FuenteMiniType[]>(fuentes);
-    const [addingMode, setAddingMode] = useState<boolean>(false);
-
-    const widths: [WidthType, WidthType, WidthType] = ['w-[50%]', 'w-[20%]', 'w-[30%]'];
-
-    const handleAddFuente = ( data: FuenteMiniDataType ) => {
-        const newCita = '';
-        const newFuente: FuenteMiniType = {
-            id: 0,
-            id_curso: idCurso,
-            titulo: data.titulo,
-            id_tipo: data.id_tipo,
-            cita: newCita,
-        };
-        setCurrentFuentes(prev => [...prev, newFuente]);
-    };
-
-    const handleDelete = ( id: number ) => {
-
-        const newFuentes = currentFuentes.filter((fuente) => fuente.id !== id);
-        setCurrentFuentes(newFuentes);
-    };
-
-    return (
-        <div className={`${className}`}>
-            <ul>
-                <ListHeaders
-                    className=''
-                    headersList={['Titulo','Tipo','Acciones']}
-                    widthList={widths}
-                />
-                {currentFuentes.map((fuente: FuenteMiniType) => (
-                    <li key={fuente.id}>
-                        <Fuente
-                            className='divider-dark p-1'
-                            fuente={fuente}
-                            idCurso={idCurso}
-                            catalogoTiposFuentes={catalogoTiposFuentes}
-                            handleDelete={handleDelete}
-                            widthList={widths}
-                        />
-                    </li>
-                ))}
-                {addingMode ? (
-                    <NewFuente
-                        className='divider-dark p-1'
-                        catalogoTiposFuentes={catalogoTiposFuentes}
-                        handleAddFuente={handleAddFuente}
-                        selfDestruct={() => setAddingMode(false)}
-                        widthList={widths}
-                    />
-                ) : (
-                    <PrimaryButton
-                        className='ml-auto flex mr-4'
-                        handleAction={() => setAddingMode(true)}
-                        buttonLabel='Nueva Fuente'
-                    />
-                )}
-            </ul>
-        </div>
-    );
+  return (
+    <div className={`${className}`}>
+      <h2 className='title-2'>Fuentes del Curso</h2>
+    <ul className='p-2'>
+      <ListHeaders
+          className=''
+          widthList={widths}
+          headersList={['Cita','Acciones']}
+      />
+      {fuentes.map((fuente) => (
+        <Fuente
+          key={fuente.id}
+          className='divider-dark p-2'
+          fuenteData={fuente}
+          autoresData={ autores.filter((a) => a.id_fuente === fuente.id) }
+          widths={widths}
+        />
+      ))}
+    </ul>
+    </div>
+  );
 };
 
-export default ListaFuentes;
+export default ListaFuentesCurso;

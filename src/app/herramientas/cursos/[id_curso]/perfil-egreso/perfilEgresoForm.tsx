@@ -4,13 +4,11 @@ import EditButton from "@/components/editButton";
 import LoadingComponent from "@/components/loading";
 import SecondarySubmit from "@/components/secondarySubmit";
 import TertiaryButton from "@/components/tertiaryButton";
-import TextAreaLabel from "@/components/textAreaLabel";
 import { CursoEgresoScheme, CursoEgresoType, CursoType } from "@/models/curso";
 import { updateCurso } from "@/utils/cursos/updateCurso";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import TablaHabilidadesCurso from "./tablaHabilidadesCurso";
 import { HabilidadCursoType, HabilidadType } from "@/models/habilidad";
 import { GrupoHabilidadType } from "@/models/grupoHabilidad";
 import TextArea from "@/components/textArea";
@@ -23,6 +21,7 @@ const PerfilEgresoForm = ({
     catalogoHabilidades,
     catalogoGruposHabilidades,
     curso,
+    canEdit,
 }:{
     idCurso: number,
     token: string,
@@ -31,6 +30,7 @@ const PerfilEgresoForm = ({
     habilidadesCurso: HabilidadCursoType[],
     catalogoHabilidades: HabilidadType[],
     catalogoGruposHabilidades: GrupoHabilidadType[],
+    canEdit: boolean,
 }) => {
     const [ editMode, setEditMode ] = useState<boolean>(false);
     const [ isLoading, setIsLoading ] = useState<boolean>(false);
@@ -69,7 +69,7 @@ const PerfilEgresoForm = ({
         <section className={className}>
             <div className='flex items-center space-x-2'>
                 <h2 className='title-2'>Vinculos con el Perfil de Egreso del Curso</h2>
-                {!editMode && (
+                {!editMode && canEdit && (
                     <EditButton className='' title='Editar Informacion Sobre el Perfil de Egreso del Curso' handleEdit={() => setEditMode(true)} />
                 )}
                 <LoadingComponent isLoading={isLoading} />
@@ -119,10 +119,6 @@ const PerfilEgresoForm = ({
                     />
             </div>
                 </div>
-
-
-
-
 
                 {editMode && (
                 <div className='flex justify-end'>
