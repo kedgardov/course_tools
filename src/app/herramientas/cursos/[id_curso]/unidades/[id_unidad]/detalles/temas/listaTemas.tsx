@@ -15,6 +15,7 @@ import { UnidadType } from '@/models/unidad';
 import { insertTema } from '@/utils/temas/insertTema';
 import Alert from '@/components/alert';
 import Tema from './tema';
+import TemasUnidad from '../../temas/page';
 
 const ListaTemas = ({
     className,
@@ -39,6 +40,7 @@ const ListaTemas = ({
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isReordering, setIsReordering] = useState<boolean>(false); // New state
+    const [ lastTemas, setLastTemas ] = useState<TemaType[]>(temas);
 
     const onReorder = (newOrder: number[]) => {
         setOrder(newOrder);
@@ -80,26 +82,28 @@ const ListaTemas = ({
         setCurrentTemas(updatedTemas);
     };
 
+
+    const handleStartReordering = () => {
+        setLastTemas(currentTemas);
+        setIsReordering(true);
+    }
+
+    const handleCancelReordering = () => {
+        setCurrentTemas(lastTemas);
+        setOrder(lastTemas.map((t) => t.id));
+        setIsReordering(false);
+    }
+
+    const handleGuardarOrden = async () => {
+        setLastTemas(currentTemas);
+        setIsReordering(false);
+    }
+
     return (
         <section className={`${className}`}>
             <div className="flex justify-between items-center mb-4">
-                <Link className="button-3 flex items-center" href={`/herramientas/cursos/${idCurso}/unidades`}>
-                    <ArrowTurnLeftUpIcon className="w-6 h-6 mr-2" />
-                    Regresar
-                </Link>
-                <h2 className="title-2">{`Temas de la Unidad: ${unidad.unidad || ''}`}</h2>
-                <div className="flex space-x-4">
-                    <PrimaryButton
-                        className="m-4"
-                        handleAction={() => setAddingMode(true)}
-                        buttonLabel="Agregar"
-                    />
-                    <PrimaryButton
-                        className="m-4"
-                        handleAction={() => setIsReordering(!isReordering)} // Toggle reordering mode
-                        buttonLabel={isReordering ? "Guardar Orden" : "Reordenar"}
-                    />
-                </div>
+                <h2 className="title-2">Temas de la Unidad</h2>
+
             </div>
             <ListHeaders
                 className=""
@@ -148,6 +152,9 @@ const ListaTemas = ({
                     })}
                 </ul>
             )}
+
+
+
             {addingMode ? (
                 <NewTema
                     className="divider-dark p-1"
@@ -158,12 +165,32 @@ const ListaTemas = ({
                     widthList={widths}
                 />
             ) : (
-                <PrimaryButton
-                    className="flex ml-auto mr-4"
-                    handleAction={() => setAddingMode(true)}
-                    buttonLabel="Agregar"
-                />
+
+                <div className='flex'>
+                    { isReordering? (
+                        <div className='space-x-2'>
+                            <button className='button-1-secondary' onClick={() => handleGuardarOrden()}>Guardar</button>
+                            <button className='button-1-tertiary' onClick={() => handleCancelReordering()}>Cancelar</button>
+                        </div>
+                    ):(
+                        <>
+                            <PrimaryButton
+                                className='m-4'
+                                handleAction={()=> handleStartReordering()}
+                                buttonLabel='Reordenar'
+                            />
+                            <PrimaryButton
+                                className='m-4 ml-auto'
+                                handleAction={()=> setAddingMode(true)}
+                                buttonLabel='Agregar'
+                            />
+                        </>
+                    )}
+                </div>
             )}
+
+
+
             <Alert error={error} setError={setError} />
         </section>
     );

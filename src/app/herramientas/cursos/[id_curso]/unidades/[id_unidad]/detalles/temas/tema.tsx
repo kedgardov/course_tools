@@ -15,7 +15,7 @@ import EditButton from '@/components/editButton';
 import DeleteButton from '@/components/deleteButton';
 import { updateTema } from '@/utils/temas/updateTema';
 import Alert from '@/components/alert';
-import { Bars3Icon } from '@heroicons/react/24/outline'; // Example icon
+import { Bars3Icon, ChevronUpDownIcon } from '@heroicons/react/24/outline'; // Example icon
 
 type TemaProps = {
     className: string;
@@ -69,6 +69,8 @@ const Tema = ({
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={`${className} flex items-center`}>
+
+            <div className={`text-xl text-center flex justify-center ${widthList[0]}`}>
             {/* Drag Handle */}
             {dragControls && (
                 <div
@@ -77,10 +79,11 @@ const Tema = ({
                     title="Reorder"
                     aria-label="Reorder Tema"
                 >
-                    <Bars3Icon className="w-5 h-5" />
+                    <ChevronUpDownIcon className="w-5 h-5" />
                 </div>
             )}
-            <div className={`text-xl text-center ${widthList[0]}`}>{tema.numero}</div>
+            {tema.numero}
+            </div>
             <div className={widthList[1]}>
                 <TextInput
                     className="w-full"

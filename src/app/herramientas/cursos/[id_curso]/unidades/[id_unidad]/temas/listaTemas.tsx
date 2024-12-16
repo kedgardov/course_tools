@@ -83,11 +83,7 @@ const ListaTemas = ({
     return (
         <section className={`${className}`}>
             <div className="flex justify-between items-center mb-4">
-                <Link className="button-3 flex items-center" href={`/herramientas/cursos/${idCurso}/unidades`}>
-                    <ArrowTurnLeftUpIcon className="w-6 h-6 mr-2" />
-                    Regresar
-                </Link>
-                <h2 className="title-2">{`Temas de la Unidad: ${unidad.unidad}`}</h2>
+            <h2 className="title-2">{`Temas de la Unidad: ${unidad.unidad}`}</h2>
                 <div className="flex space-x-4">
                     <PrimaryButton
                         className="m-4"

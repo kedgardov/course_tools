@@ -20,7 +20,8 @@ const TabsNavbar = ({
             'unidades',
             'evaluacion',
             'colaboradores',
-            'fuentes'
+            'fuentes',
+            'terminar-cambios'
         ];
         const getTab = (path: string) => {
             const tab = tabs.find((tab) => path.includes(tab));
@@ -37,7 +38,8 @@ const TabsNavbar = ({
             <Link className={`tab ${currentTab === 'objetivos' ? 'selected-tab' : ''}`} href={`/herramientas/cursos/${idCurso}/objetivos`}>Objetivos</Link>
             <Link className={`tab ${currentTab === 'unidades' ? 'selected-tab' : ''}`} href={`/herramientas/cursos/${idCurso}/unidades`}>Contenido</Link>
             <Link className={`tab ${currentTab === 'evaluacion' ? 'selected-tab' : ''}`} href={`/herramientas/cursos/${idCurso}/evaluacion`}>Evaluación</Link>
-            <Link className={`tab ${currentTab === 'fuentes' ? 'selected-tab' : ''}`} href={`/herramientas/cursos/${idCurso}/fuentes`}>Fuentes</Link>
+            <Link className={`tab ${currentTab === 'terminar-cambios' ? 'selected-tab' : ''}`} href={`/herramientas/cursos/${idCurso}/terminar-cambios`}>Terminar</Link>
+
         </nav>
     );
 };
